@@ -19,6 +19,7 @@
 		7555FFB3242A642300829871 /* shared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7555FFB1242A642300829871 /* shared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8534A526252A74CF00C12250 /* iosMain in Resources */ = {isa = PBXBuildFile; fileRef = 8534A524252A74CF00C12250 /* iosMain */; };
 		8534A527252A74CF00C12250 /* commonMain in Resources */ = {isa = PBXBuildFile; fileRef = 8534A525252A74CF00C12250 /* commonMain */; };
+		8571B3D2253139720072FADC /* Koin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8571B3D1253139720072FADC /* Koin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		7555FFB1242A642300829871 /* shared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = shared.framework; path = "../shared/build/xcode-frameworks/shared.framework"; sourceTree = "<group>"; };
 		8534A524252A74CF00C12250 /* iosMain */ = {isa = PBXFileReference; lastKnownFileType = folder; name = iosMain; path = ../shared/src/iosMain; sourceTree = "<group>"; };
 		8534A525252A74CF00C12250 /* commonMain */ = {isa = PBXFileReference; lastKnownFileType = folder; name = commonMain; path = ../shared/src/commonMain; sourceTree = "<group>"; };
+		8571B3D1253139720072FADC /* Koin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Koin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 				7555FF89242A565B00829871 /* LaunchScreen.storyboard */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				7555FF86242A565B00829871 /* Preview Content */,
+				8571B3D1253139720072FADC /* Koin.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 			files = (
 				7555FF7F242A565900829871 /* AppDelegate.swift in Sources */,
 				7555FF81242A565900829871 /* SceneDelegate.swift in Sources */,
+				8571B3D2253139720072FADC /* Koin.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

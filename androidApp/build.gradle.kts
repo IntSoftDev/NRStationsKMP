@@ -3,21 +3,7 @@ plugins {
     kotlin("android")
     id("kotlin-android-extensions")
 }
-group = "com.intsoftdev.nrstations"
-version = "1.0-SNAPSHOT"
 
-repositories {
-    gradlePluginPortal()
-    google()
-    jcenter()
-    mavenCentral()
-}
-dependencies {
-    implementation(project(":shared"))
-    implementation(Deps.material_x)
-    implementation(Deps.app_compat_x)
-    implementation(Deps.constraintlayout)
-}
 android {
     compileSdkVersion(Versions.compile_sdk)
     defaultConfig {
@@ -32,4 +18,34 @@ android {
             isMinifyEnabled = false
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude("META-INF/*.kotlin_module")
+    }
+}
+
+group = "com.intsoftdev.nrstations"
+version = "1.0-SNAPSHOT"
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check")
+    }
+}
+
+dependencies {
+    implementation(project(":shared"))
+    implementation(Deps.material_x)
+    implementation(Deps.app_compat_x)
+    implementation(Deps.constraintlayout)
+    implementation(Deps.koinCore)
+    implementation(Deps.logger)
+    implementation(Deps.lifecycle_viewmodel)
+    implementation(Deps.lifecycle_livedata)
+    implementation(Deps.activity_exts)
 }

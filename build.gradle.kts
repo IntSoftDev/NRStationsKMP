@@ -1,9 +1,9 @@
 buildscript {
     repositories {
         gradlePluginPortal()
-        jcenter()
         google()
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath(Deps.kotlin_gradle_plugin)
@@ -13,6 +13,18 @@ buildscript {
 group = "com.intsoftdev.nrstations"
 version = "1.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        maven(url = "https://dl.bintray.com/ekito/koin")
+        maven(url = "https://dl.bintray.com/aakira/maven")
+    }
 }
+
+
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
+}
+

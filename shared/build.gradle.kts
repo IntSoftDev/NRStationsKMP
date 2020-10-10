@@ -8,12 +8,22 @@ plugins {
 group = "com.intsoftdev.nrstations"
 version = "1.0-SNAPSHOT"
 
-repositories {
-    gradlePluginPortal()
-    google()
-    jcenter()
-    mavenCentral()
+android {
+    compileSdkVersion(Versions.compile_sdk)
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    defaultConfig {
+        minSdkVersion(Versions.min_sdk)
+        targetSdkVersion(Versions.target_sdk)
+        versionCode = 1
+        versionName = "1.0"
+    }
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
+    }
 }
+
 kotlin {
     android()
     ios {
@@ -23,8 +33,23 @@ kotlin {
             }
         }
     }
+
     sourceSets {
-        val commonMain by getting
+        all {
+            languageSettings.apply {
+                useExperimentalAnnotation("kotlin.RequiresOptIn")
+            }
+        }
+        val commonMain by getting {
+            dependencies {
+                implementation(Deps.koinCore)
+                implementation(Deps.Ktor.commonCore)
+                implementation(Deps.Ktor.commonJson)
+                implementation(Deps.Ktor.commonLogging)
+                implementation(Deps.Ktor.commonSerialization)
+                implementation(Deps.logger)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(Deps.KotlinTest.common)
@@ -42,25 +67,16 @@ kotlin {
                 implementation(Deps.junit)
             }
         }
-        val iosMain by getting
+        val iosMain by getting {
+            dependencies {
+                implementation(Deps.koinCore)
+                implementation(Deps.logger)
+            }
+        }
         val iosTest by getting
     }
 }
-android {
-    compileSdkVersion(Versions.compile_sdk)
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdkVersion(Versions.min_sdk)
-        targetSdkVersion(Versions.target_sdk)
-        versionCode = 1
-        versionName = "1.0"
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
-}
+
 val packForXcode by tasks.creating(Sync::class) {
     group = "build"
     val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
