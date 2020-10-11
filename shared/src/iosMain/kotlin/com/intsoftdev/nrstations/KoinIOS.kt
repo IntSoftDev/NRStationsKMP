@@ -1,6 +1,7 @@
 package com.intsoftdev.nrstations
 
 
+import com.github.aakira.napier.Napier
 import kotlinx.cinterop.ObjCClass
 import kotlinx.cinterop.getOriginalKotlinClass
 import org.koin.core.Koin
@@ -13,7 +14,9 @@ fun initKoinIos(
     doOnStartup: () -> Unit
 ): KoinApplication = initKoin(
     module {
+        factory { NativeViewModel(get()) }
         factory { doOnStartup }
+        factory { StationsClient() }
     }
 )
 

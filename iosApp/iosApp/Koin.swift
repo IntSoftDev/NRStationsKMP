@@ -19,6 +19,10 @@ func startKoin() {
     _koin = koinApplication.koin
 }
 
+func startLogger() {
+    LoggeriOSKt.debugBuild()
+}
+
 private var _koin: Koin_coreKoin? = nil
 var koin: Koin_coreKoin {
     return _koin!

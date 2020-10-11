@@ -4,6 +4,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("kotlin-android-extensions")
+    id("kotlinx-serialization")
 }
 group = "com.intsoftdev.nrstations"
 version = "1.0-SNAPSHOT"
@@ -42,35 +43,45 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                implementation(Deps.koinCore)
-                implementation(Deps.Ktor.commonCore)
-                implementation(Deps.Ktor.commonJson)
-                implementation(Deps.Ktor.commonLogging)
-                implementation(Deps.Ktor.commonSerialization)
-                implementation(Deps.logger)
-            }
+                implementation(Koin.koinCore)
+                implementation(Ktor.commonCore)
+                implementation(Ktor.commonJson)
+                implementation(Ktor.commonLogging)
+                implementation(Ktor.commonSerialization)
+                implementation(Deps.napier_logger)
+                implementation(Coroutines.common)
+              }
         }
         val commonTest by getting {
             dependencies {
-                implementation(Deps.KotlinTest.common)
-                implementation(Deps.KotlinTest.annotations)
+                implementation(KotlinTest.common)
+                implementation(KotlinTest.annotations)
             }
         }
         val androidMain by getting {
             dependencies {
                 implementation(Deps.material_x)
+                implementation(Coroutines.android)
+                implementation(Ktor.androidSerialization)
+                implementation(Ktor.androidCore)
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation(Deps.KotlinTest.junit)
+                implementation(KotlinTest.junit)
                 implementation(Deps.junit)
             }
         }
         val iosMain by getting {
             dependencies {
-                implementation(Deps.koinCore)
-                implementation(Deps.logger)
+                implementation(Koin.koinCore)
+                implementation(Ktor.ios)
+                implementation(Deps.napier_logger)
+                implementation(Coroutines.common) {
+                    version {
+                        strictly(Versions.coroutines)
+                    }
+                }
             }
         }
         val iosTest by getting

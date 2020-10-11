@@ -1,5 +1,0 @@
-package com.intsoftdev.nrstations.remote
-
-interface KtorApi {
-    suspend fun getAllStations() : List<Station>
-}
