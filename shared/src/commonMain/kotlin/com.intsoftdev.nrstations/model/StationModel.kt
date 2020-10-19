@@ -9,3 +9,8 @@ data class StationModel(
     val latitude: Double,
     val longitude: Double
 )
+
+data class StationsResult(
+    val version: DataVersion,
+    val stations : List<StationModel>
+)

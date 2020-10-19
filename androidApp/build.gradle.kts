@@ -51,6 +51,11 @@ dependencies {
     implementation(Koin.koinCore)
     implementation(Koin.android)
     implementation(Koin.androidViewModel)
-    implementation(Coroutines.common)
+    implementation(Deps.multiplatformSettings)
+    implementation(Coroutines.common){
+        version {
+            strictly(Versions.coroutines)
+        }
+    }
     implementation(Coroutines.android)
 }

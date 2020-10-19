@@ -1,5 +1,7 @@
 package com.intsoftdev.nrstations
 
+import com.github.aakira.napier.Napier
+import com.intsoftdev.nrstations.shared.ResultState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
@@ -11,7 +13,14 @@ class NativeViewModel(private val stationsClient: StationsClient) : KoinComponen
 
     fun getStationsFromNetwork() {
         scope.launch {
-            stationsClient.getAllStations()
+            stationsClient.getAllStations().also {
+                when(it) {
+                    is ResultState.Success -> Napier.d("received stations data")
+                    is ResultState.Failure -> {
+                        Napier.e("error ${it.error}")
+                    }
+                }
+            }
         }
     }
 

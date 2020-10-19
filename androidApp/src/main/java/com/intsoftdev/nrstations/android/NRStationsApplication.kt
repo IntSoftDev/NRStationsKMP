@@ -8,7 +8,8 @@ import com.github.aakira.napier.DebugAntilog
 import com.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.StationsClient
 import com.intsoftdev.nrstations.android.ui.StationsViewModel
-import com.intsoftdev.nrstations.initKoin
+import com.intsoftdev.nrstations.shared.initKoin
+import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

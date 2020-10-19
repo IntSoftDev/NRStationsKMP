@@ -1,6 +1,7 @@
-package com.intsoftdev.nrstations
+package com.intsoftdev.nrstations.shared
 
 import com.github.aakira.napier.Napier
+import com.intsoftdev.nrstations.cache.cacheModule
 import dataModule
 import domainModule
 import org.koin.core.KoinApplication
@@ -12,8 +13,10 @@ fun initKoin(appModule: Module): KoinApplication {
     val koinApplication = startKoin {
         modules(
             appModule,
+            platformModule,
             dataModule,
-            domainModule
+            domainModule,
+            cacheModule
         )
     }
 
@@ -24,3 +27,5 @@ fun initKoin(appModule: Module): KoinApplication {
 
     return koinApplication
 }
+
+expect val platformModule: Module

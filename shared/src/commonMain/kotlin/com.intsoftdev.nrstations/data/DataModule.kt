@@ -25,5 +25,5 @@ internal val dataModule = module {
 
     factory { StationsProxyService(get()) }
 
-    factory<StationsRepository> { StationsRepositoryImpl(get()) }
+    factory<StationsRepository> { StationsRepositoryImpl(get(), get(), get()) }
 }

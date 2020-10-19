@@ -5,8 +5,10 @@ import android.os.Bundle
 import com.intsoftdev.nrstations.shared.Greeting
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.github.aakira.napier.DebugAntilog
 import com.github.aakira.napier.Napier
+import com.google.android.material.snackbar.Snackbar
 import com.intsoftdev.nrstations.android.ui.StationsViewModel
 import org.koin.androidx.viewmodel.compat.ScopeCompat.getViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -31,6 +33,19 @@ class MainActivity : AppCompatActivity(), KoinComponent {
         val tv: TextView = findViewById(R.id.text_view)
         tv.text = greet()
 
-        viewModel.test()
+
+        viewModel.stationsLiveData.observe(
+            this,
+            Observer { stations ->
+                stations.forEach { Napier.d(it.crsCode) }
+            }
+        )
+        viewModel.errorLiveData.observe(
+            this,
+            Observer { errorMessage ->
+                Napier.e("error $errorMessage")
+            }
+        )
+        viewModel.getStationsFromNetwork()
     }
 }

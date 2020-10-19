@@ -14,7 +14,7 @@ class MainScope(private val mainContext: CoroutineContext) :
     internal val job = SupervisorJob()
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         //TODO
-        Napier.d("error $throwable")
+        Napier.e("exceptionHandler $throwable")
     }
 
     fun onDestroy() {

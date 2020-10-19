@@ -18,8 +18,10 @@ object Versions {
     val koin = "3.0.0-alpha-4"
     val napier = "1.5.0-alpha1"
     val ktor = "1.4.0"
-    val coroutines = "1.3.9-native-mt"
+    val coroutines = "1.3.9-native-mt-2"
     val kotlinxSerialization = "1.0.0-RC2"
+    val sqlDelight = "1.4.3"
+    val multiplatformSettings = "0.6.2"
 }
 
 object Deps {
@@ -36,7 +38,8 @@ object Deps {
     val lifecycle_viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     val lifecycle_livedata = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
     val napier_logger = "com.github.aakira:napier:${Versions.napier}"
- }
+    val multiplatformSettings = "com.russhwolf:multiplatform-settings:${Versions.multiplatformSettings}"
+}
 
 object Ktor {
     val commonCore = "io.ktor:ktor-client-core:${Versions.ktor}"
@@ -65,6 +68,14 @@ object Koin {
     val koinTest = "org.koin:koin-test:${Versions.koin}"
     val android = "org.koin:koin-android:${Versions.koin}"
     val androidViewModel = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
+}
+
+object SqlDelight{
+    val gradle = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
+    val runtime = "com.squareup.sqldelight:runtime:${Versions.sqlDelight}"
+    val runtimeJdk = "com.squareup.sqldelight:runtime-jvm:${Versions.sqlDelight}"
+    val driverIos = "com.squareup.sqldelight:native-driver:${Versions.sqlDelight}"
+    val driverAndroid = "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}"
 }
 
 object AndroidXTest {
