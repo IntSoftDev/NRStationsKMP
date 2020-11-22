@@ -1,9 +1,10 @@
 package com.intsoftdev.nrstations.shared
 
-
 import com.intsoftdev.nrstations.NativeViewModel
 import com.intsoftdev.nrstations.StationsClient
 import com.intsoftdev.nrstations.db.NRStationsKMPDb
+import com.russhwolf.settings.AppleSettings
+import com.russhwolf.settings.Settings
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import kotlinx.cinterop.ObjCClass
@@ -15,11 +16,14 @@ import org.koin.core.KoinApplication
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.Qualifier
 import org.koin.dsl.module
+import platform.Foundation.NSUserDefaults
 
 fun initKoinIos(
+    userDefaults: NSUserDefaults,
     doOnStartup: () -> Unit
 ): KoinApplication = initKoin(
     module {
+        factory<Settings> { AppleSettings(userDefaults) }
         factory { NativeViewModel(get()) }
         factory { doOnStartup }
         factory { StationsClient() }

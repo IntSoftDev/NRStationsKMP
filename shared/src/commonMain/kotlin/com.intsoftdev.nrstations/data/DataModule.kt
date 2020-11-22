@@ -1,3 +1,4 @@
+import com.intsoftdev.nrstations.cache.DataUpdateResolver
 import com.intsoftdev.nrstations.data.StationsProxyService
 import com.intsoftdev.nrstations.data.StationsRepositoryImpl
 import com.intsoftdev.nrstations.domain.StationsRepository
@@ -25,5 +26,7 @@ internal val dataModule = module {
 
     factory { StationsProxyService(get()) }
 
-    factory<StationsRepository> { StationsRepositoryImpl(get(), get(), get()) }
+    factory<StationsRepository> { StationsRepositoryImpl(get(), get(), get(), get()) }
+
+    factory { DataUpdateResolver(get()) }
 }

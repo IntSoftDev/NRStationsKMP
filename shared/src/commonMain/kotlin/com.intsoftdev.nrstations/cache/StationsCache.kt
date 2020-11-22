@@ -36,4 +36,12 @@ class StationsCache(private val nrStationsKMPDb: NRStationsKMPDb) {
 
         return results
     }
+
+    fun deleteAll() {
+        Napier.d("deleteAll enter")
+        nrStationsKMPDb.transaction {
+            nRStationsTableQueries.deleteAll()
+        }
+        Napier.d("deleteAll exit")
+    }
 }
