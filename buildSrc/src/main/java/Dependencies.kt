@@ -27,6 +27,8 @@ object Versions {
 object Deps {
     val app_compat_x = "androidx.appcompat:appcompat:1.2.0"
     val material_x = "com.google.android.material:material:1.2.1"
+    val swipeLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+
     val core_ktx = "androidx.core:core-ktx:1.2.0"
     val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.1"
     val android_gradle_plugin = "com.android.tools.build:gradle:${Versions.android_gradle_plugin}"

@@ -42,6 +42,7 @@ dependencies {
     implementation(project(":shared"))
     implementation(Deps.material_x)
     implementation(Deps.app_compat_x)
+    implementation(Deps.swipeLayout)
     implementation(Deps.constraintlayout)
     implementation(Deps.napier_logger)
     implementation(Deps.lifecycle_viewmodel)
