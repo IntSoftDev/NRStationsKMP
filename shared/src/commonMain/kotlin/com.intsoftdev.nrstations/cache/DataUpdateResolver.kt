@@ -12,7 +12,7 @@ sealed class DataUpdateAction {
 class DataUpdateResolver(private val settings: Settings) {
 
     companion object {
-        private const val EXPIRATION_TIME_MS = (60 * 1000).toLong() //(12 * 60 * 60 * 1000).toLong() // 12 hrs
+        private const val EXPIRATION_TIME_MS = (12 * 60 * 60 * 1000).toLong() // 12 hrs
         internal const val DB_TIMESTAMP_KEY = "DbTimestampKey"
     }
 
