@@ -5,7 +5,6 @@ plugins {
     id("com.android.library")
     id("kotlin-android-extensions")
     id("kotlinx-serialization")
-    id("com.squareup.sqldelight")
 }
 group = "com.intsoftdev.nrstations"
 version = "1.0-SNAPSHOT"
@@ -23,6 +22,16 @@ android {
         getByName("release") {
             isMinifyEnabled = false
         }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
@@ -44,7 +53,6 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                implementation(SqlDelight.runtime)
                 implementation(Koin.koinCore)
                 implementation(Ktor.commonCore)
                 implementation(Ktor.commonJson)
@@ -57,6 +65,9 @@ kotlin {
                         strictly(Versions.coroutines)
                     }
                 }
+                // Kodein-DB
+                api(KodeinDb.kodeinDb)
+                api(KodeinDb.kodeinSerializer)
             }
         }
         val commonTest by getting {
@@ -67,7 +78,6 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(SqlDelight.driverAndroid)
                 implementation(Deps.material_x)
                 implementation(Coroutines.android)
                 implementation(Ktor.androidSerialization)
@@ -82,7 +92,6 @@ kotlin {
         }
         val iosMain by getting {
             dependencies {
-                implementation(SqlDelight.driverIos)
                 implementation(Koin.koinCore)
                 implementation(Ktor.ios)
                 implementation(Deps.napier_logger)
@@ -110,10 +119,3 @@ val packForXcode by tasks.creating(Sync::class) {
     into(targetDir)
 }
 tasks.getByName("build").dependsOn(packForXcode)
-
-
-sqldelight {
-    database("NRStationsKMPDb") {
-        packageName = "com.intsoftdev.nrstations.db"
-    }
-}

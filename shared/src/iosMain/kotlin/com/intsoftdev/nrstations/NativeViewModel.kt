@@ -13,6 +13,7 @@ class NativeViewModel(private val stationsClient: StationsClient) : KoinComponen
 
     fun getStationsFromNetwork() {
         scope.launch {
+            Napier.d("NativeViewModel")
             stationsClient.getAllStations().also {
                 when(it) {
                     is ResultState.Success -> Napier.d("received stations data")

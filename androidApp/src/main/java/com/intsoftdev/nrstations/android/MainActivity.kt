@@ -2,6 +2,7 @@ package com.intsoftdev.nrstations.android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.intsoftdev.nrstations.shared.Greeting
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -10,6 +11,7 @@ import com.github.aakira.napier.DebugAntilog
 import com.github.aakira.napier.Napier
 import com.google.android.material.snackbar.Snackbar
 import com.intsoftdev.nrstations.android.ui.StationsViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.compat.ScopeCompat.getViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.KoinComponent
@@ -24,20 +26,24 @@ class MainActivity : AppCompatActivity(), KoinComponent {
 
     private lateinit var viewModel :StationsViewModel
 
+    private var stationAdapter = StationsAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Napier.d("NRStations enter")
         viewModel = getViewModel()
         setContentView(R.layout.activity_main)
 
-        val tv: TextView = findViewById(R.id.text_view)
-        tv.text = greet()
+        stationsRecyclerView.adapter = stationAdapter
 
+        stationsLoading.visibility = View.VISIBLE
 
         viewModel.stationsLiveData.observe(
             this,
             Observer { stations ->
-                stations.forEach { Napier.d(it.crsCode) }
+                stationAdapter.updateData(stations)
+                stationsLoading.visibility = View.GONE
+               // stations.forEach { Napier.d(it.crsCode) }
             }
         )
         viewModel.errorLiveData.observe(

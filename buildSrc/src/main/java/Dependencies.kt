@@ -20,13 +20,15 @@ object Versions {
     val ktor = "1.4.0"
     val coroutines = "1.3.9-native-mt-2"
     val kotlinxSerialization = "1.0.0-RC2"
-    val sqlDelight = "1.4.3"
     val multiplatformSettings = "0.6.2"
+    val kodein_db = "0.3.0-beta"
 }
 
 object Deps {
     val app_compat_x = "androidx.appcompat:appcompat:1.2.0"
     val material_x = "com.google.android.material:material:1.2.1"
+    val swipeLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+
     val core_ktx = "androidx.core:core-ktx:1.2.0"
     val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.1"
     val android_gradle_plugin = "com.android.tools.build:gradle:${Versions.android_gradle_plugin}"
@@ -70,12 +72,9 @@ object Koin {
     val androidViewModel = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
 }
 
-object SqlDelight{
-    val gradle = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
-    val runtime = "com.squareup.sqldelight:runtime:${Versions.sqlDelight}"
-    val runtimeJdk = "com.squareup.sqldelight:runtime-jvm:${Versions.sqlDelight}"
-    val driverIos = "com.squareup.sqldelight:native-driver:${Versions.sqlDelight}"
-    val driverAndroid = "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}"
+object KodeinDb {
+    val kodeinDb = "org.kodein.db:kodein-db:${Versions.kodein_db}"
+    val kodeinSerializer = "org.kodein.db:kodein-db-serializer-kotlinx:${Versions.kodein_db}"
 }
 
 object AndroidXTest {

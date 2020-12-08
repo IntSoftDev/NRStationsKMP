@@ -14,8 +14,8 @@ func startKoin() {
     let doOnStartup = {
         NSLog("Calling Swift from Kotlin")
     }
-    
-    let koinApplication = KoinIOSKt.doInitKoinIos(doOnStartup: doOnStartup)
+    let userDefaults = UserDefaults(suiteName: "NRSTATIONS_SETTINGS")!
+    let koinApplication = KoinIOSKt.doInitKoinIos(userDefaults: userDefaults, doOnStartup: doOnStartup)
     _koin = koinApplication.koin
 }
 
