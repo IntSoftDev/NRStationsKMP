@@ -9,7 +9,6 @@ buildscript {
         classpath(Deps.kotlin_gradle_plugin)
         classpath(Deps.android_gradle_plugin)
         classpath(Deps.kotlin_serialization)
-        classpath(SqlDelight.gradle)
     }
 }
 group = "com.intsoftdev.nrstations"

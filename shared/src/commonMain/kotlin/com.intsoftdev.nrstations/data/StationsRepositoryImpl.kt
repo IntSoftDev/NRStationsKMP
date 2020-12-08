@@ -52,7 +52,6 @@ class StationsRepositoryImpl(
     }
 
     override fun saveAllStations(stationsResult: StationsResult) {
-        stationsCache.deleteAll()
         stationsCache.insertAll(stationsResult.stations)
     }
 

@@ -2,11 +2,8 @@ package com.intsoftdev.nrstations.shared
 
 import com.intsoftdev.nrstations.NativeViewModel
 import com.intsoftdev.nrstations.StationsClient
-import com.intsoftdev.nrstations.db.NRStationsKMPDb
 import com.russhwolf.settings.AppleSettings
 import com.russhwolf.settings.Settings
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import kotlinx.cinterop.ObjCClass
 import kotlinx.cinterop.getOriginalKotlinClass
 import kotlinx.coroutines.CoroutineDispatcher
@@ -31,11 +28,6 @@ fun initKoinIos(
 )
 
 actual val platformModule = module {
-    single<SqlDriver> { NativeSqliteDriver(NRStationsKMPDb.Schema, "NRStationsKMPDb") }
-
-    single {
-        NRStationsKMPDb(get())
-    }
 
     factory<CoroutineDispatcher> { Dispatchers.Main }
 }
