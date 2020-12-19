@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import com.intsoftdev.nrstations.shared.Greeting
 import android.widget.TextView
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.github.aakira.napier.DebugAntilog
@@ -43,13 +45,14 @@ class MainActivity : AppCompatActivity(), KoinComponent {
             Observer { stations ->
                 stationAdapter.updateData(stations)
                 stationsLoading.visibility = View.GONE
-               // stations.forEach { Napier.d(it.crsCode) }
             }
         )
         viewModel.errorLiveData.observe(
             this,
             Observer { errorMessage ->
                 Napier.e("error $errorMessage")
+                stationsLoading.visibility = View.GONE
+                Toast.makeText(this, "Error $errorMessage", LENGTH_SHORT).show()
             }
         )
         viewModel.getStationsFromNetwork()

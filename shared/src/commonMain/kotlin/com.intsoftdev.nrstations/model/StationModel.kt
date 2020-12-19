@@ -20,3 +20,6 @@ data class StationsResult(
 
 @Serializable
 data class StationsList(override val id: String, val stations: List<StationModel>) : Metadata
+
+@Serializable
+data class StationsVersion(override val id: String, val version: Double, val lastUpdate: Long) : Metadata
