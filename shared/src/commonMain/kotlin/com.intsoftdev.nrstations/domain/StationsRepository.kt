@@ -3,6 +3,7 @@ package com.intsoftdev.nrstations.domain
 import com.intsoftdev.nrstations.model.DataVersion
 import com.intsoftdev.nrstations.model.StationModel
 import com.intsoftdev.nrstations.model.StationsResult
+import com.intsoftdev.nrstations.model.StationsVersion
 import com.intsoftdev.nrstations.shared.ResultState
 
 /**
@@ -12,6 +13,8 @@ import com.intsoftdev.nrstations.shared.ResultState
 interface StationsRepository {
     suspend fun getAllStations(): ResultState<List<StationModel>>
     fun saveAllStations(stationsResult: StationsResult)
+    fun saveVersion(dataVersion: DataVersion)
     fun getModelFromCache(stationName: String?, crsCode: String?): StationModel
     fun getAllStationsFromCache(): List<StationModel>
+    fun getVersionFromCache(): StationsVersion?
 }

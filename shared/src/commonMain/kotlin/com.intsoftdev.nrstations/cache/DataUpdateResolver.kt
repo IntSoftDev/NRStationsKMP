@@ -25,7 +25,8 @@ class DataUpdateResolver(private val settings: Settings) {
         return currentTimeMS - lastDownloadTimeMS > Companion.EXPIRATION_TIME_MS
     }
 
-    fun getUpdateAction(): DataUpdateAction {
+    fun getUpdateAction(stationsCache: StationsCache): DataUpdateAction {
+        if (stationsCache.isCacheEmpty()) return DataUpdateAction.REFRESH
         val currentTimeMS = currentTimeMillis()
         return if (doUpdate(currentTimeMS))
             DataUpdateAction.REFRESH
