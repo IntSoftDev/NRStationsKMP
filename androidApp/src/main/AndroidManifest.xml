@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.intsoftdev.nrstations.android">
+    package="com.intsoftdev.nrstations.app">
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
             android:allowBackup="false"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-            android:name="com.intsoftdev.nrstations.android.NRStationsApplication">
-        <activity android:name="com.intsoftdev.nrstations.android.MainActivity">
+            android:name="com.intsoftdev.nrstations.app.NRStationsApplication">
+        <activity android:name="com.intsoftdev.nrstations.app.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

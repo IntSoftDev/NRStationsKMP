@@ -18,10 +18,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
-    packagingOptions {
-        exclude("META-INF/*.kotlin_module")
-    }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -32,9 +28,9 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 dependencies {
-   // implementation(project(":shared"))
-   // implementation("com.intsoftdev:kmmsharedmodule-kotlinMultiplatform:1.4")
-    implementation("com.intsoftdev:nrstations-androidDebug:1.5")
+  //  implementation(project(":shared"))
+    // uncomment the line above and comment out this one when building and publishing
+    implementation(Deps.nrstationsClientDebug)
     implementation(Deps.material_x)
     implementation(Deps.app_compat_x)
     implementation(Deps.swipeLayout)

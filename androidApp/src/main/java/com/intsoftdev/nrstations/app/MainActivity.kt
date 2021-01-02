@@ -1,24 +1,18 @@
-package com.intsoftdev.nrstations.android
+package com.intsoftdev.nrstations.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import com.intsoftdev.nrstations.shared.Greeting
-import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.github.aakira.napier.DebugAntilog
+import androidx.recyclerview.widget.RecyclerView
 import com.github.aakira.napier.Napier
-import com.google.android.material.snackbar.Snackbar
-import com.intsoftdev.nrstations.android.ui.StationsViewModel
-import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.androidx.viewmodel.compat.ScopeCompat.getViewModel
+import com.intsoftdev.nrstations.app.ui.StationsViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.KoinComponent
-import org.koin.core.get
-import org.koin.core.inject
 
 fun greet(): String {
     return Greeting().greeting()
@@ -36,8 +30,11 @@ class MainActivity : AppCompatActivity(), KoinComponent {
         viewModel = getViewModel()
         setContentView(R.layout.activity_main)
 
+        val stationsRecyclerView = findViewById<RecyclerView>(R.id.stationsRecyclerView)
+
         stationsRecyclerView.adapter = stationAdapter
 
+        val stationsLoading = findViewById<ProgressBar>(R.id.stationsLoading)
         stationsLoading.visibility = View.VISIBLE
 
         viewModel.stationsLiveData.observe(

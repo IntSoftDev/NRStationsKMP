@@ -8,9 +8,9 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10")
-        classpath("com.android.tools.build:gradle:3.6.2")
-        classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4")
+        classpath(Deps.kotlin_gradle_plugin)
+        classpath(Deps.android_gradle_plugin)
+        classpath(Deps.jfrog_gradle_plugin)
     }
 }
 
@@ -20,7 +20,7 @@ plugins {
     id("kotlin-android-extensions")
     id("kotlinx-serialization")
     `maven-publish`
-    id("com.jfrog.bintray") version "1.8.4"
+    id("com.jfrog.bintray") version Versions.jfrog_bintray_plugin
 }
 
 android {
