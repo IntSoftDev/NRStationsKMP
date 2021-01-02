@@ -13,11 +13,7 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -28,9 +24,6 @@ android {
     }
 }
 
-group = "com.intsoftdev.nrstations"
-version = "1.0-SNAPSHOT"
-
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
@@ -39,7 +32,9 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 dependencies {
-    implementation(project(":shared"))
+   // implementation(project(":shared"))
+   // implementation("com.intsoftdev:kmmsharedmodule-kotlinMultiplatform:1.4")
+    implementation("com.intsoftdev:nrstations-androidDebug:1.5")
     implementation(Deps.material_x)
     implementation(Deps.app_compat_x)
     implementation(Deps.swipeLayout)

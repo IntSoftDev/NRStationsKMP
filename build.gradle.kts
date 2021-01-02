@@ -11,8 +11,6 @@ buildscript {
         classpath(Deps.kotlin_serialization)
     }
 }
-group = "com.intsoftdev.nrstations"
-version = "1.0-SNAPSHOT"
 
 allprojects {
     repositories {
@@ -21,6 +19,7 @@ allprojects {
         jcenter()
         maven(url = "https://dl.bintray.com/ekito/koin")
         maven(url = "https://dl.bintray.com/aakira/maven")
+        maven(url = "https://dl.bintray.com/intsoftdev/rep1")
     }
 }
 
