@@ -1,4 +1,4 @@
-package com.intsoftdev.nrstations.android.ui
+package com.intsoftdev.nrstations.app.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,9 +7,7 @@ import com.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.StationsClient
 import com.intsoftdev.nrstations.model.StationModel
 import com.intsoftdev.nrstations.shared.ResultState
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class StationsViewModel(private var stationsClient : StationsClient) : ViewModel() {
 

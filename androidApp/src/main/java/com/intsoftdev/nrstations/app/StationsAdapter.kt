@@ -1,11 +1,11 @@
-package com.intsoftdev.nrstations.android
+package com.intsoftdev.nrstations.app
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.intsoftdev.nrstations.model.StationModel
-import kotlinx.android.synthetic.main.stations_row_layout.view.*
 
 class StationsAdapter : RecyclerView.Adapter<StationsAdapter.StationViewHolder>() {
 
@@ -31,7 +31,8 @@ class StationsAdapter : RecyclerView.Adapter<StationsAdapter.StationViewHolder>(
 
     class StationViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(stationModel: StationModel) {
-            view.station_name.text = stationModel.stationName
+            val stationName = view.findViewById<TextView>(R.id.station_name)
+            stationName.text = stationModel.stationName
         }
     }
 }

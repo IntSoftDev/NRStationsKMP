@@ -1,13 +1,27 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        mavenLocal()
+    }
+    dependencies {
+        classpath(Deps.kotlin_gradle_plugin)
+        classpath(Deps.android_gradle_plugin)
+        classpath(Deps.jfrog_gradle_plugin)
+    }
+}
+
 plugins {
-    kotlin("multiplatform")
     id("com.android.library")
+    kotlin("multiplatform")
     id("kotlin-android-extensions")
     id("kotlinx-serialization")
+    `maven-publish`
+    id("com.jfrog.bintray") version Versions.jfrog_bintray_plugin
 }
-group = "com.intsoftdev.nrstations"
-version = "1.0-SNAPSHOT"
 
 android {
     compileSdkVersion(Versions.compile_sdk)
@@ -18,11 +32,7 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -36,7 +46,9 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 kotlin {
-    android()
+    android {
+        publishLibraryVariants("release", "debug")
+    }
     ios {
         binaries {
             framework {
@@ -119,3 +131,7 @@ val packForXcode by tasks.creating(Sync::class) {
     into(targetDir)
 }
 tasks.getByName("build").dependsOn(packForXcode)
+
+apply(from = rootProject.file("evaluate.gradle"))
+apply(from = rootProject.file("pom.gradle"))
+apply(from = rootProject.file("gradle/publish.gradle"))

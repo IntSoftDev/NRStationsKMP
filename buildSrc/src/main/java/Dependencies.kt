@@ -3,11 +3,12 @@ object Versions {
     val target_sdk = 29
     val compile_sdk = 29
 
-    val kotlin = "1.4.0"
-    val kotlin_gradle_plugin = "1.4.10"
+    val kotlin = "1.4.20"
+    val kotlin_gradle_plugin = "1.4.20"
+    val jfrog_bintray_plugin = "1.8.4"
     val androidx_test = "1.2.0"
     val androidx_test_ext = "1.1.1"
-    val android_gradle_plugin = "4.0.1"
+    val android_gradle_plugin = "4.1.0"
     val buildToolsVersion = "29.0.0"
     val junit = "4.13"
     val cocoapodsext = "0.11"
@@ -22,6 +23,7 @@ object Versions {
     val kotlinxSerialization = "1.0.0-RC2"
     val multiplatformSettings = "0.6.2"
     val kodein_db = "0.3.0-beta"
+    val intsoftdev_stations_client_version = "0.1"
 }
 
 object Deps {
@@ -33,6 +35,7 @@ object Deps {
     val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.1"
     val android_gradle_plugin = "com.android.tools.build:gradle:${Versions.android_gradle_plugin}"
     val kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin_gradle_plugin}"
+    val jfrog_gradle_plugin = "com.jfrog.bintray.gradle:gradle-bintray-plugin:${Versions.jfrog_bintray_plugin}"
     val kotlin_serialization = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
     val activity_exts = "androidx.activity:activity-ktx:${Versions.activity}"
 
@@ -41,6 +44,7 @@ object Deps {
     val lifecycle_livedata = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
     val napier_logger = "com.github.aakira:napier:${Versions.napier}"
     val multiplatformSettings = "com.russhwolf:multiplatform-settings:${Versions.multiplatformSettings}"
+    val nrstationsClientDebug = "com.intsoftdev:nrstations-androidDebug:${Versions.intsoftdev_stations_client_version}"
 }
 
 object Ktor {
