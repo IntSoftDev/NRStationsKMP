@@ -20,6 +20,8 @@ allprojects {
         maven(url = "https://dl.bintray.com/ekito/koin")
         maven(url = "https://dl.bintray.com/aakira/maven")
         maven(url = "https://dl.bintray.com/intsoftdev/rep1")
+        // Needed by Kodein DB until KotlinX.DateTime is published to jCenter.
+        maven(url = "https://kotlin.bintray.com/kotlinx")
     }
 }
 
