@@ -6,7 +6,7 @@ import com.intsoftdev.nrstations.shared.ResultState
 import org.koin.core.KoinComponent
 import org.koin.core.get
 
-class StationsClient() : KoinComponent {
+class StationsClient : KoinComponent {
     private val getStationsUseCase by lazy { get<GetStationsUseCase>() }
 
     suspend fun getAllStations() : ResultState<List<StationModel>> {

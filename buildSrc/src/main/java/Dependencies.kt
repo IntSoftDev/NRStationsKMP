@@ -20,10 +20,10 @@ object Versions {
     val napier = "1.5.0-alpha1"
     val ktor = "1.5.0"
     val coroutines = "1.4.2-native-mt"
-    val multiplatformSettings = "0.6.3"
+    val multiplatformSettings = "0.7"
     val kodein_db = "0.5.0-beta"
     val material = "1.2.1"
-    val intsoftdev_stations_client_version = "0.1"
+    val intsoftdev_stations_client_version = "0.3"
 }
 
 object Deps {

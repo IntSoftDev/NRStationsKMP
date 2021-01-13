@@ -10,20 +10,9 @@ import Foundation
 import shared
 
 func startKoin() {
-    
-    let doOnStartup = {
-        NSLog("Calling Swift from Kotlin")
-    }
-    let userDefaults = UserDefaults(suiteName: "NRSTATIONS_SETTINGS")!
-    let koinApplication = KoinIOSKt.doInitKoinIos(userDefaults: userDefaults, doOnStartup: doOnStartup)
-    _koin = koinApplication.koin
+    KoinIOSKt.doInitKoinIos(userDefaults: UserDefaults(suiteName: "NRSTATIONS_SETTINGS")!)
 }
 
 func startLogger() {
     LoggeriOSKt.debugBuild()
-}
-
-private var _koin: Koin_coreKoin? = nil
-var koin: Koin_coreKoin {
-    return _koin!
 }

@@ -1,18 +1,19 @@
 package com.intsoftdev.nrstations.shared
 
-import com.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.cache.cacheModule
+import com.intsoftdev.nrstations.di.sdkModule
 import dataModule
 import domainModule
-import org.koin.core.KoinApplication
+import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
+import org.koin.dsl.KoinAppDeclaration
 
-fun initKoin(appModule: Module): KoinApplication {
-    Napier.d("initKoin")
-    val koinApplication = startKoin {
+fun initKoin(enableNetworkLogs: Boolean = false, appDeclaration: KoinAppDeclaration = {}) =
+    startKoin {
+        appDeclaration()
         modules(
-            appModule,
+            sdkModule,
             platformModule,
             dataModule,
             domainModule,
@@ -20,12 +21,28 @@ fun initKoin(appModule: Module): KoinApplication {
         )
     }
 
-    val koin = koinApplication.koin
-    val doOnStartup =
-        koin.get<() -> Unit>() // doOnStartup is a lambda which is implemented in Swift on iOS side
-    doOnStartup.invoke()
+fun initDi(enableNetworkLogs: Boolean = false) {
+    loadKoinModules(
+        listOf(
+            sdkModule,
+            platformModule,
+            dataModule,
+            domainModule,
+            cacheModule
+        )
+    )
+}
 
-    return koinApplication
+// called by iOS
+fun init(iOSModule: Module) = startKoin {
+    modules(
+        sdkModule,
+        iOSModule,
+        platformModule,
+        dataModule,
+        domainModule,
+        cacheModule
+    )
 }
 
 expect val platformModule: Module

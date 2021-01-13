@@ -1,7 +1,5 @@
 package com.intsoftdev.nrstations.shared
 
-import com.intsoftdev.nrstations.NativeViewModel
-import com.intsoftdev.nrstations.StationsClient
 import com.russhwolf.settings.AppleSettings
 import com.russhwolf.settings.Settings
 import kotlinx.cinterop.ObjCClass
@@ -17,32 +15,12 @@ import platform.Foundation.NSUserDefaults
 
 fun initKoinIos(
     userDefaults: NSUserDefaults,
-    doOnStartup: () -> Unit
-): KoinApplication = initKoin(
+): KoinApplication = init(
     module {
         factory<Settings> { AppleSettings(userDefaults) }
-        factory { NativeViewModel(get()) }
-        factory { doOnStartup }
-        factory { StationsClient() }
     }
 )
 
 actual val platformModule = module {
-
     factory<CoroutineDispatcher> { Dispatchers.Main }
-}
-
-fun Koin.get(objCClass: ObjCClass, qualifier: Qualifier?, parameter: Any): Any {
-    val kClazz = getOriginalKotlinClass(objCClass)!!
-    return get(kClazz, qualifier) { parametersOf(parameter) }
-}
-
-fun Koin.get(objCClass: ObjCClass, parameter: Any): Any {
-    val kClazz = getOriginalKotlinClass(objCClass)!!
-    return get(kClazz, null) { parametersOf(parameter) }
-}
-
-fun Koin.get(objCClass: ObjCClass, qualifier: Qualifier?): Any {
-    val kClazz = getOriginalKotlinClass(objCClass)!!
-    return get(kClazz, qualifier, null)
 }
