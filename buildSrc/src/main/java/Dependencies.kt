@@ -23,7 +23,7 @@ object Versions {
     val multiplatformSettings = "0.7"
     val kodein_db = "0.5.0-beta"
     val material = "1.2.1"
-    val intsoftdev_stations_client_version = "0.13"
+    val intsoftdev_stations_client_version = "0.14"
 }
 
 object Deps {
