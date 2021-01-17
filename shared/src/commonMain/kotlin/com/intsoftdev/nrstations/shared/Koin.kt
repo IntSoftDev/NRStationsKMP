@@ -1,7 +1,7 @@
 package com.intsoftdev.nrstations.shared
 
 import com.intsoftdev.nrstations.cache.cacheModule
-import com.intsoftdev.nrstations.di.sdkModule
+import com.intsoftdev.nrstations.sdkModule
 import dataModule
 import domainModule
 import org.koin.core.context.loadKoinModules
