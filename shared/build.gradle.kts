@@ -73,7 +73,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Koin.koinCore)
+                api(Koin.koinCore)
                 implementation(Ktor.commonCore)
                 implementation(Ktor.commonJson)
                 implementation(Ktor.commonLogging)
@@ -98,6 +98,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                api(Koin.android)
                 implementation(Deps.material_x)
                 implementation(Coroutines.android)
                 implementation(Ktor.androidSerialization)

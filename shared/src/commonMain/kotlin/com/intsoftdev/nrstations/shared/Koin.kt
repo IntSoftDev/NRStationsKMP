@@ -9,40 +9,33 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 
-fun initKoin(enableNetworkLogs: Boolean = false, appDeclaration: KoinAppDeclaration = {}) =
-    startKoin {
-        appDeclaration()
-        modules(
-            sdkModule,
-            platformModule,
-            dataModule,
-            domainModule,
-            cacheModule
+private val diModules = listOf(
+    sdkModule,
+    dataModule,
+    domainModule,
+    cacheModule
+)
+
+internal fun initSDKAndroid(
+    appDeclaration: KoinAppDeclaration = {},
+    doInit: Boolean
+) {
+    if (doInit) {
+        startKoin {
+            appDeclaration()
+            modules(
+                diModules + platformModule
+            )
+        }
+    } else {
+        loadKoinModules(
+            diModules + platformModule
         )
     }
-
-fun initDi(enableNetworkLogs: Boolean = false) {
-    loadKoinModules(
-        listOf(
-            sdkModule,
-            platformModule,
-            dataModule,
-            domainModule,
-            cacheModule
-        )
-    )
 }
 
-// called by iOS
-fun init(iOSModule: Module) = startKoin {
+internal fun initSDKiOS(iOSModule: Module) = startKoin {
     modules(
-        sdkModule,
-        iOSModule,
-        platformModule,
-        dataModule,
-        domainModule,
-        cacheModule
+        diModules + iOSModule + platformModule
     )
 }
-
-expect val platformModule: Module

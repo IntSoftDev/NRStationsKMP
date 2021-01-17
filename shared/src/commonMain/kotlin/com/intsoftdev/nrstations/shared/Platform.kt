@@ -1,9 +1,13 @@
 package com.intsoftdev.nrstations.shared
 
-expect fun currentTimeMillis(): Long
+import org.koin.core.module.Module
 
-expect class Platform() {
+internal expect fun currentTimeMillis(): Long
+
+internal expect class Platform() {
     val platform: String
 }
 
-expect fun getApplicationFilesDirectoryPath(): String
+internal expect fun getApplicationFilesDirectoryPath(): String
+
+internal expect val platformModule: Module
