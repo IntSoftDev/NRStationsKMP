@@ -11,7 +11,7 @@ import com.intsoftdev.nrstations.shared.ResultState
  * This specifies the operations that need to be implemented in the data layer
  */
 interface StationsRepository {
-    suspend fun getAllStations(): ResultState<List<StationModel>>
+    suspend fun getAllStations(): ResultState<StationsResult>
     fun saveAllStations(stationsResult: StationsResult)
     fun saveVersion(dataVersion: DataVersion)
     fun getModelFromCache(stationName: String?, crsCode: String?): StationModel

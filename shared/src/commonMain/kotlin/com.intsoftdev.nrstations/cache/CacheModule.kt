@@ -1,6 +1,5 @@
 package com.intsoftdev.nrstations.cache
 
-import com.intsoftdev.nrstations.model.StationModel
 import com.intsoftdev.nrstations.model.StationsList
 import com.intsoftdev.nrstations.shared.getApplicationFilesDirectoryPath
 import org.kodein.db.DB

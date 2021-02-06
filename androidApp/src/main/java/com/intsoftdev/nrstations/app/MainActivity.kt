@@ -18,18 +18,17 @@ fun greet(): String {
     return Greeting().greeting()
 }
 
-class MainActivity : AppCompatActivity(), KoinComponent {
+class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel :StationsViewModel
+    protected lateinit var stationsViewModel: StationsViewModel
 
     private var stationAdapter = StationsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Napier.d("NRStations enter")
-        viewModel = getViewModel()
         setContentView(R.layout.activity_main)
-
+        stationsViewModel = getViewModel()
         val stationsRecyclerView = findViewById<RecyclerView>(R.id.stationsRecyclerView)
 
         stationsRecyclerView.adapter = stationAdapter
@@ -37,14 +36,14 @@ class MainActivity : AppCompatActivity(), KoinComponent {
         val stationsLoading = findViewById<ProgressBar>(R.id.stationsLoading)
         stationsLoading.visibility = View.VISIBLE
 
-        viewModel.stationsLiveData.observe(
+        stationsViewModel.stationsLiveData.observe(
             this,
             Observer { stations ->
                 stationAdapter.updateData(stations)
                 stationsLoading.visibility = View.GONE
             }
         )
-        viewModel.errorLiveData.observe(
+        stationsViewModel.errorLiveData.observe(
             this,
             Observer { errorMessage ->
                 Napier.e("error $errorMessage")
@@ -52,6 +51,6 @@ class MainActivity : AppCompatActivity(), KoinComponent {
                 Toast.makeText(this, "Error $errorMessage", LENGTH_SHORT).show()
             }
         )
-        viewModel.getStationsFromNetwork()
+        stationsViewModel.getStationsFromNetwork()
     }
 }

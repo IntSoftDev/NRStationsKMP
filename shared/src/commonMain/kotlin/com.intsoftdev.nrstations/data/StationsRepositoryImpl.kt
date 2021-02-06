@@ -21,7 +21,7 @@ class StationsRepositoryImpl(
     private val dataUpdateResolver: DataUpdateResolver
 ) : StationsRepository {
 
-    override suspend fun getAllStations(): ResultState<List<StationModel>> {
+    override suspend fun getAllStations(): ResultState<StationsResult> {
         return runCatching {
             withContext(requestDispatcher) {
                 when (dataUpdateResolver.getUpdateAction(stationsCache)) {
@@ -29,10 +29,23 @@ class StationsRepositoryImpl(
                         val stationsResult = getVersionThenStations()
                         saveAllStations(stationsResult)
                         dataUpdateResolver.setLastUpdateTime(currentTimeMillis())
-                        ResultState.Success(stationsResult.stations)
+                        ResultState.Success(
+                            StationsResult(
+                                version = stationsResult.version,
+                                stations = stationsResult.stations
+                            )
+                        )
                     }
                     is DataUpdateAction.LOCAL -> {
-                        ResultState.Success(getAllStationsFromCache())
+                        ResultState.Success(
+                            StationsResult(
+                                version = DataVersion(
+                                    getVersionFromCache()?.version
+                                        ?: throw IllegalStateException(""), 0
+                                ),
+                                stations = getAllStationsFromCache()
+                            )
+                        )
                     }
                 }
             }
