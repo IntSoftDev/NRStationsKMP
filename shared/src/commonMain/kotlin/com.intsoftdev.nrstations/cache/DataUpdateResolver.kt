@@ -1,7 +1,7 @@
 package com.intsoftdev.nrstations.cache
 
-import com.intsoftdev.nrstations.shared.currentTimeMillis
 import com.russhwolf.settings.Settings
+import kotlinx.datetime.Clock
 
 
 sealed class DataUpdateAction {
@@ -9,14 +9,15 @@ sealed class DataUpdateAction {
     object LOCAL : DataUpdateAction()
 }
 
-class DataUpdateResolver(private val settings: Settings) {
+class DataUpdateResolver(private val settings: Settings, private val clock: Clock) {
 
     companion object {
-        private const val EXPIRATION_TIME_MS = (12 * 60 * 60 * 1000).toLong() // 12 hrs
+        private const val EXPIRATION_TIME_MS = 12 * 60 * 60 * 1000 // 12 hrs
         internal const val DB_TIMESTAMP_KEY = "DbTimestampKey"
     }
 
-    fun setLastUpdateTime(lastUpdateMS: Long) {
+    fun setLastUpdateTime() {
+        val lastUpdateMS = clock.now().toEpochMilliseconds()
         settings.putLong(DB_TIMESTAMP_KEY, lastUpdateMS)
     }
 
@@ -27,7 +28,7 @@ class DataUpdateResolver(private val settings: Settings) {
 
     fun getUpdateAction(stationsCache: StationsCache): DataUpdateAction {
         if (stationsCache.isCacheEmpty()) return DataUpdateAction.REFRESH
-        val currentTimeMS = currentTimeMillis()
+        val currentTimeMS = clock.now().toEpochMilliseconds()
         return if (doUpdate(currentTimeMS))
             DataUpdateAction.REFRESH
         else DataUpdateAction.LOCAL
