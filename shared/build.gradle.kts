@@ -80,6 +80,7 @@ kotlin {
                 implementation(Ktor.commonSerialization)
                 implementation(Deps.napier_logger)
                 implementation(Deps.multiplatformSettings)
+                implementation(Deps.kotlinxDateTime)
                 implementation(Coroutines.common){
                     version {
                         strictly(Versions.coroutines)
@@ -94,6 +95,9 @@ kotlin {
             dependencies {
                 implementation(KotlinTest.common)
                 implementation(KotlinTest.annotations)
+                // Karmok is a touchLab experimental library which helps with mocking interfaces
+                implementation(Deps.karmok)
+                implementation(Koin.koinTest)
             }
         }
         val androidMain by getting {

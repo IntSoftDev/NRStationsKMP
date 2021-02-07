@@ -10,7 +10,6 @@ import com.intsoftdev.nrstations.model.StationModel
 import com.intsoftdev.nrstations.model.StationsResult
 import com.intsoftdev.nrstations.model.StationsVersion
 import com.intsoftdev.nrstations.shared.ResultState
-import com.intsoftdev.nrstations.shared.currentTimeMillis
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -28,7 +27,7 @@ class StationsRepositoryImpl(
                     is DataUpdateAction.REFRESH -> {
                         val stationsResult = getVersionThenStations()
                         saveAllStations(stationsResult)
-                        dataUpdateResolver.setLastUpdateTime(currentTimeMillis())
+                        dataUpdateResolver.setLastUpdateTime()
                         ResultState.Success(
                             StationsResult(
                                 version = stationsResult.version,

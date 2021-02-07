@@ -9,6 +9,7 @@ object Versions {
     val androidx_test = "1.2.0"
     val androidx_test_ext = "1.1.1"
     val android_gradle_plugin = "4.1.0"
+    val karmok = "0.1.8"
     val buildToolsVersion = "29.0.0"
     val junit = "4.13"
     val cocoapodsext = "0.11"
@@ -23,6 +24,7 @@ object Versions {
     val multiplatformSettings = "0.7"
     val kodein_db = "0.5.0-beta"
     val material = "1.2.1"
+    val kotlinxDateTime = "0.1.1"
     val intsoftdev_stations_client_version = "0.15"
 }
 
@@ -44,6 +46,8 @@ object Deps {
     val lifecycle_livedata = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
     val napier_logger = "com.github.aakira:napier:${Versions.napier}"
     val multiplatformSettings = "com.russhwolf:multiplatform-settings:${Versions.multiplatformSettings}"
+    val kotlinxDateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.kotlinxDateTime}"
+    val karmok = "co.touchlab:karmok-library:${Versions.karmok}"
     val nrstationsClientDebug = "com.intsoftdev:nrstations-androidDebug:${Versions.intsoftdev_stations_client_version}"
 }
 

@@ -11,8 +11,6 @@ import org.koin.dsl.module
 
 internal lateinit var appContext: Context
 
-internal actual fun currentTimeMillis(): Long = System.currentTimeMillis()
-
 internal actual class Platform actual constructor() {
     actual val platform: String = "Android ${android.os.Build.VERSION.SDK_INT}"
 }

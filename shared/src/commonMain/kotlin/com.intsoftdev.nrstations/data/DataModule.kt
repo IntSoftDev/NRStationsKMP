@@ -6,6 +6,7 @@ import io.ktor.client.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
+import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
@@ -28,5 +29,7 @@ internal val dataModule = module {
 
     factory<StationsRepository> { StationsRepositoryImpl(get(), get(), get(), get()) }
 
-    factory { DataUpdateResolver(get()) }
+    factory { DataUpdateResolver(get(), get()) }
+
+    factory<Clock> { Clock.System }
 }
