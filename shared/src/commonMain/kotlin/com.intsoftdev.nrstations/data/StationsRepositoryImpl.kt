@@ -2,8 +2,7 @@ package com.intsoftdev.nrstations.data
 
 import com.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.cache.DataUpdateAction
-import com.intsoftdev.nrstations.cache.DataUpdateResolver
-import com.intsoftdev.nrstations.cache.StationsCache
+import com.intsoftdev.nrstations.cache.StationsCacheImpl
 import com.intsoftdev.nrstations.domain.StationsRepository
 import com.intsoftdev.nrstations.model.DataVersion
 import com.intsoftdev.nrstations.model.StationModel
@@ -15,19 +14,17 @@ import kotlinx.coroutines.withContext
 
 class StationsRepositoryImpl(
     private val stationsProxyService: StationsProxyService,
-    private val stationsCache: StationsCache,
-    private val requestDispatcher: CoroutineDispatcher,
-    private val dataUpdateResolver: DataUpdateResolver
+    private val stationsCache: StationsCacheImpl,
+    private val requestDispatcher: CoroutineDispatcher
 ) : StationsRepository {
 
     override suspend fun getAllStations(): ResultState<StationsResult> {
         return runCatching {
             withContext(requestDispatcher) {
-                when (dataUpdateResolver.getUpdateAction(stationsCache)) {
+                when (stationsCache.getUpdateAction()) {
                     is DataUpdateAction.REFRESH -> {
                         val stationsResult = getVersionThenStations()
                         saveAllStations(stationsResult)
-                        dataUpdateResolver.setLastUpdateTime()
                         ResultState.Success(
                             StationsResult(
                                 version = stationsResult.version,
