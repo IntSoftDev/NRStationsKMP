@@ -7,44 +7,40 @@ import com.intsoftdev.nrstations.model.StationsList
 import com.intsoftdev.nrstations.model.StationsVersion
 import com.russhwolf.settings.Settings
 import kotlinx.datetime.Clock
-import org.kodein.db.DB
-import org.kodein.db.find
-import org.kodein.db.useModels
 
-class StationsCacheImpl(
-    private val db: DB,
+internal class StationsCacheImpl(
+    private val dbWrapper: DBWrapper,
     private val settings: Settings,
     private val clock: Clock
 ) : StationsCache {
 
-    override fun insertAll(stations: List<StationModel>) {
+    override fun insertStations(stations: List<StationModel>) {
         Napier.d("insertAll enter")
         val stationListData = StationsList("stationList", stations)
-        db.put(stationListData)
+        dbWrapper.insertStations(stationListData)
         setLastUpdateTime()
         Napier.d("insertAll exit")
     }
 
     override fun insertVersion(version: DataVersion) {
         val versionData = StationsVersion("stationsVersion", version.version, version.lastUpdated)
-        db.put(versionData)
+        dbWrapper.insertVersion(versionData)
     }
 
     override fun getAllStations(): List<StationModel>? {
         Napier.d("getAllStations enter")
-        val stationsList = db.find<StationsList>().all().useModels { it.firstOrNull() }
+        val stationsList = dbWrapper.getStations()
         return stationsList?.stations.also {
             Napier.d("getAllStations exit")
         }
     }
 
     override fun isCacheEmpty(): Boolean {
-        return db.find<StationsList>().all().useModels { it.firstOrNull() } == null
+        return dbWrapper.isEmpty()
     }
 
     override fun getVersion(): StationsVersion? {
-        val version = db.find<StationsVersion>().all().useModels { it.firstOrNull() }
-        return version
+        return dbWrapper.getVersion()
     }
 
     override fun getUpdateAction(): DataUpdateAction {
@@ -66,7 +62,7 @@ class StationsCacheImpl(
     }
 
     companion object {
-        private const val EXPIRATION_TIME_MS = 2 * 60 * 1000//12 * 60 * 60 * 1000 // 12 hrs
+        private const val EXPIRATION_TIME_MS = 12 * 60 * 60 * 1000 // 12 hrs
         internal const val DB_TIMESTAMP_KEY = "DbTimestampKey"
     }
 }

@@ -95,6 +95,7 @@ kotlin {
             dependencies {
                 implementation(KotlinTest.common)
                 implementation(KotlinTest.annotations)
+                implementation(Deps.multiplatformSettingsTest)
                 // Karmok is a touchLab experimental library which helps with mocking interfaces
                 implementation(Deps.karmok)
                 implementation(Koin.koinTest)
@@ -111,8 +112,14 @@ kotlin {
         }
         val androidTest by getting {
             dependencies {
+                implementation(KotlinTest.jvm)
                 implementation(KotlinTest.junit)
-                implementation(Deps.junit)
+                implementation(AndroidXTest.core)
+                implementation(AndroidXTest.junit)
+                implementation(AndroidXTest.runner)
+                implementation(AndroidXTest.rules)
+                implementation(Coroutines.test)
+                implementation(Deps.robolectric)
             }
         }
         val iosMain by getting {

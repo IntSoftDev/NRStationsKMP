@@ -10,8 +10,8 @@ import org.kodein.db.orm.kotlinx.KotlinxSerializer
 import org.koin.dsl.module
 
 internal val cacheModule = module {
-    factory {
-        StationsCacheImpl(db = get(), settings = get(), clock = get())
+    factory<StationsCache> {
+        StationsCacheImpl(dbWrapper = get(), settings = get(), clock = get())
     }
 
     factory {
@@ -20,6 +20,8 @@ internal val cacheModule = module {
                 root<StationsList>()
             }, KotlinxSerializer())
     }
+
+    factory<DBWrapper> { DBWrapperImpl(db = get()) }
 
     factory<Clock> { Clock.System }
 }

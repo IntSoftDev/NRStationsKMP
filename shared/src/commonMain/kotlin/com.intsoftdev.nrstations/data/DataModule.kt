@@ -1,10 +1,12 @@
 import com.intsoftdev.nrstations.data.StationsProxyService
 import com.intsoftdev.nrstations.data.StationsRepositoryImpl
+import com.intsoftdev.nrstations.data.StationsServiceAPI
 import com.intsoftdev.nrstations.domain.StationsRepository
 import io.ktor.client.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
@@ -23,7 +25,7 @@ internal val dataModule = module {
         }
     }
 
-    factory { StationsProxyService(httpClient = get()) }
+    factory<StationsServiceAPI> { StationsProxyService(httpClient = get()) }
 
     factory<StationsRepository> {
         StationsRepositoryImpl(
