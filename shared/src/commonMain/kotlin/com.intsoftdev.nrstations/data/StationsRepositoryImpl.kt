@@ -2,7 +2,6 @@ package com.intsoftdev.nrstations.data
 
 import com.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.cache.DataUpdateAction
-import com.intsoftdev.nrstations.cache.DataUpdateResolver
 import com.intsoftdev.nrstations.cache.StationsCache
 import com.intsoftdev.nrstations.domain.StationsRepository
 import com.intsoftdev.nrstations.model.DataVersion
@@ -13,92 +12,43 @@ import com.intsoftdev.nrstations.shared.ResultState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
-class StationsRepositoryImpl(
-    private val stationsProxyService: StationsProxyService,
+internal class StationsRepositoryImpl(
+    private val stationsProxyService: StationsServiceAPI,
     private val stationsCache: StationsCache,
-    private val requestDispatcher: CoroutineDispatcher,
-    private val dataUpdateResolver: DataUpdateResolver
+    private val requestDispatcher: CoroutineDispatcher
 ) : StationsRepository {
 
     override suspend fun getAllStations(): ResultState<StationsResult> {
         return runCatching {
             withContext(requestDispatcher) {
-                when (dataUpdateResolver.getUpdateAction(stationsCache)) {
+                when (stationsCache.getUpdateAction()) {
                     is DataUpdateAction.REFRESH -> {
-                        val stationsResult = getVersionThenStations()
-                        saveAllStations(stationsResult)
-                        dataUpdateResolver.setLastUpdateTime()
-                        ResultState.Success(
-                            StationsResult(
-                                version = stationsResult.version,
-                                stations = stationsResult.stations
-                            )
-                        )
+                        ResultState.Success(refreshStations())
                     }
                     is DataUpdateAction.LOCAL -> {
-                        ResultState.Success(
-                            StationsResult(
-                                version = DataVersion(
-                                    getVersionFromCache()?.version
-                                        ?: throw IllegalStateException(""), 0
-                                ),
-                                stations = getAllStationsFromCache()
-                            )
-                        )
+                        ResultState.Success(getStationsFromCache())
                     }
                 }
             }
-        }.getOrElse {
-            ResultState.Failure(it)
+        }.getOrElse { throwable ->
+            ResultState.Failure(throwable)
         }
     }
 
-    private suspend fun getVersionThenStations(): StationsResult {
-        Napier.d("getVersionThenStations")
-        stationsProxyService.getDataVersion().also {
-            Napier.d("version is ${it.first().version}")
-
-            return when (shouldUpdateStations(it.first())) {
-                true -> {
-                    Napier.d("update stations")
-                    saveVersion(it.first())
-                    StationsResult(
-                        version = it.first(),
-                        stations = stationsProxyService.getAllStations()
-                    )
-                }
-
-                false -> getVersionFromCache()?.let { stationsVersion ->
-                    StationsResult(
-                        version = DataVersion(
-                            stationsVersion.version,
-                            stationsVersion.lastUpdate
-                        ),
-                        stations = getAllStationsFromCache()
-                    )
-                } ?: throw IllegalStateException("empty version cache")
-            }
-        }
+    private suspend fun getServerDataVersion(): DataVersion {
+        return stationsProxyService.getDataVersion().first()
     }
 
-    private fun shouldUpdateStations(dataVersion: DataVersion): Boolean {
-        return getVersionFromCache()?.let {
-            dataVersion.version > it.version
+    private fun isCachedVersionSuperseded(serverDataVersion: DataVersion): Boolean {
+        return getVersionFromCache()?.let { cachedData ->
+            serverDataVersion.version > cachedData.version
         } ?: true
     }
 
-    override fun saveAllStations(stationsResult: StationsResult) {
+    override fun saveResult(stationsResult: StationsResult) {
         Napier.d("saveAllStations version ${stationsResult.version} count ${stationsResult.stations.size}")
-        stationsCache.insertAll(stationsResult.stations)
-    }
-
-    override fun saveVersion(dataVersion: DataVersion) {
-        Napier.d("saveVersion ${dataVersion.version}")
-        stationsCache.insertVersion(dataVersion)
-    }
-
-    override fun getModelFromCache(stationName: String?, crsCode: String?): StationModel {
-        TODO("Not yet implemented")
+        stationsCache.insertStations(stationsResult.stations)
+        stationsCache.insertVersion(stationsResult.version)
     }
 
     override fun getAllStationsFromCache(): List<StationModel> {
@@ -106,7 +56,29 @@ class StationsRepositoryImpl(
         return stationsCache.getAllStations() ?: throw IllegalStateException("empty stations cache")
     }
 
-    override fun getVersionFromCache(): StationsVersion? {
-        return stationsCache.getVersion()
+    override fun getVersionFromCache(): StationsVersion? = stationsCache.getVersion()
+
+    private suspend fun refreshStations(): StationsResult {
+        val serverDataVersion = getServerDataVersion()
+        return if (isCachedVersionSuperseded(serverDataVersion)) {
+            val stations = stationsProxyService.getAllStations()
+            StationsResult(
+                version = serverDataVersion,
+                stations = stations
+            ).also { stationsResult ->
+                saveResult(stationsResult)
+            }
+        } else {
+            getStationsFromCache()
+        }
     }
+
+    private fun getStationsFromCache() =
+        StationsResult(
+            version = DataVersion(
+                getVersionFromCache()?.version
+                    ?: throw IllegalStateException(""), 0
+            ),
+            stations = getAllStationsFromCache()
+        )
 }

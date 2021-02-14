@@ -4,7 +4,7 @@ import com.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.model.StationsResult
 import com.intsoftdev.nrstations.shared.ResultState
 
-class GetStationsUseCase(private val stationsRepository: StationsRepository) {
+internal class GetStationsUseCase(private val stationsRepository: StationsRepository) {
 
     suspend fun getAllStations() : ResultState<StationsResult> {
         Napier.d("getAllStations")

@@ -29,7 +29,10 @@ publishing.publications.all {
 }
 
 def properties = new Properties()
-properties.load(new FileInputStream("local.properties"))
+def localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    properties.load(new FileInputStream(localPropertiesFile))
+}
 
 publishing {
     repositories {

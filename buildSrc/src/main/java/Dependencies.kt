@@ -6,12 +6,12 @@ object Versions {
     val kotlin = "1.4.21"
     val kotlin_gradle_plugin = "1.4.20"
     val jfrog_bintray_plugin = "1.8.4"
-    val androidx_test = "1.2.0"
-    val androidx_test_ext = "1.1.1"
+    val androidx_test = "1.3.0"
+    val androidx_test_ext = "1.1.2"
     val android_gradle_plugin = "4.1.0"
     val karmok = "0.1.8"
     val buildToolsVersion = "29.0.0"
-    val junit = "4.13"
+    val junit = "4.13.1"
     val cocoapodsext = "0.11"
     val activity = "1.1.0"
     val lifecycle = "2.2.0"
@@ -25,7 +25,8 @@ object Versions {
     val kodein_db = "0.5.0-beta"
     val material = "1.2.1"
     val kotlinxDateTime = "0.1.1"
-    val intsoftdev_stations_client_version = "0.15"
+    val robolectric = "4.4"
+    val intsoftdev_stations_client_version = "0.16"
 }
 
 object Deps {
@@ -42,10 +43,12 @@ object Deps {
     val activity_exts = "androidx.activity:activity-ktx:${Versions.activity}"
 
     val junit = "junit:junit:${Versions.junit}"
+    val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
     val lifecycle_viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     val lifecycle_livedata = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
     val napier_logger = "com.github.aakira:napier:${Versions.napier}"
     val multiplatformSettings = "com.russhwolf:multiplatform-settings:${Versions.multiplatformSettings}"
+    val multiplatformSettingsTest = "com.russhwolf:multiplatform-settings-test:${Versions.multiplatformSettings}"
     val kotlinxDateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.kotlinxDateTime}"
     val karmok = "co.touchlab:karmok-library:${Versions.karmok}"
     val nrstationsClientDebug = "com.intsoftdev:nrstations-androidDebug:${Versions.intsoftdev_stations_client_version}"

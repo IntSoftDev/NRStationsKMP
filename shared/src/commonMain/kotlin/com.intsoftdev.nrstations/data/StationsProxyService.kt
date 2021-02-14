@@ -5,7 +5,7 @@ import com.intsoftdev.nrstations.model.StationModel
 import io.ktor.client.*
 import io.ktor.client.request.*
 
-class StationsProxyService(private val httpClient: HttpClient) : StationsServiceAPI {
+internal class StationsProxyService(private val httpClient: HttpClient) : StationsServiceAPI {
 
     private val baseUrl = "https://onrails.azurewebsites.net/stations"
     private val versionUrl = "https://onrails.azurewebsites.net/config/stationsversion.json"
