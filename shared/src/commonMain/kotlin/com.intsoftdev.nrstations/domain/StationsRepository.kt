@@ -1,9 +1,7 @@
 package com.intsoftdev.nrstations.domain
 
-import com.intsoftdev.nrstations.model.StationModel
-import com.intsoftdev.nrstations.model.StationsResult
-import com.intsoftdev.nrstations.model.StationsVersion
-import com.intsoftdev.nrstations.shared.ResultState
+import com.intsoftdev.nrstations.common.StationsResult
+import com.intsoftdev.nrstations.sdk.ResultState
 
 /**
  * Interface defining methods for how the data layer can pass data to and from the Domain layer.
@@ -11,7 +9,7 @@ import com.intsoftdev.nrstations.shared.ResultState
  */
 internal interface StationsRepository {
     suspend fun getAllStations(): ResultState<StationsResult>
-    fun saveResult(stationsResult: StationsResult)
-    fun getAllStationsFromCache(): List<StationModel>
-    fun getVersionFromCache(): StationsVersion?
+    //fun saveResult(stationsResult: StationsResult)
+   /* fun getAllStationsFromCache(): List<StationModel>
+    fun getVersionFromCache(): StationsVersion?*/
 }

@@ -1,12 +1,11 @@
-package com.intsoftdev.nrstations
+package com.intsoftdev.nrstations.sdk
 
+import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.domain.GetStationsUseCase
-import com.intsoftdev.nrstations.model.StationsResult
-import com.intsoftdev.nrstations.shared.ResultState
 import org.koin.core.KoinComponent
 import org.koin.core.get
 
-class StationsSDK : StationsAPI, KoinComponent {
+class NREStationsSDK : StationsAPI, KoinComponent {
     private val getStationsUseCase by lazy { get<GetStationsUseCase>() }
 
     override suspend fun getAllStations(): ResultState<StationsResult> {

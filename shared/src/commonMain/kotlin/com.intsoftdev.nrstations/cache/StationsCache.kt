@@ -1,14 +1,12 @@
 package com.intsoftdev.nrstations.cache
 
-import com.intsoftdev.nrstations.model.DataVersion
-import com.intsoftdev.nrstations.model.StationModel
-import com.intsoftdev.nrstations.model.StationsVersion
+import com.intsoftdev.nrstations.common.StationLocation
+import com.intsoftdev.nrstations.common.UpdateVersion
 
 internal interface StationsCache {
-    fun insertStations(stations: List<StationModel>)
-    fun insertVersion(version: DataVersion)
-    fun getAllStations(): List<StationModel>?
-    fun isCacheEmpty() : Boolean
-    fun getVersion(): StationsVersion?
-    fun getUpdateAction(): DataUpdateAction
+    fun insertStations(stations: List<StationLocation>)
+    fun insertVersion(version: UpdateVersion)
+    fun getAllStations(): List<StationLocation>
+    fun getCacheState(serverVersion: Double? = null): CacheState
+    fun getVersion(): UpdateVersion
 }

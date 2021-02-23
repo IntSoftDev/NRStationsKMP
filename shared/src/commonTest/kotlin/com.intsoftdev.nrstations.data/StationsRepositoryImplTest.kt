@@ -1,9 +1,9 @@
 package com.intsoftdev.nrstations.data
 
-import com.intsoftdev.nrstations.cache.DataUpdateAction
+import com.intsoftdev.nrstations.cache.CacheState
+import com.intsoftdev.nrstations.common.UpdateVersion
 import com.intsoftdev.nrstations.data.mock.MockStationsCacheImpl
-import com.intsoftdev.nrstations.data.mock.StationsProxyServiceMock
-import com.intsoftdev.nrstations.model.StationsVersion
+import com.intsoftdev.nrstations.data.mock.StationsProxyMock
 import com.intsoftdev.nrstations.shared.BaseTest
 import kotlinx.coroutines.Dispatchers
 import kotlin.test.BeforeTest
@@ -15,7 +15,7 @@ class StationsRepositoryImplTest : BaseTest() {
     private lateinit var cut: StationsRepositoryImpl
     private val mockStationsCache = MockStationsCacheImpl()
     private val dispatcher = Dispatchers.Main
-    private val mockApi = StationsProxyServiceMock()
+    private val mockApi = StationsProxyMock()
 
     @BeforeTest
     fun setup() = runTest {
@@ -30,8 +30,7 @@ class StationsRepositoryImplTest : BaseTest() {
     fun getStationsFromServerNewVersionTest() = runTest {
 
         // given server refresh
-        mockStationsCache.mock.getUpdateAction.returns(DataUpdateAction.REFRESH)
-
+        mockStationsCache.mock.getCacheState.returns(CacheState.Stale)
         // server data version is higher than cached version
         mockApi.mock.getDataVersion.returns(mockApi.stationsVersion())
         mockStationsCache.mock.getVersion.returns(CACHED_VERSION_OLD)
@@ -39,7 +38,7 @@ class StationsRepositoryImplTest : BaseTest() {
         mockStationsCache.mock.insertVersion.returns(Unit)
         mockStationsCache.mock.insertStations.returns(Unit)
 
-        mockApi.mock.getAllStations.returns(mockApi.stationsResult())
+        mockApi.mock.getAllStations.returns(mockApi.stationsData())
 
         // when get stations
         cut.getAllStations()
@@ -57,7 +56,7 @@ class StationsRepositoryImplTest : BaseTest() {
     fun getStationsFromServerSameVersionTest() = runTest {
 
         // given server refresh
-        mockStationsCache.mock.getUpdateAction.returns(DataUpdateAction.REFRESH)
+        mockStationsCache.mock.getCacheState.returns(CacheState.Stale)
 
         // server and cached versions are the same
         mockApi.mock.getDataVersion.returns(mockApi.stationsVersion())
@@ -74,16 +73,16 @@ class StationsRepositoryImplTest : BaseTest() {
     @Test
     fun getStationsFromCacheTest() = runTest {
         // given local update
-        mockStationsCache.mock.getUpdateAction.returns(DataUpdateAction.LOCAL)
+        mockStationsCache.mock.getCacheState.returns(CacheState.Usable)
         mockStationsCache.mock.getVersion.returns(CACHED_VERSION_CURRENT)
 
-        mockStationsCache.mock.getAllStations.returns(mockApi.stationsResult())
+        mockStationsCache.mock.getAllStations.returns(mockApi.stationsLocations())
 
         // when get all stations
         cut.getAllStations()
 
         // then cached stations and version read
-        assertTrue(mockStationsCache.mock.getUpdateAction.calledCount == 1)
+        assertTrue(mockStationsCache.mock.getCacheState.calledCount == 1)
         assertTrue(mockStationsCache.mock.getAllStations.calledCount == 1)
         assertTrue(mockStationsCache.mock.getVersion.calledCount == 1)
         // and api not called
@@ -92,8 +91,8 @@ class StationsRepositoryImplTest : BaseTest() {
 
     companion object {
         private val CACHED_VERSION_OLD =
-            StationsVersion("stationsVersion", version = 0.9, lastUpdate = 0L)
+            UpdateVersion(version = 0.9, lastUpdated = 0L)
         private val CACHED_VERSION_CURRENT =
-            StationsVersion("stationsVersion", version = 1.0, lastUpdate = 0L)
+            UpdateVersion(version = 1.0, lastUpdated = 0L)
     }
 }

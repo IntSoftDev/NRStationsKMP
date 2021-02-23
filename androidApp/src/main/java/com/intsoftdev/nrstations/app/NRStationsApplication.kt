@@ -11,7 +11,7 @@ class NRStationsApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        startKoin {
+        val koinApp = startKoin {
             // declare used Android context
             androidContext(this@NRStationsApplication)
             modules(listOf(viewModelModule))
@@ -19,8 +19,8 @@ class NRStationsApplication : Application() {
 
         initStationsSDK(
             context = this@NRStationsApplication,
-            enableLogging = true,
-            initializeKoin = false
+            koinApp = koinApp,
+            enableLogging = true
         )
     }
 }

@@ -1,11 +1,10 @@
 package com.intsoftdev.nrstations.data.mock
 
 import co.touchlab.karmok.MockManager
-import com.intsoftdev.nrstations.cache.DataUpdateAction
+import com.intsoftdev.nrstations.cache.CacheState
 import com.intsoftdev.nrstations.cache.StationsCache
-import com.intsoftdev.nrstations.model.DataVersion
-import com.intsoftdev.nrstations.model.StationModel
-import com.intsoftdev.nrstations.model.StationsVersion
+import com.intsoftdev.nrstations.common.StationLocation
+import com.intsoftdev.nrstations.common.UpdateVersion
 
 internal class MockStationsCacheImpl : StationsCache {
     internal val mock = InnerMock()
@@ -14,34 +13,28 @@ internal class MockStationsCacheImpl : StationsCache {
         internal val insertStations = MockFunctionRecorder<MockStationsCacheImpl, Unit>()
         internal val insertVersion = MockFunctionRecorder<MockStationsCacheImpl, Unit>()
         internal val getAllStations =
-            MockFunctionRecorder<MockStationsCacheImpl, List<StationModel>?>()
-        internal val isCacheEmpty = MockFunctionRecorder<MockStationsCacheImpl, Boolean>()
-        internal val getVersion = MockFunctionRecorder<MockStationsCacheImpl, StationsVersion?>()
-        internal val getUpdateAction =
-            MockFunctionRecorder<MockStationsCacheImpl, DataUpdateAction>()
+            MockFunctionRecorder<MockStationsCacheImpl, List<StationLocation>>()
+        internal val getCacheState = MockFunctionRecorder<MockStationsCacheImpl, CacheState>()
+        internal val getVersion = MockFunctionRecorder<MockStationsCacheImpl, UpdateVersion>()
     }
 
-    override fun insertStations(stations: List<StationModel>) {
+    override fun insertStations(stations: List<StationLocation>) {
         return mock.insertStations.invoke { insertStations(listOf()) }
     }
 
-    override fun insertVersion(version: DataVersion) {
+    override fun insertVersion(version: UpdateVersion) {
         return mock.insertVersion.invoke { insertVersion(version) }
     }
 
-    override fun getAllStations(): List<StationModel>? {
+    override fun getAllStations(): List<StationLocation> {
         return mock.getAllStations.invoke({ getAllStations() }, listOf())
     }
 
-    override fun isCacheEmpty(): Boolean {
-        return mock.isCacheEmpty.invoke({ isCacheEmpty() }, listOf())
+    override fun getCacheState(serverVersion: Double?): CacheState {
+        return mock.getCacheState.invoke({ getCacheState(serverVersion) }, listOf())
     }
 
-    override fun getVersion(): StationsVersion? {
+    override fun getVersion(): UpdateVersion {
         return mock.getVersion.invoke({ getVersion() }, listOf())
-    }
-
-    override fun getUpdateAction(): DataUpdateAction {
-        return mock.getUpdateAction.invoke({ getUpdateAction() }, listOf())
     }
 }

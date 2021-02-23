@@ -5,11 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.intsoftdev.nrstations.model.StationModel
+import com.intsoftdev.nrstations.common.StationLocation
 
 class StationsAdapter : RecyclerView.Adapter<StationsAdapter.StationViewHolder>() {
 
-    private val stations = mutableListOf<StationModel>()
+    private val stations = mutableListOf<StationLocation>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StationViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -23,14 +23,14 @@ class StationsAdapter : RecyclerView.Adapter<StationsAdapter.StationViewHolder>(
         holder.bind(stations[position])
     }
 
-    fun updateData(items: List<StationModel>) {
+    fun updateData(items: List<StationLocation>) {
         stations.clear()
         stations.addAll(items)
         notifyDataSetChanged()
     }
 
     class StationViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(stationModel: StationModel) {
+        fun bind(stationModel: StationLocation) {
             val stationName = view.findViewById<TextView>(R.id.station_name)
             stationName.text = stationModel.stationName
         }

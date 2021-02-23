@@ -1,21 +1,19 @@
 package com.intsoftdev.nrstations.cache
 
 import com.intsoftdev.nrstations.cache.StationsCacheImpl.Companion.DB_TIMESTAMP_KEY
+import com.intsoftdev.nrstations.cache.entities.VersionEntity
 import com.intsoftdev.nrstations.cache.mock.ClockMock
 import com.intsoftdev.nrstations.cache.mock.MockDBWrapperImpl
-import com.intsoftdev.nrstations.model.DataVersion
-import com.intsoftdev.nrstations.model.StationModel
-import com.intsoftdev.nrstations.model.StationsList
-import com.intsoftdev.nrstations.model.StationsVersion
 import com.intsoftdev.nrstations.shared.BaseTest
 import com.russhwolf.settings.MockSettings
 import kotlinx.datetime.Clock
-import kotlin.test.*
-
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.time.ExperimentalTime
 import kotlin.time.hours
 
-class StationsCacheImplTest : BaseTest(){
+class StationsCacheImplTest : BaseTest() {
 
     private lateinit var cut: StationsCacheImpl
     private val settings = MockSettings()
@@ -30,27 +28,37 @@ class StationsCacheImplTest : BaseTest(){
     @Test
     fun emptyCacheTest() = runTest {
         dbWrapper.mock.isEmpty.returns(true)
-        val action = cut.getUpdateAction()
-        assertEquals(expected = DataUpdateAction.REFRESH, actual = action)
+        val cacheState = cut.getCacheState()
+        assertEquals(expected = CacheState.Empty, actual = cacheState)
     }
 
     @Test
-    fun cacheNotStateTest() = runTest {
+    fun cacheUsableTest() = runTest {
         val currentTimeMS = Clock.System.now().toEpochMilliseconds()
         settings.putLong(DB_TIMESTAMP_KEY, currentTimeMS)
         dbWrapper.mock.isEmpty.returns(false)
-        val action = cut.getUpdateAction()
-        assertEquals(expected = DataUpdateAction.LOCAL, actual = action)
+        val cacheState = cut.getCacheState()
+        assertEquals(expected = CacheState.Usable, actual = cacheState)
+    }
+
+    @Test
+    fun cacheStaleVersionTest() = runTest {
+        val versionEntity = VersionEntity(version = 1.0, lastUpdate = 0)
+        dbWrapper.mock.isEmpty.returns(false)
+        dbWrapper.mock.getVersion.returns(versionEntity)
+        val serverVersion = 2.0
+        val cacheState = cut.getCacheState(serverVersion)
+        assertEquals(expected = CacheState.Stale, actual = cacheState)
     }
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun cacheStateTest() = runTest {
+    fun cacheStaleExpiredTest() = runTest {
         val currentTimeMS = Clock.System.now().toEpochMilliseconds()
         settings.putLong(DB_TIMESTAMP_KEY, currentTimeMS)
         dbWrapper.mock.isEmpty.returns(false)
         clock.currentInstant += 13.hours
-        val action = cut.getUpdateAction()
-        assertEquals(expected = DataUpdateAction.REFRESH, actual = action)
+        val cacheState = cut.getCacheState()
+        assertEquals(expected = CacheState.Stale, actual = cacheState)
     }
 }

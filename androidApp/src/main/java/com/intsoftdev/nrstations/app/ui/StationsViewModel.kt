@@ -4,14 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.aakira.napier.Napier
-import com.intsoftdev.nrstations.StationsSDK
-import com.intsoftdev.nrstations.model.StationModel
-import com.intsoftdev.nrstations.shared.ResultState
+import com.intsoftdev.nrstations.common.StationLocation
+import com.intsoftdev.nrstations.sdk.NREStationsSDK
+import com.intsoftdev.nrstations.sdk.ResultState
 import kotlinx.coroutines.launch
 
-class StationsViewModel(private var stationsSDK : StationsSDK) : ViewModel() {
+class StationsViewModel(private var stationsSDK : NREStationsSDK) : ViewModel() {
 
-    val stationsLiveData = MutableLiveData<List<StationModel>>()
+    val stationsLiveData = MutableLiveData<List<StationLocation>>()
     val errorLiveData = MutableLiveData<String>()
 
     fun getStationsFromNetwork() {

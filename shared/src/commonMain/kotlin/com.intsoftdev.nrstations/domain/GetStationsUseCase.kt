@@ -1,8 +1,8 @@
 package com.intsoftdev.nrstations.domain
 
 import com.github.aakira.napier.Napier
-import com.intsoftdev.nrstations.model.StationsResult
-import com.intsoftdev.nrstations.shared.ResultState
+import com.intsoftdev.nrstations.common.StationsResult
+import com.intsoftdev.nrstations.sdk.ResultState
 
 internal class GetStationsUseCase(private val stationsRepository: StationsRepository) {
 
