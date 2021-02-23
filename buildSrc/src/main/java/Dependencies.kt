@@ -26,7 +26,7 @@ object Versions {
     val material = "1.2.1"
     val kotlinxDateTime = "0.1.1"
     val robolectric = "4.4"
-    val intsoftdev_stations_client_version = "0.16"
+    val intsoftdev_stations_client_version = "0.17"
 }
 
 object Deps {

@@ -1,4 +1,4 @@
-package com.intsoftdev.nrstations.shared
+package com.intsoftdev.nrstations.sdk
 
 sealed class ResultState<out T : Any> {
     data class Success<out T : Any>(val data: T) : ResultState<T>()

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.app.ui.StationsViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
-import org.koin.core.KoinComponent
 
 fun greet(): String {
     return Greeting().greeting()

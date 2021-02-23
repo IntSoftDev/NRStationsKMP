@@ -2,8 +2,8 @@ package com.intsoftdev.nrstations.cache.mock
 
 import co.touchlab.karmok.MockManager
 import com.intsoftdev.nrstations.cache.DBWrapper
-import com.intsoftdev.nrstations.model.StationsList
-import com.intsoftdev.nrstations.model.StationsVersion
+import com.intsoftdev.nrstations.cache.entities.StationsEntity
+import com.intsoftdev.nrstations.cache.entities.VersionEntity
 
 class MockDBWrapperImpl : DBWrapper {
 
@@ -11,23 +11,23 @@ class MockDBWrapperImpl : DBWrapper {
 
     class InnerMock(delegate: Any? = null) : MockManager(delegate) {
         internal val insertStations = MockFunctionRecorder<MockDBWrapperImpl, Unit>()
-        internal val getStations = MockFunctionRecorder<MockDBWrapperImpl, StationsList?>()
+        internal val getStations = MockFunctionRecorder<MockDBWrapperImpl, StationsEntity?>()
         internal val insertVersion =
             MockFunctionRecorder<MockDBWrapperImpl, Unit>()
-        internal val getVersion = MockFunctionRecorder<MockDBWrapperImpl, StationsVersion?>()
+        internal val getVersion = MockFunctionRecorder<MockDBWrapperImpl, VersionEntity?>()
         internal val isEmpty =
             MockFunctionRecorder<MockDBWrapperImpl, Boolean>()
     }
 
-    override fun insertStations(stations: StationsList) {
+    override fun insertStations(stations: StationsEntity) {
         return mock.insertStations.invoke { insertStations(stations) }
     }
 
-    override fun getStations(): StationsList? {
+    override fun getStations(): StationsEntity? {
         return mock.getStations.invoke({ getStations() }, listOf())
     }
 
-    override fun insertVersion(version: StationsVersion) {
+    override fun insertVersion(version: VersionEntity) {
         return mock.insertVersion.invoke {
             insertVersion(
                 version
@@ -35,7 +35,7 @@ class MockDBWrapperImpl : DBWrapper {
         }
     }
 
-    override fun getVersion(): StationsVersion? {
+    override fun getVersion(): VersionEntity? {
         return mock.getVersion.invoke({ getVersion() }, listOf())
     }
 

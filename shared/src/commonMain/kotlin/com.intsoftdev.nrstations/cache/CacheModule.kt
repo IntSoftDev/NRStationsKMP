@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations.cache
 
-import com.intsoftdev.nrstations.model.StationsList
+import com.intsoftdev.nrstations.cache.entities.StationsEntity
 import com.intsoftdev.nrstations.shared.getApplicationFilesDirectoryPath
 import kotlinx.datetime.Clock
 import org.kodein.db.DB
@@ -17,7 +17,7 @@ internal val cacheModule = module {
     factory {
         DB.inDir(getApplicationFilesDirectoryPath())
             .open("stations_db", TypeTable {
-                root<StationsList>()
+                root<StationsEntity>()
             }, KotlinxSerializer())
     }
 

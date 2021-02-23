@@ -1,9 +1,10 @@
 package com.intsoftdev.nrstations.shared
 
 import com.intsoftdev.nrstations.cache.cacheModule
-import com.intsoftdev.nrstations.sdkModule
+import com.intsoftdev.nrstations.sdk.sdkModule
 import dataModule
 import domainModule
+import org.koin.core.KoinApplication
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -18,15 +19,16 @@ private val diModules = listOf(
 
 internal fun initSDKAndroid(
     appDeclaration: KoinAppDeclaration = {},
-    doInit: Boolean
+    koinApp: KoinApplication? = null
 ) {
-    if (doInit) {
+    if (koinApp == null) {
         startKoin {
             appDeclaration()
             modules(
                 diModules + platformModule
             )
         }
+
     } else {
         loadKoinModules(
             diModules + platformModule
