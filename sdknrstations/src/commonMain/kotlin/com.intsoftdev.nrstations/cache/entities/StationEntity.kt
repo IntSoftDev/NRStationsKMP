@@ -6,7 +6,7 @@ import org.kodein.db.model.orm.Metadata
 import org.kodein.memory.util.UUID
 
 @Serializable
-data class StationEntity(
+internal data class StationEntity(
     override val id: String = UUID.randomUUID().toString(),
     val stationName: String,
     val crsCode: String,
@@ -14,14 +14,14 @@ data class StationEntity(
     val longitude: Double
 ) : Metadata
 
-fun StationEntity.toStationLocation() = StationLocation(
+internal fun StationEntity.toStationLocation() = StationLocation(
     stationName = this.stationName,
     crsCode = this.crsCode,
     latitude = this.latitude,
     longitude = this.longitude
 )
 
-fun StationLocation.toStationEntity() = StationEntity(
+internal fun StationLocation.toStationEntity() = StationEntity(
     stationName = this.stationName,
     crsCode = this.crsCode,
     latitude = this.latitude,
@@ -29,13 +29,13 @@ fun StationLocation.toStationEntity() = StationEntity(
 )
 
 @Serializable
-data class StationsEntity(override val id: String, val stations: List<StationEntity>) : Metadata
+internal data class StationsEntity(override val id: String, val stations: List<StationEntity>) : Metadata
 
-fun StationsEntity.toStationLocations() = this.stations.map {
+internal fun StationsEntity.toStationLocations() = this.stations.map {
     it.toStationLocation()
 }
 
-fun List<StationLocation>.toStationsEntity() = StationsEntity(
+internal fun List<StationLocation>.toStationsEntity() = StationsEntity(
     id = "stationsList",
     stations = this.map {
         it.toStationEntity()

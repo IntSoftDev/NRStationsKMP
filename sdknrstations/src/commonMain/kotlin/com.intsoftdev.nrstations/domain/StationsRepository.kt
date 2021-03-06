@@ -9,7 +9,4 @@ import com.intsoftdev.nrstations.sdk.ResultState
  */
 internal interface StationsRepository {
     suspend fun getAllStations(): ResultState<StationsResult>
-    //fun saveResult(stationsResult: StationsResult)
-   /* fun getAllStationsFromCache(): List<StationModel>
-    fun getVersionFromCache(): StationsVersion?*/
 }

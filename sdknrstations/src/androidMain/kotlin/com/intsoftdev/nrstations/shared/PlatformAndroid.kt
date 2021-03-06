@@ -17,7 +17,7 @@ internal actual class Platform actual constructor() {
 
 internal actual fun getApplicationFilesDirectoryPath(): String = appContext.filesDir.absolutePath
 
-internal actual val platformDIModule: Module = module(override=true) {
+internal actual val nrStationsPlatformModule = module {
     factory<CoroutineDispatcher> { Dispatchers.Default }
 
     factory<Settings> {

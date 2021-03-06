@@ -25,19 +25,19 @@ internal fun initStationsSDKAndroid(
         startKoin {
             appDeclaration()
             modules(
-                stationsDIModules + platformDIModule
+                stationsDIModules + nrStationsPlatformModule
             )
         }
 
     } else {
         loadKoinModules(
-            stationsDIModules + platformDIModule
+            stationsDIModules + nrStationsPlatformModule
         )
     }
 }
 
 internal fun initSDKiOS(iOSModule: Module) = startKoin {
     modules(
-        stationsDIModules + iOSModule + platformDIModule
+        stationsDIModules + iOSModule + nrStationsPlatformModule
     )
 }

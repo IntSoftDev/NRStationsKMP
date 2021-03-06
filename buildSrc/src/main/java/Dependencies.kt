@@ -51,7 +51,6 @@ object Deps {
     val multiplatformSettingsTest = "com.russhwolf:multiplatform-settings-test:${Versions.multiplatformSettings}"
     val kotlinxDateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.kotlinxDateTime}"
     val karmok = "co.touchlab:karmok-library:${Versions.karmok}"
-    val nrstationsClientDebug = "com.intsoftdev:nrstations-androidRelease:${Versions.intsoftdev_stations_client_version}"
     val nrStationsClient = "com.intsoftdev:sdknrstations:${Versions.intsoftdev_stations_client_version}"
 }
 

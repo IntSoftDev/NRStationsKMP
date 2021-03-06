@@ -5,7 +5,7 @@ import com.intsoftdev.nrstations.cache.DBWrapper
 import com.intsoftdev.nrstations.cache.entities.StationsEntity
 import com.intsoftdev.nrstations.cache.entities.VersionEntity
 
-class MockDBWrapperImpl : DBWrapper {
+internal class MockDBWrapperImpl : DBWrapper {
 
     internal val mock = InnerMock()
 

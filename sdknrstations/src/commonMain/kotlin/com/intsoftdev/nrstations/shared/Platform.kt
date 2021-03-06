@@ -8,4 +8,4 @@ internal expect class Platform() {
 
 internal expect fun getApplicationFilesDirectoryPath(): String
 
-internal expect val platformDIModule: Module
+internal expect val nrStationsPlatformModule: Module

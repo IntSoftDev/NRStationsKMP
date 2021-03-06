@@ -16,6 +16,6 @@ internal actual class Platform actual constructor() {
 internal actual fun getApplicationFilesDirectoryPath(): String =
     NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true)[0] as String
 
-internal actual val platformDIModule = module {
+internal actual val nrStationsPlatformModule = module {
     factory<CoroutineDispatcher> { Dispatchers.Main }
 }

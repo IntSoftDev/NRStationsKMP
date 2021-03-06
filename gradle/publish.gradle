@@ -3,6 +3,7 @@ apply plugin: 'maven-publish'
 group = BINTRAY_PACKAGE
 version = Versions.intsoftdev_stations_client_version
 
+// TODO add new publishing upload
 /*publishing.publications.all {
     pom {
         description = POM_DESCRIPTION
