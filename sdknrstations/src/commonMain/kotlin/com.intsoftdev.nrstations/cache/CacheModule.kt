@@ -9,7 +9,7 @@ import org.kodein.db.impl.inDir
 import org.kodein.db.orm.kotlinx.KotlinxSerializer
 import org.koin.dsl.module
 
-internal val stationsCacheModule = module(override=true) {
+internal val stationsCacheModule = module {
     factory<StationsCache> {
         StationsCacheImpl(dbWrapper = get(), settings = get(), clock = get())
     }
