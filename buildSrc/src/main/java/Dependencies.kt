@@ -26,7 +26,7 @@ object Versions {
     val material = "1.2.1"
     val kotlinxDateTime = "0.1.1"
     val robolectric = "4.4"
-    val intsoftdev_stations_client_version = "0.17"
+    val intsoftdev_stations_client_version = "0.22"
 }
 
 object Deps {
@@ -51,7 +51,7 @@ object Deps {
     val multiplatformSettingsTest = "com.russhwolf:multiplatform-settings-test:${Versions.multiplatformSettings}"
     val kotlinxDateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.kotlinxDateTime}"
     val karmok = "co.touchlab:karmok-library:${Versions.karmok}"
-    val nrstationsClientDebug = "com.intsoftdev:nrstations-androidDebug:${Versions.intsoftdev_stations_client_version}"
+    val nrStationsClient = "com.intsoftdev:sdknrstations:${Versions.intsoftdev_stations_client_version}"
 }
 
 object Ktor {

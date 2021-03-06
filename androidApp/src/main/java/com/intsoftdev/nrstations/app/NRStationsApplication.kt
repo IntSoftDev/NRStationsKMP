@@ -1,6 +1,8 @@
 package com.intsoftdev.nrstations.app
 
 import android.app.Application
+import com.github.aakira.napier.DebugAntilog
+import com.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.app.di.viewModelModule
 import com.intsoftdev.nrstations.shared.initStationsSDK
 import org.koin.android.ext.koin.androidContext
@@ -16,6 +18,9 @@ class NRStationsApplication : Application() {
             androidContext(this@NRStationsApplication)
             modules(listOf(viewModelModule))
         }
+
+        Napier.base(DebugAntilog())
+        Napier.d("NRStationsApplication enter")
 
         initStationsSDK(
             context = this@NRStationsApplication,

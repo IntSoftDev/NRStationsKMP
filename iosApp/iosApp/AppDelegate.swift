@@ -1,5 +1,5 @@
 import UIKit
-import shared
+import sdknrstations
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
