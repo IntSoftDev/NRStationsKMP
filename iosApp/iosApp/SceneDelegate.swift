@@ -1,6 +1,6 @@
 import UIKit
 import SwiftUI
-import shared
+import sdknrstations
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

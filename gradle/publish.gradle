@@ -3,7 +3,7 @@ apply plugin: 'maven-publish'
 group = BINTRAY_PACKAGE
 version = Versions.intsoftdev_stations_client_version
 
-publishing.publications.all {
+/*publishing.publications.all {
     pom {
         description = POM_DESCRIPTION
         url = SITE_URL
@@ -49,4 +49,4 @@ publishing {
             }
         }
     }
-}
+}*/

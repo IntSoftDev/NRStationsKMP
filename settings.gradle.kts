@@ -17,4 +17,4 @@ rootProject.name = "NRStations"
 
 
 include(":androidApp")
-include(":shared")
+include(":sdknrstations")

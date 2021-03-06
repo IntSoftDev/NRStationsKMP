@@ -1,5 +1,5 @@
 import SwiftUI
-import shared
+import sdknrstations
 
 func greet() -> String {
     return Greeting().greeting()
