@@ -22,7 +22,7 @@ object Versions {
     val activity = "1.1.0"
     val lifecycle = "2.2.0"
     val robolectric = "4.4"
-    val intsoftdev_stations_client_version = "0.23"
+    val intsoftdev_stations_client_version = "0.24"
 }
 
 object Deps {

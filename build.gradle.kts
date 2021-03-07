@@ -14,7 +14,6 @@ allprojects {
         google()
         mavenLocal()
         mavenCentral()
-        jcenter()
         maven(url = "https://dl.bintray.com/ekito/koin")
         maven(url = "https://dl.bintray.com/aakira/maven")
         maven(url = "https://kotlin.bintray.com/kotlinx/") // soon will be just jcenter()
