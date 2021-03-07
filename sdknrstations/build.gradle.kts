@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 buildscript {
     repositories {
         google()
+        mavenLocal()
         mavenCentral()
         jcenter()
-        mavenLocal()
     }
     dependencies {
         classpath(Deps.kotlin_gradle_plugin)
@@ -18,7 +18,7 @@ plugins {
     id("com.android.library")
     kotlin("multiplatform")
     id("kotlin-android-extensions")
-    id("kotlinx-serialization")
+    kotlin("plugin.serialization") version "1.4.30"
     `maven-publish`
     id("com.jfrog.bintray") version Versions.jfrog_bintray_plugin
 }
@@ -43,6 +43,17 @@ android {
             isMinifyEnabled = false
         }
     }
+
+    // workaround for https://youtrack.jetbrains.com/issue/KT-43944
+    configurations {
+        create("androidTestApi")
+        create("androidTestDebugApi")
+        create("androidTestReleaseApi")
+        create("testApi")
+        create("testDebugApi")
+        create("testReleaseApi")
+    }
+
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -73,7 +84,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(Koin.koinCore)
+                implementation(Deps.kotlinx_serialization)
                 implementation(Ktor.commonCore)
                 implementation(Ktor.commonJson)
                 implementation(Ktor.commonLogging)
@@ -89,6 +100,8 @@ kotlin {
                 // Kodein-DB
                 api(KodeinDb.kodeinDb)
                 api(KodeinDb.kodeinSerializer)
+
+                api(Koin.koinCore)
             }
         }
         val commonTest by getting {
@@ -98,7 +111,6 @@ kotlin {
                 implementation(Deps.multiplatformSettingsTest)
                 // Karmok is a touchLab experimental library which helps with mocking interfaces
                 implementation(Deps.karmok)
-                implementation(Koin.koinTest)
             }
         }
         val androidMain by getting {
@@ -112,7 +124,6 @@ kotlin {
         }
         val androidTest by getting {
             dependencies {
-                implementation(KotlinTest.jvm)
                 implementation(KotlinTest.junit)
                 implementation(AndroidXTest.core)
                 implementation(AndroidXTest.junit)
@@ -151,7 +162,6 @@ val packForXcode by tasks.creating(Sync::class) {
 
 tasks.getByName("build").dependsOn(packForXcode)
 
-apply(from = rootProject.file("evaluate.gradle"))
 /*apply(from = rootProject.file("pom.gradle"))*/
 // TODO
 apply(from = rootProject.file("gradle/publish.gradle"))

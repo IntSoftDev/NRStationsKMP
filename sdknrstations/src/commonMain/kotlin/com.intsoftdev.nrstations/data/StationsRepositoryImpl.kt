@@ -8,7 +8,7 @@ import com.intsoftdev.nrstations.data.model.station.DataVersion
 import com.intsoftdev.nrstations.data.model.station.toStationLocation
 import com.intsoftdev.nrstations.data.model.station.toUpdateVersion
 import com.intsoftdev.nrstations.domain.StationsRepository
-import com.intsoftdev.nrstations.sdk.ResultState
+import com.intsoftdev.nrstations.common.StationsResultState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -18,15 +18,15 @@ internal class StationsRepositoryImpl(
     private val requestDispatcher: CoroutineDispatcher
 ) : StationsRepository {
 
-    override suspend fun getAllStations(): ResultState<StationsResult> {
+    override suspend fun getAllStations(): StationsResultState<StationsResult> {
         return runCatching {
             withContext(requestDispatcher) {
                 when (stationsCache.getCacheState()) {
                     is CacheState.Empty, CacheState.Stale -> {
-                        ResultState.Success(refreshStations())
+                        StationsResultState.Success(refreshStations())
                     }
                     is CacheState.Usable -> {
-                        ResultState.Success(
+                        StationsResultState.Success(
                             StationsResult(
                                 version = stationsCache.getVersion(),
                                 stations = stationsCache.getAllStations()
@@ -36,7 +36,7 @@ internal class StationsRepositoryImpl(
                 }
             }
         }.getOrElse { throwable ->
-            ResultState.Failure(throwable)
+            StationsResultState.Failure(throwable)
         }
     }
 

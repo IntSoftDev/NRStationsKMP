@@ -3,30 +3,26 @@ object Versions {
     val target_sdk = 30
     val compile_sdk = 30
 
-    val kotlin = "1.4.21"
-    val kotlin_gradle_plugin = "1.4.20"
+    val kotlin = "1.4.31"
+    val coroutines = "1.4.3-native-mt"
+    val ktor = "1.5.2"
+    val koin = "3.0.0-alpha-4" // TODO update to official version - getting unresolved imports with 3.0.1 Beta 1
+    val multiplatformSettings = "0.7.3"
+    val karmok = "0.1.8"
+    val kodein_db = "0.6.0-beta"
+    val napier = "1.5.0-alpha1"
+    val android_gradle_plugin = "7.0.0-alpha08"
+    val kotlinxDateTime = "0.1.1"
+
     val jfrog_bintray_plugin = "1.8.4"
     val androidx_test = "1.3.0"
     val androidx_test_ext = "1.1.2"
-    val android_gradle_plugin = "4.1.0"
-    val karmok = "0.1.8"
-    val buildToolsVersion = "29.0.0"
+
     val junit = "4.13.1"
-    val cocoapodsext = "0.11"
     val activity = "1.1.0"
     val lifecycle = "2.2.0"
-    val arch = "2.1.0"
-    val ktlint_gradle_plugin = "9.2.1"
-    val koin = "3.0.0-alpha-4"
-    val napier = "1.5.0-alpha1"
-    val ktor = "1.5.0"
-    val coroutines = "1.4.2-native-mt"
-    val multiplatformSettings = "0.7"
-    val kodein_db = "0.5.0-beta"
-    val material = "1.2.1"
-    val kotlinxDateTime = "0.1.1"
     val robolectric = "4.4"
-    val intsoftdev_stations_client_version = "0.22"
+    val intsoftdev_stations_client_version = "0.24"
 }
 
 object Deps {
@@ -34,12 +30,11 @@ object Deps {
     val material_x = "com.google.android.material:material:1.2.1"
     val swipeLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
-    val core_ktx = "androidx.core:core-ktx:1.2.0"
     val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.1"
     val android_gradle_plugin = "com.android.tools.build:gradle:${Versions.android_gradle_plugin}"
-    val kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin_gradle_plugin}"
+    val kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     val jfrog_gradle_plugin = "com.jfrog.bintray.gradle:gradle-bintray-plugin:${Versions.jfrog_bintray_plugin}"
-    val kotlin_serialization = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
+    val kotlinx_serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0"
     val activity_exts = "androidx.activity:activity-ktx:${Versions.activity}"
 
     val junit = "junit:junit:${Versions.junit}"
@@ -58,10 +53,7 @@ object Ktor {
     val commonCore = "io.ktor:ktor-client-core:${Versions.ktor}"
     val commonJson = "io.ktor:ktor-client-json:${Versions.ktor}"
     val commonLogging = "io.ktor:ktor-client-logging:${Versions.ktor}"
-    val jvmCore =     "io.ktor:ktor-client-core-jvm:${Versions.ktor}"
     val androidCore = "io.ktor:ktor-client-okhttp:${Versions.ktor}"
-    val jvmJson =     "io.ktor:ktor-client-json-jvm:${Versions.ktor}"
-    val jvmLogging =     "io.ktor:ktor-client-logging-jvm:${Versions.ktor}"
     val ios =         "io.ktor:ktor-client-ios:${Versions.ktor}"
     val iosCore =     "io.ktor:ktor-client-core-native:${Versions.ktor}"
     val iosJson =     "io.ktor:ktor-client-json-native:${Versions.ktor}"
@@ -78,7 +70,6 @@ object Coroutines {
 
 object Koin {
     val koinCore = "org.koin:koin-core:${Versions.koin}"
-    val koinTest = "org.koin:koin-test:${Versions.koin}"
     val android = "org.koin:koin-android:${Versions.koin}"
     val androidViewModel = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
 }
