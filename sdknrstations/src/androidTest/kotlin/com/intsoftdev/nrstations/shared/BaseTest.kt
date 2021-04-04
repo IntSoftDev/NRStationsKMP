@@ -10,7 +10,6 @@ import kotlinx.coroutines.runBlocking
 
 @RunWith(AndroidJUnit4::class)
 actual abstract class BaseTest {
-    @ExperimentalCoroutinesApi
     @get:Rule
     var coroutineTestRule = CoroutineTestRule()
 

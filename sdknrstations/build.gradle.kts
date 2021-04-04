@@ -82,6 +82,16 @@ kotlin {
     }
 
     sourceSets {
+        all {
+            languageSettings.apply {
+                useExperimentalAnnotation("kotlin.RequiresOptIn")
+                useExperimentalAnnotation("kotlinx.coroutines.ExperimentalCoroutinesApi")
+            }
+        }
+    }
+
+    sourceSets {
+
         val commonMain by getting {
             dependencies {
                 implementation(Deps.kotlinx_serialization)
@@ -92,11 +102,7 @@ kotlin {
                 implementation(Deps.napier_logger)
                 implementation(Deps.multiplatformSettings)
                 implementation(Deps.kotlinxDateTime)
-                implementation(Coroutines.common){
-                    version {
-                        strictly(Versions.coroutines)
-                    }
-                }
+                implementation(Coroutines.common)
                 // Kodein-DB
                 api(KodeinDb.kodeinDb)
                 api(KodeinDb.kodeinSerializer)
@@ -111,8 +117,10 @@ kotlin {
                 implementation(Deps.multiplatformSettingsTest)
                 // Karmok is a touchLab experimental library which helps with mocking interfaces
                 implementation(Deps.karmok)
+                implementation(Deps.turbine)
             }
         }
+
         val androidMain by getting {
             dependencies {
                 api(Koin.android)

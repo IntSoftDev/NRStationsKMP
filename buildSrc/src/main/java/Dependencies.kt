@@ -11,7 +11,7 @@ object Versions {
     val karmok = "0.1.8"
     val kodein_db = "0.6.0-beta"
     val napier = "1.5.0-alpha1"
-    val android_gradle_plugin = "7.0.0-alpha08"
+    val android_gradle_plugin = "7.0.0-alpha10"
     val kotlinxDateTime = "0.1.1"
 
     val jfrog_bintray_plugin = "1.8.4"
@@ -22,7 +22,8 @@ object Versions {
     val activity = "1.1.0"
     val lifecycle = "2.2.0"
     val robolectric = "4.4"
-    val intsoftdev_stations_client_version = "0.24"
+    val turbine = "0.4.1"
+    val intsoftdev_stations_client_version = "0.25"
 }
 
 object Deps {
@@ -46,6 +47,7 @@ object Deps {
     val multiplatformSettingsTest = "com.russhwolf:multiplatform-settings-test:${Versions.multiplatformSettings}"
     val kotlinxDateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.kotlinxDateTime}"
     val karmok = "co.touchlab:karmok-library:${Versions.karmok}"
+    val turbine = "app.cash.turbine:turbine:${Versions.turbine}"
     val nrStationsClient = "com.intsoftdev:sdknrstations:${Versions.intsoftdev_stations_client_version}"
 }
 

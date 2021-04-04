@@ -18,10 +18,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView()
 
-        stationSDK.getAllStations(completionHandler: { stations, error in
-        })
-       
-    
+        stationSDK.getAllStations().watch { stationsResult in
+            
+            if let success = stationsResult as? StationsResultStateSuccess {
+                let allStations = success.data.stations
+                NSLog("got %d stations", allStations.count)
+            } else {
+                NSLog("*** Data Error ***")
+            }
+        }
+        
+        
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
