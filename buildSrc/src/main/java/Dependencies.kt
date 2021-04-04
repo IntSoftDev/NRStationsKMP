@@ -6,7 +6,7 @@ object Versions {
     val kotlin = "1.4.31"
     val coroutines = "1.4.3-native-mt"
     val ktor = "1.5.2"
-    val koin = "3.0.0-alpha-4" // TODO update to official version - getting unresolved imports with 3.0.1 Beta 1
+    val koin = "3.0.1-beta-2"
     val multiplatformSettings = "0.7.3"
     val karmok = "0.1.8"
     val kodein_db = "0.6.0-beta"
@@ -23,7 +23,7 @@ object Versions {
     val lifecycle = "2.2.0"
     val robolectric = "4.4"
     val turbine = "0.4.1"
-    val intsoftdev_stations_client_version = "0.25"
+    val intsoftdev_stations_client_version = "0.26"
 }
 
 object Deps {
@@ -71,9 +71,9 @@ object Coroutines {
 }
 
 object Koin {
-    val koinCore = "org.koin:koin-core:${Versions.koin}"
-    val android = "org.koin:koin-android:${Versions.koin}"
-    val androidViewModel = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
+    val koinCore = "io.insert-koin:koin-core:${Versions.koin}"
+    val android = "io.insert-koin:koin-android:${Versions.koin}"
+    val androidExt = "io.insert-koin:koin-android-ext:${Versions.koin}"
 }
 
 object KodeinDb {

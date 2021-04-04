@@ -42,7 +42,6 @@ dependencies {
     implementation(Ktor.androidCore)
     implementation(Koin.koinCore)
     implementation(Koin.android)
-    implementation(Koin.androidViewModel)
     implementation(Deps.multiplatformSettings)
     implementation(Coroutines.android)
 }
