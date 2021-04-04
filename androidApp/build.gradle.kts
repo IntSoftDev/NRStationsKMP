@@ -28,9 +28,9 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 dependencies {
-   // implementation(project(":sdknrstations"))
+    implementation(project(":sdknrstations"))
     // uncomment the line above and comment out this one when building and publishing
-    implementation(Deps.nrStationsClient)
+   // implementation(Deps.nrStationsClient)
     implementation(Deps.material_x)
     implementation(Deps.app_compat_x)
     implementation(Deps.swipeLayout)
