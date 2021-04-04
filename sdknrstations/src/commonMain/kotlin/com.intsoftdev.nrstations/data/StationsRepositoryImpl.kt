@@ -4,13 +4,16 @@ import com.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.cache.CacheState
 import com.intsoftdev.nrstations.cache.StationsCache
 import com.intsoftdev.nrstations.common.StationsResult
+import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.data.model.station.DataVersion
 import com.intsoftdev.nrstations.data.model.station.toStationLocation
 import com.intsoftdev.nrstations.data.model.station.toUpdateVersion
 import com.intsoftdev.nrstations.domain.StationsRepository
-import com.intsoftdev.nrstations.common.StationsResultState
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 internal class StationsRepositoryImpl(
     private val stationsProxyService: StationsAPI,
@@ -18,34 +21,34 @@ internal class StationsRepositoryImpl(
     private val requestDispatcher: CoroutineDispatcher
 ) : StationsRepository {
 
-    override suspend fun getAllStations(): StationsResultState<StationsResult> {
-        return runCatching {
-            withContext(requestDispatcher) {
-                when (stationsCache.getCacheState()) {
-                    is CacheState.Empty, CacheState.Stale -> {
-                        StationsResultState.Success(refreshStations())
-                    }
-                    is CacheState.Usable -> {
+    override fun getAllStations(): Flow<StationsResultState<StationsResult>> =
+        flow {
+            when (stationsCache.getCacheState()) {
+                is CacheState.Empty, CacheState.Stale -> {
+                    emit(refreshStations())
+                }
+                is CacheState.Usable -> {
+                    emit(
                         StationsResultState.Success(
                             StationsResult(
                                 version = stationsCache.getVersion(),
                                 stations = stationsCache.getAllStations()
                             )
                         )
-                    }
+                    )
                 }
             }
-        }.getOrElse { throwable ->
-            StationsResultState.Failure(throwable)
-        }
-    }
+        }.catch { throwable ->
+            emit(StationsResultState.Failure(throwable))
+        }.flowOn(requestDispatcher)
 
     private suspend fun getServerDataVersion(): DataVersion {
         return stationsProxyService.getDataVersion().first()
     }
 
-    private suspend fun refreshStations(): StationsResult {
+    private suspend fun refreshStations(): StationsResultState<StationsResult> {
         Napier.d("refreshStations enter")
+
         getServerDataVersion().also { serverDataVersion ->
             return when (stationsCache.getCacheState(serverDataVersion.version)) {
                 is CacheState.Empty, CacheState.Stale -> {
@@ -59,17 +62,21 @@ internal class StationsRepositoryImpl(
                     stationsCache.insertStations(stationLocations)
                     stationsCache.insertVersion(version)
 
-                    StationsResult(
-                        version = version,
-                        stations = stationLocations
+                    StationsResultState.Success(
+                        StationsResult(
+                            version = version,
+                            stations = stationLocations
+                        )
                     )
                 }
 
                 is CacheState.Usable -> {
                     Napier.d("getStationsFromCache")
-                    StationsResult(
-                        version = stationsCache.getVersion(),
-                        stations = stationsCache.getAllStations()
+                    StationsResultState.Success(
+                        StationsResult(
+                            version = stationsCache.getVersion(),
+                            stations = stationsCache.getAllStations()
+                        )
                     )
                 }
             }

@@ -50,6 +50,6 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error $errorMessage", LENGTH_SHORT).show()
             }
         )
-        stationsViewModel.getStationsFromNetwork()
+        stationsViewModel.getAllStations()
     }
 }
