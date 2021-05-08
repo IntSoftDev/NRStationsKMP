@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations.cache
 
-import com.github.aakira.napier.Napier
+import co.touchlab.kermit.Kermit
 import com.intsoftdev.nrstations.cache.entities.toStationLocations
 import com.intsoftdev.nrstations.cache.entities.toStationsEntity
 import com.intsoftdev.nrstations.cache.entities.toUpdateVersion
@@ -13,14 +13,15 @@ import kotlinx.datetime.Clock
 internal class StationsCacheImpl(
     private val dbWrapper: DBWrapper,
     private val settings: Settings,
-    private val clock: Clock
+    private val clock: Clock,
+    private val logger: Kermit
 ) : StationsCache {
 
     override fun insertStations(stations: List<StationLocation>) {
-        Napier.d("insertAll enter")
+        logger.d { "insertAll enter" }
         dbWrapper.insertStations(stations.toStationsEntity())
         setLastUpdateTime()
-        Napier.d("insertAll exit")
+        logger.d { "insertAll exit" }
     }
 
     override fun insertVersion(version: UpdateVersion) {
@@ -28,7 +29,7 @@ internal class StationsCacheImpl(
     }
 
     override fun getAllStations(): List<StationLocation> {
-        Napier.d("getAllStations enter")
+        logger.d { "getAllStations enter" }
         return dbWrapper.getStations()?.toStationLocations()
             ?: throw IllegalStateException("no stations in cache")
     }

@@ -31,7 +31,8 @@ internal val stationsDataModule = module {
         StationsRepositoryImpl(
             stationsProxyService = get(),
             stationsCache = get(),
-            requestDispatcher = get(named("NRStationsCoroutineDispatcher"))
+            requestDispatcher = get(named("NRStationsCoroutineDispatcher")),
+            logger = get()
         )
     }
 }
