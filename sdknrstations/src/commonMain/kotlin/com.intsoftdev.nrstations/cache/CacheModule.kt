@@ -11,7 +11,7 @@ import org.koin.dsl.module
 
 internal val stationsCacheModule = module {
     factory<StationsCache> {
-        StationsCacheImpl(dbWrapper = get(), settings = get(), clock = get())
+        StationsCacheImpl(dbWrapper = get(), settings = get(), clock = get(), logger = get())
     }
 
     factory {

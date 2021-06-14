@@ -35,7 +35,6 @@ dependencies {
     implementation(Deps.app_compat_x)
     implementation(Deps.swipeLayout)
     implementation(Deps.constraintlayout)
-    implementation(Deps.napier_logger)
     implementation(Deps.lifecycle_viewmodel)
     implementation(Deps.lifecycle_livedata)
     implementation(Deps.activity_exts)
@@ -43,5 +42,6 @@ dependencies {
     implementation(Koin.koinCore)
     implementation(Koin.android)
     implementation(Deps.multiplatformSettings)
+    implementation(Deps.kermit)
     implementation(Coroutines.android)
 }

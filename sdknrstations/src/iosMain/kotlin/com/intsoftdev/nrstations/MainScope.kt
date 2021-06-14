@@ -1,6 +1,5 @@
 package com.intsoftdev.nrstations
 
-import com.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -13,8 +12,7 @@ class MainScope(private val mainContext: CoroutineContext) :
 
     internal val job = SupervisorJob()
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        //TODO
-        Napier.e("exceptionHandler $throwable")
+        //TODO log
     }
 
     fun onDestroy() {

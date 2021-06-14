@@ -1,9 +1,11 @@
 package com.intsoftdev.nrstations.shared
 
+import co.touchlab.kermit.Kermit
+import co.touchlab.kermit.NSLogLogger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import org.koin.dsl.module
 import org.koin.core.qualifier.named
+import org.koin.dsl.module
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSSearchPathForDirectoriesInDomains
 import platform.Foundation.NSUserDomainMask
@@ -19,4 +21,5 @@ internal actual fun getApplicationFilesDirectoryPath(): String =
 
 internal actual val nrStationsPlatformModule = module {
     factory<CoroutineDispatcher>(named("NRStationsCoroutineDispatcher")) { Dispatchers.Main }
+    single { Kermit(NSLogLogger()) }
 }

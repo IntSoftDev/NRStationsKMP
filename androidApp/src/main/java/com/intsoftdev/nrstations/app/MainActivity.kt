@@ -1,16 +1,17 @@
 package com.intsoftdev.nrstations.app
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
-import com.intsoftdev.nrstations.shared.Greeting
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.github.aakira.napier.Napier
+import co.touchlab.kermit.Kermit
 import com.intsoftdev.nrstations.app.ui.StationsViewModel
+import com.intsoftdev.nrstations.shared.Greeting
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 fun greet(): String {
@@ -21,11 +22,12 @@ class MainActivity : AppCompatActivity() {
 
     protected lateinit var stationsViewModel: StationsViewModel
 
+    private val logger: Kermit by inject()
+
     private var stationAdapter = StationsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Napier.d("NRStations enter")
         setContentView(R.layout.activity_main)
         stationsViewModel = getViewModel()
         val stationsRecyclerView = findViewById<RecyclerView>(R.id.stationsRecyclerView)
@@ -45,11 +47,12 @@ class MainActivity : AppCompatActivity() {
         stationsViewModel.errorLiveData.observe(
             this,
             Observer { errorMessage ->
-                Napier.e("error $errorMessage")
+                logger.e { "error $errorMessage" }
                 stationsLoading.visibility = View.GONE
                 Toast.makeText(this, "Error $errorMessage", LENGTH_SHORT).show()
             }
         )
+        logger.d { "getAllStations" }
         stationsViewModel.getAllStations()
     }
 }

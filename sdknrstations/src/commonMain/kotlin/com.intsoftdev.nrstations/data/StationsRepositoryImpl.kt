@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations.data
 
-import com.github.aakira.napier.Napier
+import co.touchlab.kermit.Kermit
 import com.intsoftdev.nrstations.cache.CacheState
 import com.intsoftdev.nrstations.cache.StationsCache
 import com.intsoftdev.nrstations.common.StationsResult
@@ -18,7 +18,8 @@ import kotlinx.coroutines.flow.flowOn
 internal class StationsRepositoryImpl(
     private val stationsProxyService: StationsAPI,
     private val stationsCache: StationsCache,
-    private val requestDispatcher: CoroutineDispatcher
+    private val requestDispatcher: CoroutineDispatcher,
+    private val logger: Kermit
 ) : StationsRepository {
 
     override fun getAllStations(): Flow<StationsResultState<StationsResult>> =
@@ -47,12 +48,12 @@ internal class StationsRepositoryImpl(
     }
 
     private suspend fun refreshStations(): StationsResultState<StationsResult> {
-        Napier.d("refreshStations enter")
+        logger.d { "refreshStations enter" }
 
         getServerDataVersion().also { serverDataVersion ->
             return when (stationsCache.getCacheState(serverDataVersion.version)) {
                 is CacheState.Empty, CacheState.Stale -> {
-                    Napier.d("getStationsFromServer")
+                    logger.d { "getStationsFromServer" }
                     val stationLocations = stationsProxyService.getAllStations().map {
                         it.toStationLocation()
                     }
@@ -71,7 +72,7 @@ internal class StationsRepositoryImpl(
                 }
 
                 is CacheState.Usable -> {
-                    Napier.d("getStationsFromCache")
+                    logger.d { "getStationsFromCache" }
                     StationsResultState.Success(
                         StationsResult(
                             version = stationsCache.getVersion(),

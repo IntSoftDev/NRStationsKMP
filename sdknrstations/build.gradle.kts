@@ -99,7 +99,6 @@ kotlin {
                 implementation(Ktor.commonJson)
                 implementation(Ktor.commonLogging)
                 implementation(Ktor.commonSerialization)
-                implementation(Deps.napier_logger)
                 implementation(Deps.multiplatformSettings)
                 implementation(Deps.kotlinxDateTime)
                 implementation(Coroutines.common)
@@ -107,6 +106,10 @@ kotlin {
                 api(KodeinDb.kodeinDb)
                 api(KodeinDb.kodeinSerializer)
 
+                // kermit
+                api(Deps.kermit)
+
+                // Koin DI
                 api(Koin.koinCore)
             }
         }
@@ -145,7 +148,6 @@ kotlin {
             dependencies {
                 implementation(Koin.koinCore)
                 implementation(Ktor.ios)
-                implementation(Deps.napier_logger)
                 implementation(Coroutines.common){
                     version {
                         strictly(Versions.coroutines)
