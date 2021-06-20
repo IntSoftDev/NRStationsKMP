@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations
 
-import com.github.aakira.napier.Napier
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob

@@ -1,8 +1,8 @@
 package com.intsoftdev.nrstations.shared
 
 import android.content.Context
-import com.github.aakira.napier.DebugAntilog
-import com.github.aakira.napier.Napier
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.KoinApplication
 

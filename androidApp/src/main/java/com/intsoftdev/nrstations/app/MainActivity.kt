@@ -9,7 +9,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.github.aakira.napier.Napier
+import io.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.app.ui.StationsViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 

@@ -1,7 +1,7 @@
 package com.intsoftdev.nrstations.shared
 
-import com.github.aakira.napier.DebugAntilog
-import com.github.aakira.napier.Napier
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import com.russhwolf.settings.AppleSettings
 import com.russhwolf.settings.Settings
 import org.koin.core.KoinApplication

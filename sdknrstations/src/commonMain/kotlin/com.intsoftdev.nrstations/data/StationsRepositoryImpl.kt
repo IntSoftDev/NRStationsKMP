@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations.data
 
-import com.github.aakira.napier.Napier
+import io.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.cache.CacheState
 import com.intsoftdev.nrstations.cache.StationsCache
 import com.intsoftdev.nrstations.common.StationsResult

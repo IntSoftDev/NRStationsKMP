@@ -3,7 +3,7 @@ package com.intsoftdev.nrstations.app.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.aakira.napier.Napier
+import io.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NREStationsSDK
