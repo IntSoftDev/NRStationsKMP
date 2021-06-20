@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations.domain
 
-import com.github.aakira.napier.Napier
+import io.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.shared.CFlow

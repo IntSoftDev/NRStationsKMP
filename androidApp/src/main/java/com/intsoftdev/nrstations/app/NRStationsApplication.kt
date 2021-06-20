@@ -1,8 +1,8 @@
 package com.intsoftdev.nrstations.app
 
 import android.app.Application
-import com.github.aakira.napier.DebugAntilog
-import com.github.aakira.napier.Napier
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.app.di.viewModelModule
 import com.intsoftdev.nrstations.shared.initStationsSDK
 import org.koin.android.ext.koin.androidContext

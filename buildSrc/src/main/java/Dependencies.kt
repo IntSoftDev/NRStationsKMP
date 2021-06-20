@@ -10,7 +10,7 @@ object Versions {
     val multiplatformSettings = "0.7.3"
     val karmok = "0.1.8"
     val kodein_db = "0.6.0-beta"
-    val napier = "1.5.0-alpha1"
+    val napier = "1.5.0"
     val android_gradle_plugin = "7.0.0-alpha10"
     val kotlinxDateTime = "0.1.1"
 
@@ -23,7 +23,7 @@ object Versions {
     val lifecycle = "2.2.0"
     val robolectric = "4.4"
     val turbine = "0.4.1"
-    val intsoftdev_stations_client_version = "0.26"
+    val intsoftdev_stations_client_version = "0.27"
 }
 
 object Deps {
@@ -42,7 +42,7 @@ object Deps {
     val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
     val lifecycle_viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     val lifecycle_livedata = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
-    val napier_logger = "com.github.aakira:napier:${Versions.napier}"
+    val napier_logger = "io.github.aakira:napier:${Versions.napier}"
     val multiplatformSettings = "com.russhwolf:multiplatform-settings:${Versions.multiplatformSettings}"
     val multiplatformSettingsTest = "com.russhwolf:multiplatform-settings-test:${Versions.multiplatformSettings}"
     val kotlinxDateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.kotlinxDateTime}"

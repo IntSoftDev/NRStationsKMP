@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations.cache
 
-import com.github.aakira.napier.Napier
+import io.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.cache.entities.toStationLocations
 import com.intsoftdev.nrstations.cache.entities.toStationsEntity
 import com.intsoftdev.nrstations.cache.entities.toUpdateVersion
