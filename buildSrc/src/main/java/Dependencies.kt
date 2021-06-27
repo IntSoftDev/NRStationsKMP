@@ -11,7 +11,7 @@ object Versions {
     val karmok = "0.1.8"
     val kodein_db = "0.8.1-beta"
     val napier = "1.5.0"
-    val android_gradle_plugin = "7.0.0-alpha10"
+    val android_gradle_plugin = "7.0.0-beta04"
     val kotlinxDateTime = "0.2.1"
 
     val jfrog_bintray_plugin = "1.8.4"

@@ -4,29 +4,6 @@ plugins {
     id("kotlin-android-extensions")
 }
 
-android {
-    compileSdkVersion(Versions.compile_sdk)
-    defaultConfig {
-        applicationId = "com.intsoftdev.nrstations.androidApp"
-        minSdkVersion(Versions.min_sdk)
-        targetSdkVersion(Versions.target_sdk)
-        versionCode = 1
-        versionName = "1.0"
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check")
-    }
-}
-
 dependencies {
     implementation(project(":sdknrstations"))
     // uncomment the line above and comment out this one when building and publishing
@@ -44,4 +21,16 @@ dependencies {
     implementation(Koin.android)
     implementation(Deps.multiplatformSettings)
     implementation(Coroutines.android)
+}
+
+
+android {
+    compileSdkVersion(Versions.compile_sdk)
+    defaultConfig {
+        applicationId = "com.intsoftdev.nrstations.androidApp"
+        minSdkVersion(Versions.min_sdk)
+        targetSdkVersion(Versions.target_sdk)
+        versionCode = 1
+        versionName = "1.0"
+    }
 }

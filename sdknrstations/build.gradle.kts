@@ -1,19 +1,5 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
-buildscript {
-    repositories {
-        google()
-        mavenLocal()
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath(Deps.kotlin_gradle_plugin)
-        classpath(Deps.android_gradle_plugin)
-        classpath(Deps.jfrog_gradle_plugin)
-    }
-}
-
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
@@ -21,34 +7,6 @@ plugins {
     kotlin("plugin.serialization")
     `maven-publish`
     id("com.jfrog.bintray") version Versions.jfrog_bintray_plugin
-}
-
-android {
-    compileSdkVersion(Versions.compile_sdk)
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdkVersion(Versions.min_sdk)
-        targetSdkVersion(Versions.target_sdk)
-        versionCode = 1
-        versionName = "1.0"
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
 }
 
 kotlin {
@@ -143,6 +101,21 @@ kotlin {
             }
         }
         val iosTest by getting
+    }
+}
+
+android {
+    compileSdkVersion(Versions.compile_sdk)
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    defaultConfig {
+        minSdkVersion(Versions.min_sdk)
+        targetSdkVersion(Versions.target_sdk)
+    }
+
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
     }
 }
 
