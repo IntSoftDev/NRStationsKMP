@@ -36,6 +36,7 @@ object Deps {
     val kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     val jfrog_gradle_plugin = "com.jfrog.bintray.gradle:gradle-bintray-plugin:${Versions.jfrog_bintray_plugin}"
     val kotlinx_serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0"
+    val kotlin_serialization = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
     val activity_exts = "androidx.activity:activity-ktx:${Versions.activity}"
 
     val junit = "junit:junit:${Versions.junit}"

@@ -18,6 +18,7 @@ plugins {
     id("com.android.library")
     kotlin("multiplatform")
     id("kotlin-android-extensions")
+    kotlin("plugin.serialization")
     `maven-publish`
     id("com.jfrog.bintray") version Versions.jfrog_bintray_plugin
 }
