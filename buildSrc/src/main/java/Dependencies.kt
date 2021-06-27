@@ -3,16 +3,16 @@ object Versions {
     val target_sdk = 30
     val compile_sdk = 30
 
-    val kotlin = "1.4.31"
-    val coroutines = "1.4.3-native-mt"
-    val ktor = "1.5.2"
-    val koin = "3.0.1-beta-2"
-    val multiplatformSettings = "0.7.3"
+    val kotlin = "1.5.10"
+    val coroutines = "1.5.0-native-mt"
+    val ktor = "1.6.0"
+    val koin = "3.0.2"
+    val multiplatformSettings = "0.7.7"
     val karmok = "0.1.8"
-    val kodein_db = "0.6.0-beta"
+    val kodein_db = "0.8.1-beta"
     val napier = "1.5.0"
     val android_gradle_plugin = "7.0.0-alpha10"
-    val kotlinxDateTime = "0.1.1"
+    val kotlinxDateTime = "0.2.1"
 
     val jfrog_bintray_plugin = "1.8.4"
     val androidx_test = "1.3.0"
@@ -22,8 +22,8 @@ object Versions {
     val activity = "1.1.0"
     val lifecycle = "2.2.0"
     val robolectric = "4.4"
-    val turbine = "0.4.1"
-    val intsoftdev_stations_client_version = "0.27"
+    val turbine = "0.5.2"
+    val intsoftdev_stations_client_version = "0.30"
 }
 
 object Deps {

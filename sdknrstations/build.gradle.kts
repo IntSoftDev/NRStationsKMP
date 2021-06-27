@@ -18,7 +18,6 @@ plugins {
     id("com.android.library")
     kotlin("multiplatform")
     id("kotlin-android-extensions")
-    kotlin("plugin.serialization") version "1.4.30"
     `maven-publish`
     id("com.jfrog.bintray") version Versions.jfrog_bintray_plugin
 }
@@ -43,17 +42,6 @@ android {
             isMinifyEnabled = false
         }
     }
-
-    // workaround for https://youtrack.jetbrains.com/issue/KT-43944
-    configurations {
-        create("androidTestApi")
-        create("androidTestDebugApi")
-        create("androidTestReleaseApi")
-        create("testApi")
-        create("testDebugApi")
-        create("testReleaseApi")
-    }
-
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
