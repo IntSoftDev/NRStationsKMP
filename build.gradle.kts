@@ -2,6 +2,7 @@ buildscript {
     repositories {
         gradlePluginPortal()
         google()
+        mavenCentral()
     }
     dependencies {
         classpath(Deps.kotlin_gradle_plugin)
@@ -15,7 +16,6 @@ allprojects {
         google()
         mavenLocal()
         mavenCentral()
-        maven(url = "https://kotlin.bintray.com/kotlinx/") // soon will be just jcenter()
     }
 }
 
