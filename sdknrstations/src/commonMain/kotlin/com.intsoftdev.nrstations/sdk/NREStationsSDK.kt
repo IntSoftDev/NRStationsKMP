@@ -1,5 +1,6 @@
 package com.intsoftdev.nrstations.sdk
 
+import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.domain.GetStationsUseCase
@@ -13,4 +14,7 @@ class NREStationsSDK : StationsAPI, KoinComponent {
 
     override fun getAllStations(): CFlow<StationsResultState<StationsResult>> =
         getStationsUseCase.getAllStations().wrap()
+
+    override fun getStationLocation(crsCode: String): StationLocation =
+        getStationsUseCase.getStationLocation(crsCode)
 }

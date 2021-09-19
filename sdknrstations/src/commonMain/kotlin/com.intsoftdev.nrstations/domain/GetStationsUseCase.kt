@@ -12,4 +12,6 @@ internal class GetStationsUseCase(private val stationsRepository: StationsReposi
         Napier.d("getAllStations")
         return stationsRepository.getAllStations()
     }
+
+    fun getStationLocation(crsCode: String?) = stationsRepository.getStationLocation(crsCode)
 }

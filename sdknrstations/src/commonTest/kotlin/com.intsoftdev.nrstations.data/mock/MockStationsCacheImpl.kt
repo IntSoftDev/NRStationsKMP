@@ -14,6 +14,8 @@ internal class MockStationsCacheImpl : StationsCache {
         internal val insertVersion = MockFunctionRecorder<MockStationsCacheImpl, Unit>()
         internal val getAllStations =
             MockFunctionRecorder<MockStationsCacheImpl, List<StationLocation>>()
+        internal val getStationLocation =
+            MockFunctionRecorder<MockStationsCacheImpl, StationLocation>()
         internal val getCacheState = MockFunctionRecorder<MockStationsCacheImpl, CacheState>()
         internal val getVersion = MockFunctionRecorder<MockStationsCacheImpl, UpdateVersion>()
     }
@@ -28,6 +30,10 @@ internal class MockStationsCacheImpl : StationsCache {
 
     override fun getAllStations(): List<StationLocation> {
         return mock.getAllStations.invoke({ getAllStations() }, listOf())
+    }
+
+    override fun getStationLocation(crsCode: String): StationLocation {
+        return mock.getStationLocation.invoke({ getStationLocation(crsCode) }, listOf())
     }
 
     override fun getCacheState(serverVersion: Double?): CacheState {

@@ -1,5 +1,6 @@
 package com.intsoftdev.nrstations.domain
 
+import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.shared.CFlow
@@ -11,4 +12,5 @@ import kotlinx.coroutines.flow.Flow
  */
 internal interface StationsRepository {
     fun getAllStations(): Flow<StationsResultState<StationsResult>>
+    fun getStationLocation(crsCode: String?): StationLocation
 }

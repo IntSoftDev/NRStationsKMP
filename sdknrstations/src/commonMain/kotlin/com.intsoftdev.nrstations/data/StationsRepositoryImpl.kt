@@ -3,6 +3,7 @@ package com.intsoftdev.nrstations.data
 import io.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.cache.CacheState
 import com.intsoftdev.nrstations.cache.StationsCache
+import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.data.model.station.DataVersion
@@ -41,6 +42,18 @@ internal class StationsRepositoryImpl(
         }.catch { throwable ->
             emit(StationsResultState.Failure(throwable))
         }.flowOn(requestDispatcher)
+
+    override fun getStationLocation(crsCode: String?): StationLocation {
+        requireNotNull(crsCode)
+        return when (stationsCache.getCacheState()) {
+            is CacheState.Empty -> {
+                throw IllegalStateException("cache empty")
+            }
+            else -> {
+                stationsCache.getStationLocation(crsCode)
+            }
+        }
+    }
 
     private suspend fun getServerDataVersion(): DataVersion {
         return stationsProxyService.getDataVersion().first()
