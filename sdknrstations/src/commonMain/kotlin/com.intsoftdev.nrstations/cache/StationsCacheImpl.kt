@@ -1,10 +1,11 @@
 package com.intsoftdev.nrstations.cache
 
-import io.github.aakira.napier.Napier
+import com.intsoftdev.nrstations.cache.entities.*
 import com.intsoftdev.nrstations.cache.entities.toStationLocations
 import com.intsoftdev.nrstations.cache.entities.toStationsEntity
 import com.intsoftdev.nrstations.cache.entities.toUpdateVersion
 import com.intsoftdev.nrstations.cache.entities.toVersionEntity
+import io.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.UpdateVersion
 import com.russhwolf.settings.Settings
@@ -31,6 +32,11 @@ internal class StationsCacheImpl(
         Napier.d("getAllStations enter")
         return dbWrapper.getStations()?.toStationLocations()
             ?: throw IllegalStateException("no stations in cache")
+    }
+
+    override fun getStationLocation(crsCode: String): StationLocation {
+        return dbWrapper.getStationLocation(crsCode)?.toStationLocation()
+            ?: throw IllegalStateException("station code $crsCode not found")
     }
 
     override fun getCacheState(serverVersion: Double?): CacheState {
