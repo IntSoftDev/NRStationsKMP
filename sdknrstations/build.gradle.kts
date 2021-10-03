@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
-    id("kotlin-android-extensions")
+    id("kotlin-parcelize")
     kotlin("plugin.serialization")
     `maven-publish`
     id("com.jfrog.bintray") version Versions.jfrog_bintray_plugin
@@ -50,6 +50,7 @@ kotlin {
                 implementation(Deps.multiplatformSettings)
                 implementation(Deps.kotlinxDateTime)
                 implementation(Coroutines.common)
+                api(Deps.moko_parcelize)
                 // Kodein-DB
                 api(KodeinDb.kodeinDb)
                 api(KodeinDb.kodeinSerializer)
@@ -71,7 +72,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 api(Koin.android)
-                implementation(Deps.material_x)
+                implementation(Android.material_x)
                 implementation(Coroutines.android)
                 implementation(Ktor.androidSerialization)
                 implementation(Ktor.androidCore)
