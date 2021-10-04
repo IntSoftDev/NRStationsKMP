@@ -10,23 +10,22 @@ object Versions {
     val compile_sdk = 30
 
     // SDK version
-    val intsoftdev_stations_client_version = "0.40"
+    val intsoftdev_stations_client_version = "0.50"
 
     // kotlin core
-    const val kotlin = "1.5.10"
-    const val coroutines = "1.5.0-native-mt"
-    const val ktor = "1.6.0"
-    const val kotlinxDateTime = "0.2.1"
-    const val ktlint_gradle_plugin = "9.2.1"
+    const val kotlin = "1.5.30"
+    const val coroutines = "1.5.1-native-mt"
+    const val ktor = "1.6.2"
+    const val kotlinxDateTime = "0.3.0"
 
     // parcel
-    const val moko_parcelize_version = "0.7.0"
+    const val moko_parcelize_version = "0.7.1"
 
     // di
-    const val koin = "3.0.2"
+    const val koin = "3.1.2"
 
     // logger
-    const val napier = "1.5.0"
+    const val napier = "2.1.0"
 
     const val kodein_db = "0.8.1-beta"
 
@@ -35,13 +34,12 @@ object Versions {
     const val jfrog_bintray_plugin = "1.8.4"
 
     // android
-    const val activity = "1.1.0"
-    const val lifecycle = "2.2.0"
-    const val android_app_compat = "1.3.0-beta01"
-    const val android_swipe_layout = "1.0.0"
-    const val android_constraint_layout = "2.0.1"
-    const val androidx_navigation = "2.3.5"
+    const val activity = "1.3.1"
+    const val lifecycle = "2.3.1"
     const val material = "1.2.1"
+    const val android_swipe_layout = "1.1.0"
+    const val android_app_compat = "1.3.1"
+    const val android_constraint_layout = "2.1.1"
     const val androidx_test = "1.3.0"
     const val androidx_test_ext = "1.1.2"
 

@@ -8,7 +8,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        SDKInitializerKt.doInitStationsSDK(userDefaults: UserDefaults(suiteName: "NRSTATIONS_SETTINGS")!, enableLogging: true)
+        SDKInitializerKt.doInitStationsSDK(userDefaults: UserDefaults(suiteName: "NRSTATIONS_SETTINGS")!, koinApp: nil, enableLogging: true)
         NSLog("started SDK")
 
         return true
