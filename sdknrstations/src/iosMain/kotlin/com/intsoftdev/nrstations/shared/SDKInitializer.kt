@@ -10,6 +10,7 @@ import platform.Foundation.NSUserDefaults
 
 fun initStationsSDK(
     userDefaults: NSUserDefaults,
+    koinApp: KoinApplication? = null,
     enableLogging: Boolean = false
 ): KoinApplication {
     if (enableLogging) {
@@ -18,6 +19,7 @@ fun initStationsSDK(
     return initSDKiOS(
         module {
             factory<Settings> { AppleSettings(userDefaults) }
-        }
+        },
+        koinApp
     )
 }
