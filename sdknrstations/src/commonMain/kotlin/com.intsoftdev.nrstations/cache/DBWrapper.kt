@@ -10,6 +10,5 @@ internal interface DBWrapper {
     fun getStationLocation(stationId: String): StationEntity?
     fun insertVersion(version: VersionEntity)
     fun getVersion(): VersionEntity?
-
     fun isEmpty(): Boolean
 }

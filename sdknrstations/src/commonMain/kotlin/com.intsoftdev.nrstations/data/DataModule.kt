@@ -1,3 +1,4 @@
+import com.intsoftdev.nrstations.common.DefaultRetryPolicy
 import com.intsoftdev.nrstations.data.StationsAPI
 import com.intsoftdev.nrstations.data.StationsProxy
 import com.intsoftdev.nrstations.data.StationsRepositoryImpl
@@ -31,7 +32,8 @@ internal val stationsDataModule = module {
         StationsRepositoryImpl(
             stationsProxyService = get(),
             stationsCache = get(),
-            requestDispatcher = get(named("NRStationsCoroutineDispatcher"))
+            requestDispatcher = get(named("NRStationsCoroutineDispatcher")),
+            requestRetryPolicy = DefaultRetryPolicy()
         )
     }
 }
