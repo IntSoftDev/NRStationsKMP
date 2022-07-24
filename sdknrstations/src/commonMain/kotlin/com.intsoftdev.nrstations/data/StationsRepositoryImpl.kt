@@ -3,9 +3,11 @@ package com.intsoftdev.nrstations.data
 import io.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.cache.CacheState
 import com.intsoftdev.nrstations.cache.StationsCache
+import com.intsoftdev.nrstations.common.RequestRetryPolicy
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.common.StationsResultState
+import com.intsoftdev.nrstations.common.retryWithPolicy
 import com.intsoftdev.nrstations.data.model.station.DataVersion
 import com.intsoftdev.nrstations.data.model.station.toStationLocation
 import com.intsoftdev.nrstations.data.model.station.toUpdateVersion
@@ -19,7 +21,8 @@ import kotlinx.coroutines.flow.flowOn
 internal class StationsRepositoryImpl(
     private val stationsProxyService: StationsAPI,
     private val stationsCache: StationsCache,
-    private val requestDispatcher: CoroutineDispatcher
+    private val requestDispatcher: CoroutineDispatcher,
+    private val requestRetryPolicy: RequestRetryPolicy
 ) : StationsRepository {
 
     override fun getAllStations(): Flow<StationsResultState<StationsResult>> =
@@ -39,7 +42,7 @@ internal class StationsRepositoryImpl(
                     )
                 }
             }
-        }.catch { throwable ->
+        }.retryWithPolicy(requestRetryPolicy).catch { throwable ->
             emit(StationsResultState.Failure(throwable))
         }.flowOn(requestDispatcher)
 
