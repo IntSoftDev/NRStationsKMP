@@ -10,7 +10,7 @@ object Versions {
     val compile_sdk = 30
 
     // SDK version
-    val intsoftdev_stations_client_version = "0.51"
+    val intsoftdev_stations_client_version = "0.61"
 
     // kotlin core
     const val kotlin = "1.5.30"
