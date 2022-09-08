@@ -5,8 +5,7 @@ plugins {
     kotlin("multiplatform")
     id("kotlin-parcelize")
     kotlin("plugin.serialization")
-    `maven-publish`
-    id("com.jfrog.bintray") version Versions.jfrog_bintray_plugin
+    id("convention.publication")
 }
 
 kotlin {

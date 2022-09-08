@@ -25,6 +25,7 @@ gradle-app.setting
 /build
 /captures
 
+convention-plugins/build
 
 *.xcworkspacedata
 *.xcuserstate
