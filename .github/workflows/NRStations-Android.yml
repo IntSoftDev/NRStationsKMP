@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - main
   pull_request:
     paths-ignore:
       - "**.md"
@@ -26,3 +26,6 @@ jobs:
 
       - name: Build
         run: ./gradlew build
+
+
+
