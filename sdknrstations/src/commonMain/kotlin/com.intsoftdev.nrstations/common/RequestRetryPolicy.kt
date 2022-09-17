@@ -29,7 +29,6 @@ data class DefaultRetryPolicy(
     override val delayFactor: Long = 2
 ) : RequestRetryPolicy
 
-
 fun <T> Flow<T>.retryWithPolicy(
     requestRetryPolicy: RequestRetryPolicy
 ): Flow<T> {

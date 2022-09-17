@@ -1,9 +1,9 @@
 package com.intsoftdev.nrstations.shared
 
-import io.github.aakira.napier.DebugAntilog
-import io.github.aakira.napier.Napier
 import com.russhwolf.settings.AppleSettings
 import com.russhwolf.settings.Settings
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import org.koin.core.KoinApplication
 import org.koin.dsl.module
 import platform.Foundation.NSUserDefaults

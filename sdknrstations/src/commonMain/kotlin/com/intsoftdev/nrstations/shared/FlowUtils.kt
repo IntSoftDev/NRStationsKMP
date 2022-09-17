@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations.shared
 
-import io.ktor.utils.io.core.*
+import io.ktor.utils.io.core.Closeable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

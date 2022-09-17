@@ -2,8 +2,9 @@ package com.intsoftdev.nrstations.data
 
 import com.intsoftdev.nrstations.data.model.station.DataVersion
 import com.intsoftdev.nrstations.data.model.station.StationModel
-import io.ktor.client.*
-import io.ktor.client.request.*
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
 
 internal class StationsProxy(private val httpClient: HttpClient) : StationsAPI {
 
@@ -11,10 +12,12 @@ internal class StationsProxy(private val httpClient: HttpClient) : StationsAPI {
     private val versionUrl = "https://onrails.azurewebsites.net/config/stationsversion.json"
 
     override suspend fun getAllStations(): List<StationModel> {
-        return httpClient.get(baseUrl)
+        val response = httpClient.get(baseUrl)
+        return response.body()
     }
 
     override suspend fun getDataVersion(): List<DataVersion> {
-        return httpClient.get(versionUrl)
+        val response = httpClient.get(versionUrl)
+        return response.body()
     }
 }

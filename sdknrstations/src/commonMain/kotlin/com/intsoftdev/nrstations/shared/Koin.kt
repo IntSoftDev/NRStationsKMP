@@ -28,7 +28,6 @@ internal fun initStationsSDKAndroid(
                 stationsDIModules + nrStationsPlatformModule
             )
         }
-
     } else {
         loadKoinModules(
             stationsDIModules + nrStationsPlatformModule
@@ -37,12 +36,13 @@ internal fun initStationsSDKAndroid(
 }
 
 internal fun initSDKiOS(iOSModule: Module, koinApp: KoinApplication? = null): KoinApplication {
-    return if (koinApp == null)
+    return if (koinApp == null) {
         startKoin {
             modules(
                 stationsDIModules + iOSModule + nrStationsPlatformModule
             )
-        } else {
+        }
+    } else {
         loadKoinModules(
             stationsDIModules + iOSModule + nrStationsPlatformModule
         )

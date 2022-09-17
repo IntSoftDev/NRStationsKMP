@@ -1,0 +1,23 @@
+PODS:
+  - sdknrstations (0.62)
+  - SwiftLint (0.49.1)
+
+DEPENDENCIES:
+  - sdknrstations (from `../sdknrstations/`)
+  - SwiftLint
+
+SPEC REPOS:
+  trunk:
+    - SwiftLint
+
+EXTERNAL SOURCES:
+  sdknrstations:
+    :path: "../sdknrstations/"
+
+SPEC CHECKSUMS:
+  sdknrstations: f3cee89dad02742ef31b2541a57a2bef3f38040e
+  SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
+
+PODFILE CHECKSUM: be5385557f933a1f654a7a76f654471809e2195d
+
+COCOAPODS: 1.10.1
