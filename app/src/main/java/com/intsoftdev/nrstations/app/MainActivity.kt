@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
                         is StationsViewState.StationsLoaded -> {
                             Napier.d("StationsLoaded ${uiState.stationsData.count()}")
+                            stationAdapter.updateData(uiState.stationsData)
                         }
 
                         is StationsViewState.Error -> {
