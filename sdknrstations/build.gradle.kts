@@ -8,6 +8,8 @@ plugins {
     id("com.squareup.sqldelight")
     id("kotlin-parcelize")
     id("convention.publication")
+    `version-catalog`
+    `maven-publish`
 }
 
 android {
@@ -30,7 +32,7 @@ android {
 }
 
 group = "com.intsoftdev"
-version = "0.62"
+version = libs.versions.sdkstations.get()
 
 android {
     configurations {
@@ -137,5 +139,20 @@ kotlin {
 sqldelight {
     database("NRStationsDb") {
         packageName = "com.intsoftdev.nrstations.database"
+    }
+}
+
+catalog {
+    versionCatalog {
+        from(files("../gradle/libs.versions.toml"))
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            artifactId = "versioncatalog"
+            from(components["versionCatalog"])
+        }
     }
 }
