@@ -1,8 +1,5 @@
 package com.intsoftdev.nrstations.shared
 
-import com.intsoftdev.nrstations.database.NRStationsDb
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import io.ktor.client.engine.darwin.Darwin
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -23,8 +20,6 @@ internal actual val nrStationsPlatformModule = module {
     single { Darwin.create() }
 
     single { StationsCallbackViewModel(get()) }
-
-    single<SqlDriver> { NativeSqliteDriver(NRStationsDb.Schema, "NRStationsDb") }
 }
 
 @Suppress("unused") // Called from Swift

@@ -136,12 +136,6 @@ kotlin {
     }
 }
 
-sqldelight {
-    database("NRStationsDb") {
-        packageName = "com.intsoftdev.nrstations.database"
-    }
-}
-
 catalog {
     versionCatalog {
         from(files("../gradle/libs.versions.toml"))

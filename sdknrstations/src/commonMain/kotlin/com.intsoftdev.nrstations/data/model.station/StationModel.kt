@@ -1,7 +1,6 @@
 package com.intsoftdev.nrstations.data.model.station
 
 import com.intsoftdev.nrstations.common.StationLocation
-import com.intsoftdev.nrstations.database.Station
 import kotlinx.serialization.Serializable
 
 /*
@@ -23,21 +22,6 @@ internal fun StationModel.toStationLocation() = StationLocation(
     longitude = this.longitude
 )
 
-internal fun StationLocation.toNRStation() = Station(
-    id = getHashFromStation(this.crsCode, this.stationName),
-    crs = this.crsCode,
-    name = this.stationName,
-    latitude = this.latitude,
-    longitude = this.longitude
-)
-
 internal fun getHashFromStation(crs: String, name: String): Long {
     return (crs + name).hashCode().toLong()
 }
-
-internal fun Station.toStationLocation() = StationLocation(
-    crsCode = this.crs,
-    stationName = this.name,
-    latitude = this.latitude,
-    longitude = this.longitude
-)
