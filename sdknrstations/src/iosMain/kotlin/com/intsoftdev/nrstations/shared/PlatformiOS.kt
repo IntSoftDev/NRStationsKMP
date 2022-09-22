@@ -9,14 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import org.koin.core.component.KoinComponent
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import platform.Foundation.NSDocumentDirectory
-import platform.Foundation.NSSearchPathForDirectoriesInDomains
-import platform.Foundation.NSUserDomainMask
 
-internal actual fun getApplicationFilesDirectoryPath(): String =
-    NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true)[0] as String
-
-internal actual val nrStationsPlatformModule = module {
+internal actual val stationsPlatformModule = module {
     factory<CoroutineDispatcher>(named("NRStationsCoroutineDispatcher")) { Dispatchers.Main }
 
     // TODO not sure if needed
@@ -24,7 +18,7 @@ internal actual val nrStationsPlatformModule = module {
 
     single { StationsCallbackViewModel(get()) }
 
-    single<SqlDriver> { NativeSqliteDriver(NRStationsDb.Schema, "NRStationsDb") }
+    single<SqlDriver>(named("StationsSqlDriver")) { NativeSqliteDriver(NRStationsDb.Schema, "NRStationsDb") }
 }
 
 @Suppress("unused") // Called from Swift

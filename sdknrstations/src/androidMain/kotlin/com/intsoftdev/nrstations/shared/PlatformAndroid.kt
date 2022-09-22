@@ -14,16 +14,15 @@ import org.koin.dsl.module
 
 internal lateinit var appContext: Context
 
-internal actual fun getApplicationFilesDirectoryPath(): String = appContext.filesDir.absolutePath
+internal actual val stationsPlatformModule = module {
 
-internal actual val nrStationsPlatformModule = module {
     factory<CoroutineDispatcher>(named("NRStationsCoroutineDispatcher")) { Dispatchers.Default }
 
     factory<Settings> {
         AndroidSettings(appContext.getSharedPreferences("NRSTATIONS_SETTINGS", Application.MODE_PRIVATE))
     }
 
-    single<SqlDriver> {
+    single<SqlDriver>(named("StationsSqlDriver")) {
         AndroidSqliteDriver(
             NRStationsDb.Schema,
             get(),

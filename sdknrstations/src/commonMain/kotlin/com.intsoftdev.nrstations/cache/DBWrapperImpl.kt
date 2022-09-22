@@ -1,9 +1,10 @@
 package com.intsoftdev.nrstations.cache
 
 import com.intsoftdev.nrstations.common.StationLocation
+import com.intsoftdev.nrstations.data.model.station.getHashFromStation
 import com.intsoftdev.nrstations.data.model.station.toNRStation
 import com.intsoftdev.nrstations.database.NRStationsDb
-import com.intsoftdev.nrstations.database.Station
+import com.intsoftdev.nrstations.database.StationDb
 import com.intsoftdev.nrstations.database.Version
 import io.github.aakira.napier.Napier
 
@@ -11,20 +12,12 @@ internal class DBWrapperImpl(
     private val stationsDb: NRStationsDb
 ) : DBWrapper {
 
-    override fun insertStation(stations: Station) {
-        stationsDb.stationsTableQueries.insert(
-            stations.crs,
-            stations.name,
-            stations.latitude,
-            stations.longitude
-        )
-    }
-
     override fun insertStations(stations: List<StationLocation>) {
         stationsDb.stationsTableQueries.transaction {
             stations.map {
                 with(it.toNRStation()) {
                     stationsDb.stationsTableQueries.insert(
+                        getHashFromStation(this.crs, this.name),
                         this.crs,
                         this.name,
                         this.latitude,
@@ -35,10 +28,10 @@ internal class DBWrapperImpl(
         }
     }
 
-    override fun getStations(): List<Station> =
+    override fun getStations(): List<StationDb> =
         stationsDb.stationsTableQueries.selectAll().executeAsList()
 
-    override fun getStationLocation(stationId: String): Station? {
+    override fun getStationLocation(stationId: String): StationDb? {
         return getStations().firstOrNull { it.crs == stationId }
     }
 

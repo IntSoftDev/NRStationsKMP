@@ -5,6 +5,7 @@ import android.util.Log
 import com.intsoftdev.nrstations.app.di.viewModelModule
 import com.intsoftdev.nrstations.shared.initStationsSDK
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.logger.AndroidLogger
 import org.koin.core.context.startKoin
 
 class NRStationsApplication : Application() {
@@ -13,6 +14,9 @@ class NRStationsApplication : Application() {
         super.onCreate()
 
         val koinApp = startKoin {
+            if (BuildConfig.DEBUG) {
+                logger(AndroidLogger())
+            }
             // declare used Android context
             androidContext(this@NRStationsApplication)
             modules(listOf(viewModelModule))
@@ -23,7 +27,7 @@ class NRStationsApplication : Application() {
         initStationsSDK(
             context = this@NRStationsApplication,
             koinApp = koinApp,
-            enableLogging = true
+            enableLogging = BuildConfig.DEBUG
         )
     }
 }
