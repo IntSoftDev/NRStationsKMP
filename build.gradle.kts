@@ -9,6 +9,7 @@ buildscript {
     dependencies {
         classpath(libs.bundles.gradlePlugins)
         classpath(kotlin("gradle-plugin", libs.versions.kotlin.get()))
+        classpath("io.realm.kotlin:gradle-plugin:1.1.0")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build gradle files
     }
@@ -23,6 +24,7 @@ plugins {
 allprojects {
     repositories {
         google()
+        mavenLocal()
         mavenCentral()
     }
 }

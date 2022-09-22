@@ -35,7 +35,7 @@ internal class StationsRepositoryImpl(
                 is CacheState.Usable -> {
                     Napier.d("cacheState is $cacheState")
                     val result = StationsResult(
-                        version = stationsCache.getVersion().toUpdateVersion(),
+                        version = stationsCache.getVersion(),
                         stations = stationsCache.getAllStations()
                     )
                     Napier.d("cached stations ${result.stations.size} version ${result.version.version}")
@@ -73,7 +73,7 @@ internal class StationsRepositoryImpl(
                     }
 
                     stationsCache.insertStations(stationLocations)
-                    stationsCache.insertVersion(serverDataVersion)
+                    stationsCache.insertVersion(serverDataVersion.toUpdateVersion())
 
                     Napier.d("got stations ${stationLocations.size} version ${serverDataVersion.version}")
 
@@ -88,7 +88,7 @@ internal class StationsRepositoryImpl(
                 is CacheState.Usable -> {
                     Napier.d("getStationsFromCache")
                     val result = StationsResult(
-                        version = stationsCache.getVersion().toUpdateVersion(),
+                        version = stationsCache.getVersion(),
                         stations = stationsCache.getAllStations()
                     )
                     Napier.d("read stations ${result.stations.size} version ${result.version.version}")

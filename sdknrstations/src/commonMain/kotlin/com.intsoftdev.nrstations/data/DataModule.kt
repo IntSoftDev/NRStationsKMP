@@ -16,7 +16,7 @@ import org.koin.dsl.module
 
 private val nonStrictJson = Json { isLenient = true; ignoreUnknownKeys = true }
 
-internal val stationsDataModule = module {
+internal val stationsDataModule = module(createdAtStart=true) {
     factory(named("NRStationsHttpClient")) {
         HttpClient {
             install(ContentNegotiation) {

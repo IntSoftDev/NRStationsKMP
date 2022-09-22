@@ -9,12 +9,12 @@ compose = "1.1.1"
 composeCompiler = "1.2.0-alpha08"
 coroutines = "1.6.1"
 multiplatformSettings = "0.9"
-koin = "3.1.6"
+koin = "3.2.0"
 kotlin = "1.6.20"
 ktor = "2.0.0"
 lifecycle = "2.4.1"
 sqlDelight = "1.5.3"
-sdkstations = "0.625"
+sdkstations = "0.632"
 
 [libraries]
 # 1st party libs

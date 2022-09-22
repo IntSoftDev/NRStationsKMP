@@ -47,6 +47,7 @@ android {
 
 dependencies {
     implementation(project(":sdknrstations"))
+  //  implementation(libs.intsoftdev.stations)
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")

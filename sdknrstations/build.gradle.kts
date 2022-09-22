@@ -8,6 +8,7 @@ plugins {
     id("com.squareup.sqldelight")
     id("kotlin-parcelize")
     id("convention.publication")
+    id("io.realm.kotlin")
     `version-catalog`
     `maven-publish`
 }
@@ -85,6 +86,7 @@ kotlin {
                 implementation(libs.napier.logger)
                 api(libs.moko.parcelize)
                 api(libs.touchlab.kermit)
+                implementation("io.realm.kotlin:library-base:1.1.0")
             }
         }
         val commonTest by getting {

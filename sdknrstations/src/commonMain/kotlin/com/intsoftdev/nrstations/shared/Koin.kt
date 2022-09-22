@@ -7,15 +7,13 @@ import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
+import org.koin.dsl.module
 import stationsDataModule
 import stationsDomainModule
 
-private val stationsDIModules = listOf(
-    stationsSdkModule,
-    stationsDataModule,
-    stationsDomainModule,
-    stationsCacheModule
-)
+val stationsModule = module {
+    includes(stationsCacheModule, stationsDomainModule, stationsDataModule, stationsSdkModule)
+}
 
 internal fun initStationsSDKAndroid(
     appDeclaration: KoinAppDeclaration = {},
@@ -25,12 +23,12 @@ internal fun initStationsSDKAndroid(
         startKoin {
             appDeclaration()
             modules(
-                stationsDIModules + nrStationsPlatformModule
+                stationsModule + nrStationsPlatformModule
             )
         }
     } else {
         loadKoinModules(
-            stationsDIModules + nrStationsPlatformModule
+            stationsModule + nrStationsPlatformModule
         )
     }
 }
@@ -39,12 +37,12 @@ internal fun initSDKiOS(iOSModule: Module, koinApp: KoinApplication? = null): Ko
     return if (koinApp == null) {
         startKoin {
             modules(
-                stationsDIModules + iOSModule + nrStationsPlatformModule
+                stationsModule + iOSModule + nrStationsPlatformModule
             )
         }
     } else {
         loadKoinModules(
-            stationsDIModules + iOSModule + nrStationsPlatformModule
+            stationsModule + iOSModule + nrStationsPlatformModule
         )
         koinApp
     }
