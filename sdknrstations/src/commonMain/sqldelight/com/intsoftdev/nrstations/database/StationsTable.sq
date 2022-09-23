@@ -1,0 +1,23 @@
+CREATE TABLE StationDb (
+id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+crs TEXT NOT NULL,
+name TEXT NOT NULL,
+latitude REAL NOT NULL,
+longitude REAL NOT NULL
+);
+
+selectAll:
+SELECT * FROM StationDb ORDER BY name ASC;
+
+selectByCrsCode:
+SELECT * FROM StationDb WHERE crs = ?;
+
+selectByName:
+SELECT * FROM StationDb WHERE name = ?;
+
+insert:
+INSERT OR REPLACE INTO StationDb(id, crs, name, latitude, longitude)
+VALUES (?, ?, ?, ?, ?);
+
+deleteAll:
+DELETE FROM StationDb;

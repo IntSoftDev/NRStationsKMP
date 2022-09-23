@@ -1,12 +1,4 @@
-pluginManagement {
-    repositories {
-        google()
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
-rootProject.name = "NRStations"
+include(":app", ":sdknrstations")
+rootProject.name = "StationsSDK"
 
 includeBuild("convention-plugins")
-include(":androidApp")
-include(":sdknrstations")

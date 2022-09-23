@@ -1,6 +1,5 @@
 package com.intsoftdev.nrstations.data
 
-import io.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.cache.CacheState
 import com.intsoftdev.nrstations.cache.StationsCache
 import com.intsoftdev.nrstations.common.RequestRetryPolicy
@@ -12,6 +11,7 @@ import com.intsoftdev.nrstations.data.model.station.DataVersion
 import com.intsoftdev.nrstations.data.model.station.toStationLocation
 import com.intsoftdev.nrstations.data.model.station.toUpdateVersion
 import com.intsoftdev.nrstations.domain.StationsRepository
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -27,19 +27,19 @@ internal class StationsRepositoryImpl(
 
     override fun getAllStations(): Flow<StationsResultState<StationsResult>> =
         flow {
-            when (stationsCache.getCacheState()) {
+            when (val cacheState = stationsCache.getCacheState()) {
                 is CacheState.Empty, CacheState.Stale -> {
+                    Napier.d("cacheState is $cacheState")
                     emit(refreshStations())
                 }
                 is CacheState.Usable -> {
-                    emit(
-                        StationsResultState.Success(
-                            StationsResult(
-                                version = stationsCache.getVersion(),
-                                stations = stationsCache.getAllStations()
-                            )
-                        )
+                    Napier.d("cacheState is $cacheState")
+                    val result = StationsResult(
+                        version = stationsCache.getVersion().toUpdateVersion(),
+                        stations = stationsCache.getAllStations()
                     )
+                    Napier.d("cached stations ${result.stations.size} version ${result.version.version}")
+                    emit(StationsResultState.Success(result))
                 }
             }
         }.retryWithPolicy(requestRetryPolicy).catch { throwable ->
@@ -64,7 +64,6 @@ internal class StationsRepositoryImpl(
 
     private suspend fun refreshStations(): StationsResultState<StationsResult> {
         Napier.d("refreshStations enter")
-
         getServerDataVersion().also { serverDataVersion ->
             return when (stationsCache.getCacheState(serverDataVersion.version)) {
                 is CacheState.Empty, CacheState.Stale -> {
@@ -73,14 +72,14 @@ internal class StationsRepositoryImpl(
                         it.toStationLocation()
                     }
 
-                    val version = serverDataVersion.toUpdateVersion()
-
                     stationsCache.insertStations(stationLocations)
-                    stationsCache.insertVersion(version)
+                    stationsCache.insertVersion(serverDataVersion)
+
+                    Napier.d("got stations ${stationLocations.size} version ${serverDataVersion.version}")
 
                     StationsResultState.Success(
                         StationsResult(
-                            version = version,
+                            version = serverDataVersion.toUpdateVersion(),
                             stations = stationLocations
                         )
                     )
@@ -88,12 +87,12 @@ internal class StationsRepositoryImpl(
 
                 is CacheState.Usable -> {
                     Napier.d("getStationsFromCache")
-                    StationsResultState.Success(
-                        StationsResult(
-                            version = stationsCache.getVersion(),
-                            stations = stationsCache.getAllStations()
-                        )
+                    val result = StationsResult(
+                        version = stationsCache.getVersion().toUpdateVersion(),
+                        stations = stationsCache.getAllStations()
                     )
+                    Napier.d("read stations ${result.stations.size} version ${result.version.version}")
+                    StationsResultState.Success(result)
                 }
             }
         }

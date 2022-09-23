@@ -1,14 +1,12 @@
 package com.intsoftdev.nrstations.cache
 
-import com.intsoftdev.nrstations.cache.entities.*
-import com.intsoftdev.nrstations.cache.entities.toStationLocations
-import com.intsoftdev.nrstations.cache.entities.toStationsEntity
-import com.intsoftdev.nrstations.cache.entities.toUpdateVersion
-import com.intsoftdev.nrstations.cache.entities.toVersionEntity
-import io.github.aakira.napier.Napier
 import com.intsoftdev.nrstations.common.StationLocation
-import com.intsoftdev.nrstations.common.UpdateVersion
+import com.intsoftdev.nrstations.data.model.station.DataVersion
+import com.intsoftdev.nrstations.data.model.station.toDataVersion
+import com.intsoftdev.nrstations.data.model.station.toStationLocation
+import com.intsoftdev.nrstations.data.model.station.toVersion
 import com.russhwolf.settings.Settings
+import io.github.aakira.napier.Napier
 import kotlinx.datetime.Clock
 
 internal class StationsCacheImpl(
@@ -19,19 +17,21 @@ internal class StationsCacheImpl(
 
     override fun insertStations(stations: List<StationLocation>) {
         Napier.d("insertAll enter")
-        dbWrapper.insertStations(stations.toStationsEntity())
+        dbWrapper.insertStations(stations)
         setLastUpdateTime()
         Napier.d("insertAll exit")
     }
 
-    override fun insertVersion(version: UpdateVersion) {
-        dbWrapper.insertVersion(version.toVersionEntity())
+    override fun insertVersion(version: DataVersion) {
+        Napier.d("insertVersion $version")
+        dbWrapper.insertVersion(version.toVersion())
     }
 
     override fun getAllStations(): List<StationLocation> {
         Napier.d("getAllStations enter")
-        return dbWrapper.getStations()?.toStationLocations()
-            ?: throw IllegalStateException("no stations in cache")
+        return dbWrapper.getStations().map {
+            it.toStationLocation()
+        }
     }
 
     override fun getStationLocation(crsCode: String): StationLocation {
@@ -51,8 +51,9 @@ internal class StationsCacheImpl(
         }
 
         // 3. has cache time expiry reached
-        return if (doUpdate())
+        return if (doUpdate()) {
             CacheState.Stale
+        }
 
         // 4. else cache is ok
         else CacheState.Usable
@@ -60,10 +61,9 @@ internal class StationsCacheImpl(
 
     private fun isCacheEmpty(): Boolean = dbWrapper.isEmpty()
 
-    override fun getVersion(): UpdateVersion {
-        return dbWrapper.getVersion()?.toUpdateVersion()
+    override fun getVersion(): DataVersion =
+        dbWrapper.getVersion()?.toDataVersion()
             ?: throw IllegalStateException("no version in cache")
-    }
 
     private fun setLastUpdateTime() {
         val lastUpdateMS = clock.now().toEpochMilliseconds()

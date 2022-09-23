@@ -13,7 +13,6 @@ class MainScope(private val mainContext: CoroutineContext) :
 
     internal val job = SupervisorJob()
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        //TODO
         Napier.e("exceptionHandler $throwable")
     }
 

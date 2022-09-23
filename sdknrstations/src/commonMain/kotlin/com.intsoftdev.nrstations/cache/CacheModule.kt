@@ -1,27 +1,20 @@
 package com.intsoftdev.nrstations.cache
 
-import com.intsoftdev.nrstations.cache.entities.StationsEntity
-import com.intsoftdev.nrstations.shared.getApplicationFilesDirectoryPath
+import com.intsoftdev.nrstations.database.NRStationsDb
 import kotlinx.datetime.Clock
-import org.kodein.db.DB
-import org.kodein.db.TypeTable
-import org.kodein.db.impl.inDir
-import org.kodein.db.orm.kotlinx.KotlinxSerializer
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-internal val stationsCacheModule = module {
+internal val stationsCacheModule = module(createdAtStart = true) {
     factory<StationsCache> {
         StationsCacheImpl(dbWrapper = get(), settings = get(), clock = get())
     }
 
     factory {
-        DB.inDir(getApplicationFilesDirectoryPath())
-            .open("stations_db", TypeTable {
-                root<StationsEntity>()
-            }, KotlinxSerializer())
+        NRStationsDb(get(named("StationsSqlDriver")))
     }
 
-    factory<DBWrapper> { DBWrapperImpl(db = get()) }
+    factory<DBWrapper> { DBWrapperImpl(stationsDb = get()) }
 
     factory<Clock> { Clock.System }
 }

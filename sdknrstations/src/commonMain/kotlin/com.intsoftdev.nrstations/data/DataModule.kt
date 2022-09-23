@@ -3,24 +3,29 @@ import com.intsoftdev.nrstations.data.StationsAPI
 import com.intsoftdev.nrstations.data.StationsProxy
 import com.intsoftdev.nrstations.data.StationsRepositoryImpl
 import com.intsoftdev.nrstations.domain.StationsRepository
-import io.ktor.client.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.logging.*
-import kotlinx.serialization.json.Json
+import io.github.aakira.napier.Napier
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.serialization.kotlinx.json.json
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-private val nonStrictJson = Json { isLenient = true; ignoreUnknownKeys = true }
-
-internal val stationsDataModule = module {
+internal val stationsDataModule = module(createdAtStart = true) {
     factory(named("NRStationsHttpClient")) {
         HttpClient {
-            install(JsonFeature) {
-                serializer = KotlinxSerializer(nonStrictJson)
+            expectSuccess = true
+            install(ContentNegotiation) {
+                json()
             }
             install(Logging) {
-                logger = Logger.DEFAULT
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        Napier.d(message)
+                    }
+                }
                 level = LogLevel.INFO
             }
         }
