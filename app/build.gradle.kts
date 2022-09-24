@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk = isdlibs.versions.compileSdk.get().toInt()
     defaultConfig {
         applicationId = "com.intsoftdev.nrstations.androidApp"
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
+        minSdk = isdlibs.versions.minSdk.get().toInt()
+        targetSdk = isdlibs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -41,21 +41,23 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+        kotlinCompilerExtensionVersion = isdlibs.versions.composeCompiler.get()
     }
 }
 
 dependencies {
     implementation(project(":sdknrstations"))
+    // Use the line below for a compiled library rather than source code
+    // implementation(isdlibs.intsoftdev.stations)
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation(libs.androidx.appcompat)
-    implementation(libs.bundles.app.ui)
-    implementation(libs.multiplatformSettings.common)
-    implementation(libs.kotlinx.dateTime)
-    implementation(libs.napier.logger)
-    coreLibraryDesugaring(libs.android.desugaring)
-    implementation(libs.koin.android)
-    testImplementation(libs.junit)
+    implementation(isdlibs.androidx.appcompat)
+    implementation(isdlibs.bundles.app.ui)
+    implementation(isdlibs.multiplatformSettings.common)
+    implementation(isdlibs.kotlinx.dateTime)
+    implementation(isdlibs.napier.logger)
+    coreLibraryDesugaring(isdlibs.android.desugaring)
+    implementation(isdlibs.koin.android)
+    testImplementation(isdlibs.junit)
 }

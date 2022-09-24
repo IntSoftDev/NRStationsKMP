@@ -7,8 +7,8 @@ buildscript {
         maven("https://plugins.gradle.org/m2/")
     }
     dependencies {
-        classpath(libs.bundles.gradlePlugins)
-        classpath(kotlin("gradle-plugin", libs.versions.kotlin.get()))
+        classpath(isdlibs.bundles.gradlePlugins)
+        classpath(kotlin("gradle-plugin", isdlibs.versions.kotlin.get()))
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build gradle files
     }
@@ -17,12 +17,13 @@ buildscript {
 // https://youtrack.jetbrains.com/issue/KTIJ-19369
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.gradleDependencyUpdate)
+    alias(isdlibs.plugins.gradleDependencyUpdate)
 }
 
 allprojects {
     repositories {
         google()
+        mavenLocal()
         mavenCentral()
     }
 }
