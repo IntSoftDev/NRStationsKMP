@@ -31,6 +31,8 @@ android {
 }
 
 group = "com.intsoftdev"
+// the version generated can be either release or snapshot
+// current version is 0.625-SNAPSHOT (update this)
 version = isdlibs.versions.sdkstations.get()
 
 android {
