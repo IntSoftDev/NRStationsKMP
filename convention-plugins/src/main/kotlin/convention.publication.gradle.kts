@@ -85,7 +85,6 @@ publishing {
             scm {
                 url.set("https://github.com/IntSoftDev/NRStationsKMP")
             }
-
         }
     }
 }

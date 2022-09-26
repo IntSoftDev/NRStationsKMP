@@ -8,15 +8,14 @@ plugins {
     id("com.squareup.sqldelight")
     id("kotlin-parcelize")
     id("convention.publication")
-    `version-catalog`
     `maven-publish`
 }
 
 android {
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk = isdlibs.versions.compileSdk.get().toInt()
     defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
+        minSdk = isdlibs.versions.minSdk.get().toInt()
+        targetSdk = isdlibs.versions.targetSdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     testOptions {
@@ -32,7 +31,9 @@ android {
 }
 
 group = "com.intsoftdev"
-version = libs.versions.sdkstations.get()
+// the version generated can be either release or snapshot
+// current version is 0.625-SNAPSHOT (update this)
+version = isdlibs.versions.sdkstations.get()
 
 android {
     configurations {
@@ -73,42 +74,42 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(libs.koin.core)
-                implementation(libs.coroutines.core)
-                implementation(libs.sqlDelight.coroutinesExt)
-                implementation(libs.bundles.ktor.common)
-                implementation(libs.touchlab.stately)
-                implementation(libs.multiplatformSettings.common)
-                implementation(libs.kotlinx.dateTime)
-                implementation(libs.kolinx.serialization)
-                implementation(libs.bundles.ktor.common)
-                implementation(libs.napier.logger)
-                api(libs.moko.parcelize)
-                api(libs.touchlab.kermit)
+                implementation(isdlibs.koin.core)
+                implementation(isdlibs.coroutines.core)
+                implementation(isdlibs.sqlDelight.coroutinesExt)
+                implementation(isdlibs.bundles.ktor.common)
+                implementation(isdlibs.touchlab.stately)
+                implementation(isdlibs.multiplatformSettings.common)
+                implementation(isdlibs.kotlinx.dateTime)
+                implementation(isdlibs.kolinx.serialization)
+                implementation(isdlibs.bundles.ktor.common)
+                implementation(isdlibs.napier.logger)
+                api(isdlibs.moko.parcelize)
+                api(isdlibs.touchlab.kermit)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(libs.bundles.sdknrstations.commonTest)
+                implementation(isdlibs.bundles.sdknrstations.commonTest)
             }
         }
         val androidMain by getting {
             dependencies {
-                api(libs.koin.android)
-                implementation(libs.androidx.lifecycle.viewmodel)
-                implementation(libs.sqlDelight.android)
-                implementation(libs.ktor.client.okHttp)
+                api(isdlibs.koin.android)
+                implementation(isdlibs.androidx.lifecycle.viewmodel)
+                implementation(isdlibs.sqlDelight.android)
+                implementation(isdlibs.ktor.client.okHttp)
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation(libs.bundles.sdknrstations.androidTest)
+                implementation(isdlibs.bundles.sdknrstations.androidTest)
             }
         }
         val iosMain by getting {
             dependencies {
-                implementation(libs.sqlDelight.native)
-                implementation(libs.ktor.client.ios)
+                implementation(isdlibs.sqlDelight.native)
+                implementation(isdlibs.ktor.client.ios)
             }
         }
         val iosTest by getting
@@ -139,20 +140,5 @@ kotlin {
 sqldelight {
     database("NRStationsDb") {
         packageName = "com.intsoftdev.nrstations.database"
-    }
-}
-
-catalog {
-    versionCatalog {
-        from(files("../gradle/libs.versions.toml"))
-    }
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            artifactId = "versioncatalog"
-            from(components["versionCatalog"])
-        }
     }
 }

@@ -1,3 +1,16 @@
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+    }
+    versionCatalogs {
+        create("isdlibs") {
+            from("com.intsoftdev:isdversioncatalog:0.01-SNAPSHOT")
+        }
+    }
+}
+
 include(":app", ":sdknrstations")
 rootProject.name = "StationsSDK"
 
