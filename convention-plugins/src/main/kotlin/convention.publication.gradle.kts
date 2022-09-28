@@ -40,6 +40,11 @@ val javadocJar by tasks.registering(Jar::class) {
 
 fun getExtraString(name: String) = ext[name]?.toString()
 
+group = "com.intsoftdev"
+// the version generated can be either release or snapshot
+// current version is 0.625-SNAPSHOT (update this)
+version = "0.625-SNAPSHOT"
+
 publishing {
     // Configure maven central repository
     repositories {
