@@ -42,8 +42,8 @@ fun getExtraString(name: String) = ext[name]?.toString()
 
 group = "com.intsoftdev"
 // the version generated can be either release or snapshot
-// current version is 0.625-SNAPSHOT (update this)
-version = "0.625-SNAPSHOT"
+// current version is 3.0.0-SNAPSHOT (update this)
+version = "3.0.2"
 
 publishing {
     // Configure maven central repository

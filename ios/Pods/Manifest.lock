@@ -1,5 +1,5 @@
 PODS:
-  - sdknrstations (0.625-SNAPSHOT)
+  - sdknrstations (3.0.1-SNAPSHOT)
   - SwiftLint (0.49.1)
 
 DEPENDENCIES:
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../sdknrstations/"
 
 SPEC CHECKSUMS:
-  sdknrstations: 71e67750ecda3fac09d3195a64e865786f7c0424
+  sdknrstations: 3537886b59b4b8315c4f82bc15fc2e4876655b3b
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
 
 PODFILE CHECKSUM: be5385557f933a1f654a7a76f654471809e2195d
