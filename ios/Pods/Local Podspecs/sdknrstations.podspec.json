@@ -1,6 +1,6 @@
 {
   "name": "sdknrstations",
-  "version": "0.625-SNAPSHOT",
+  "version": "3.0.1-SNAPSHOT",
   "homepage": "https://github.com/intsoftdev/NRStationsKMP",
   "source": {
     "http": ""

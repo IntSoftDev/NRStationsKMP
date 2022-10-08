@@ -8,11 +8,13 @@ import io.ktor.client.request.get
 
 internal class StationsProxy(private val httpClient: HttpClient) : StationsAPI {
 
-    private val baseUrl = "https://onrails.azurewebsites.net/stations"
-    private val versionUrl = "https://onrails.azurewebsites.net/config/stationsversion.json"
+    private val baseUrl = "https://onrails.azurewebsites.net"
+
+    private val stationsUrl = "$baseUrl/stations"
+    private val versionUrl = "$baseUrl/config/stationsversion.json"
 
     override suspend fun getAllStations(): List<StationModel> {
-        val response = httpClient.get(baseUrl)
+        val response = httpClient.get(stationsUrl)
         return response.body()
     }
 
