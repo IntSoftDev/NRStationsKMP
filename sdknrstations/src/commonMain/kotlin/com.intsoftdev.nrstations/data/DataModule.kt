@@ -15,7 +15,7 @@ import org.koin.dsl.module
 
 internal val stationsDataModule = module(createdAtStart = true) {
     factory(named("NRStationsHttpClient")) {
-        HttpClient {
+        HttpClient(engine = get(named("StationsHttpEngine"))) {
             expectSuccess = true
             install(ContentNegotiation) {
                 json()

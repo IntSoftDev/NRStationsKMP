@@ -13,8 +13,7 @@ import org.koin.dsl.module
 internal actual val stationsPlatformModule = module {
     factory<CoroutineDispatcher>(named("NRStationsCoroutineDispatcher")) { Dispatchers.Main }
 
-    // TODO not sure if needed
-    single { Darwin.create() }
+    single(named("StationsHttpEngine")) { Darwin.create() }
 
     single { StationsCallbackViewModel(get()) }
 
