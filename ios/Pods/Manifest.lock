@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../sdknrstations/"
 
 SPEC CHECKSUMS:
-  sdknrstations: f21423fa7b7df44681e62c26e976df3c6ad5e88a
+  sdknrstations: 7487d5b4ae1b0fccfb97104decd5b50596963407
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
 
 PODFILE CHECKSUM: be5385557f933a1f654a7a76f654471809e2195d

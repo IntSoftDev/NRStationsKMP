@@ -17,7 +17,7 @@ buildscript {
 // https://youtrack.jetbrains.com/issue/KTIJ-19369
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(isdlibs.plugins.gradleDependencyUpdate)
+    alias(isdlibs.plugins.gradleVersions)
 }
 
 allprojects {
