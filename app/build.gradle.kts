@@ -31,17 +31,9 @@ android {
         abortOnError = true
     }
 
-    buildFeatures {
-        compose = true
-    }
-
     kotlinOptions {
         jvmTarget = "1.8"
         freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = isdlibs.versions.composeCompiler.get()
     }
 }
 
