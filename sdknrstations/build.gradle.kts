@@ -30,7 +30,7 @@ android {
     }
 }
 
-android {
+/*android {
     configurations {
         create("androidTestApi")
         create("androidTestDebugApi")
@@ -39,7 +39,7 @@ android {
         create("testDebugApi")
         create("testReleaseApi")
     }
-}
+}*/
 
 kotlin {
     android {
