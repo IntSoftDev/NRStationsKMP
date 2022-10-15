@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 pluginManagement {
     repositories {
         google()
@@ -14,7 +16,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("isdlibs") {
-            from("com.intsoftdev:isdversioncatalog:3.1.0-SNAPSHOT")
+            from("com.intsoftdev:isdversioncatalog:3.1.1-SNAPSHOT")
         }
     }
 }
