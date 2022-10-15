@@ -1,3 +1,13 @@
+@file:Suppress("UnstableApiUsage")
+
+pluginManagement {
+    repositories {
+        google()
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
 dependencyResolutionManagement {
     repositories {
         mavenLocal()
@@ -6,7 +16,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("isdlibs") {
-            from("com.intsoftdev:isdversioncatalog:0.01-SNAPSHOT")
+            from("com.intsoftdev:isdversioncatalog:3.1.1-SNAPSHOT")
         }
     }
 }

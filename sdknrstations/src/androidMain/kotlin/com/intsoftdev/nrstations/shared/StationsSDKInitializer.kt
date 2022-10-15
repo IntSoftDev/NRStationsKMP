@@ -9,7 +9,7 @@ import org.koin.core.KoinApplication
 fun initStationsSDK(
     context: Context,
     koinApp: KoinApplication? = null,
-    enableLogging: Boolean = false,
+    enableLogging: Boolean = false
 ) {
     appContext = context
     if (enableLogging) {

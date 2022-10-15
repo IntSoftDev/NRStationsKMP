@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class StationsViewModel(
-    private var stationsSDK: NREStationsSDK,
+    private var stationsSDK: NREStationsSDK
 ) : SdkViewModel() {
 
     // Backing property to avoid state updates from other classes

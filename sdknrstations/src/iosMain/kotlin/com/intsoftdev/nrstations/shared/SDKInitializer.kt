@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations.shared
 
-import com.russhwolf.settings.AppleSettings
+import com.russhwolf.settings.NSUserDefaultsSettings
 import com.russhwolf.settings.Settings
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
@@ -18,7 +18,7 @@ fun initStationsSDK(
     }
     return initSDKiOS(
         module {
-            factory<Settings> { AppleSettings(userDefaults) }
+            factory<Settings> { NSUserDefaultsSettings(userDefaults) }
         },
         koinApp
     )
