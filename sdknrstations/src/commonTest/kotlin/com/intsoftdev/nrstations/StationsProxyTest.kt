@@ -12,36 +12,38 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.test.runTest
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.core.qualifier.named
+import org.koin.test.KoinTest
+import org.koin.test.get
+import org.koin.test.inject
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class StationsProxyTest {
+class StationsProxyTest : KoinTest {
 
-    val jsonResponse =
-        "[{\"latitude\":51.491060763749196,\"longitude\":0.12139402996250627,\"stationName\":\"Abbey Wood (London)\",\"crsCode\":\"ABW\"}]"
+    @BeforeTest
+    fun setUp() {
+        startKoin {
+            modules(testModule)
+        }
+    }
+
+    @AfterTest
+    fun teardown() {
+        stopKoin()
+    }
 
     @Test
     fun success() = runTest {
-        val engine = MockEngine {
-            assertEquals("https://onrails.azurewebsites.net/stations", it.url.toString())
-            respond(
-                content = jsonResponse,
-                headers = headersOf(
-                    HttpHeaders.ContentType,
-                    ContentType.Application.Json.toString()
-                )
-            )
-        }
 
-        val httpClient = HttpClient(engine) {
-            expectSuccess = true
-            install(ContentNegotiation) {
-                json()
-            }
-        }
+        val httpClientSuccess = get<HttpClient>(named("HttpTestClientSuccess"))
 
-        val stationsApi = StationsProxy(httpClient)
+        val stationsApi = StationsProxy(httpClientSuccess)
 
         val result = stationsApi.getAllStations()
 
@@ -53,22 +55,10 @@ class StationsProxyTest {
 
     @Test
     fun failure() = runTest {
-        val engine = MockEngine {
-            assertEquals("https://onrails.azurewebsites.net/stations", it.url.toString())
-            respond(
-                content = "",
-                status = HttpStatusCode.NotFound
-            )
-        }
 
-        val httpClient = HttpClient(engine) {
-            expectSuccess = true
-            install(ContentNegotiation) {
-                json()
-            }
-        }
+        val httpClientFailure = get<HttpClient>(named("HttpTestClientError"))
 
-        val stationsApi = StationsProxy(httpClient)
+        val stationsApi = StationsProxy(httpClientFailure)
 
         assertFailsWith<ClientRequestException> {
             stationsApi.getAllStations()

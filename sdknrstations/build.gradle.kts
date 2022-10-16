@@ -65,6 +65,7 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(isdlibs.bundles.sdknrstations.commonTest)
+                implementation("com.russhwolf:multiplatform-settings-test:1.0.0-RC")
             }
         }
         val androidMain by getting {
