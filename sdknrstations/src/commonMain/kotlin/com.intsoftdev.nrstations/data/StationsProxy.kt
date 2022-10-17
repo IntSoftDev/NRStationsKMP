@@ -8,7 +8,8 @@ import io.ktor.client.request.get
 
 internal class StationsProxy(
     private val httpClient: HttpClient,
-    private val baseUrl: String) : StationsAPI {
+    private val baseUrl: String
+) : StationsAPI {
 
     private val stationsUrl = "$baseUrl/stations"
     private val versionUrl = "$baseUrl/config/stationsversion.json"
