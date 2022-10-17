@@ -2,22 +2,13 @@ package com.intsoftdev.nrstations
 
 import com.intsoftdev.nrstations.data.StationsProxy
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.mock.MockEngine
-import io.ktor.client.engine.mock.respond
 import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpStatusCode
-import io.ktor.http.headersOf
-import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.test.runTest
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
 import org.koin.test.KoinTest
 import org.koin.test.get
-import org.koin.test.inject
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -43,7 +34,7 @@ class StationsProxyTest : KoinTest {
 
         val httpClientSuccess = get<HttpClient>(named("HttpTestClientSuccess"))
 
-        val stationsApi = StationsProxy(httpClientSuccess)
+        val stationsApi = StationsProxy(httpClientSuccess, MOCK_SERVER_BASE_URL)
 
         val result = stationsApi.getAllStations()
 
@@ -58,10 +49,15 @@ class StationsProxyTest : KoinTest {
 
         val httpClientFailure = get<HttpClient>(named("HttpTestClientError"))
 
-        val stationsApi = StationsProxy(httpClientFailure)
+        val stationsApi = StationsProxy(httpClientFailure, MOCK_SERVER_BASE_URL)
 
         assertFailsWith<ClientRequestException> {
             stationsApi.getAllStations()
         }
+    }
+
+    companion object {
+        internal const val MOCK_SERVER_BASE_URL = "http://example.com"
+        internal const val MOCK_SERVER_STATIONS_URL = "http://example.com/stations"
     }
 }

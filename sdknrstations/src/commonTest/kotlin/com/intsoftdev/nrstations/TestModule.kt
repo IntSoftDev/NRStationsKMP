@@ -1,5 +1,6 @@
 package com.intsoftdev.nrstations
 
+import com.intsoftdev.nrstations.StationsProxyTest.Companion.MOCK_SERVER_STATIONS_URL
 import com.intsoftdev.nrstations.cache.DBWrapper
 import com.intsoftdev.nrstations.cache.DBWrapperImpl
 import com.intsoftdev.nrstations.cache.StationsCache
@@ -8,11 +9,9 @@ import com.intsoftdev.nrstations.database.NRStationsDb
 import com.intsoftdev.nrstations.mock.ClockMock
 import com.russhwolf.settings.MapSettings
 import com.russhwolf.settings.Settings
-import io.github.aakira.napier.Napier
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.datetime.Clock
@@ -27,7 +26,7 @@ internal val testModule = module {
             "[{\"latitude\":51.491060763749196,\"longitude\":0.12139402996250627,\"stationName\":\"Abbey Wood (London)\",\"crsCode\":\"ABW\"}]"
 
         val engine = MockEngine {
-            assertEquals("https://onrails.azurewebsites.net/stations", it.url.toString())
+            assertEquals(MOCK_SERVER_STATIONS_URL, it.url.toString())
             respond(
                 content = jsonResponse,
                 headers = headersOf(
@@ -47,7 +46,7 @@ internal val testModule = module {
 
     factory(named("HttpTestClientError")) {
         val engine = MockEngine {
-            assertEquals("https://onrails.azurewebsites.net/stations", it.url.toString())
+            assertEquals(MOCK_SERVER_STATIONS_URL, it.url.toString())
             respond(
                 content = "",
                 status = HttpStatusCode.NotFound

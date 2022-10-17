@@ -1,6 +1,8 @@
 package com.intsoftdev.nrstations.shared
 
 import com.intsoftdev.nrstations.cache.stationsCacheModule
+import com.intsoftdev.nrstations.common.APIConfig
+import com.intsoftdev.nrstations.common.toKoinProperties
 import com.intsoftdev.nrstations.sdk.stationsSdkModule
 import org.koin.core.KoinApplication
 import org.koin.core.context.loadKoinModules
@@ -22,31 +24,39 @@ private val stationsDIModules = module {
 }
 
 internal fun initStationsSDKAndroid(
+    apiConfig: APIConfig,
     appDeclaration: KoinAppDeclaration = {},
     koinApp: KoinApplication? = null
 ) {
     if (koinApp == null) {
         startKoin {
+            properties(apiConfig.toKoinProperties())
             appDeclaration()
             modules(
                 stationsDIModules
             )
         }
     } else {
+        koinApp.properties(apiConfig.toKoinProperties())
         loadKoinModules(
             stationsDIModules
         )
     }
 }
 
-internal fun initSDKiOS(iOSModule: Module, koinApp: KoinApplication? = null): KoinApplication {
+internal fun initSDKiOS(
+    apiConfig: APIConfig,
+    iOSModule: Module,
+    koinApp: KoinApplication? = null): KoinApplication {
     return if (koinApp == null) {
         startKoin {
+            properties(apiConfig.toKoinProperties())
             modules(
                 stationsDIModules + iOSModule
             )
         }
     } else {
+        koinApp.properties(apiConfig.toKoinProperties())
         loadKoinModules(
             stationsDIModules + iOSModule
         )

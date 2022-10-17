@@ -1,3 +1,4 @@
+import com.intsoftdev.nrstations.common.APIConfig.Companion.SERVER_PROP_KEY
 import com.intsoftdev.nrstations.common.DefaultRetryPolicy
 import com.intsoftdev.nrstations.data.StationsAPI
 import com.intsoftdev.nrstations.data.StationsProxy
@@ -31,7 +32,12 @@ internal val stationsDataModule = module(createdAtStart = true) {
         }
     }
 
-    factory<StationsAPI> { StationsProxy(httpClient = get(named("NRStationsHttpClient"))) }
+    factory<StationsAPI> {
+        StationsProxy(
+            httpClient = get(named("NRStationsHttpClient")),
+            baseUrl = getProperty(SERVER_PROP_KEY)
+        )
+    }
 
     factory<StationsRepository> {
         StationsRepositoryImpl(
