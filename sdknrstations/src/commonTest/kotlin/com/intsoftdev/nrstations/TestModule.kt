@@ -1,23 +1,27 @@
 package com.intsoftdev.nrstations
 
-import com.intsoftdev.nrstations.StationsProxyTest.Companion.MOCK_SERVER_STATIONS_URL
-import com.intsoftdev.nrstations.cache.DBWrapper
+import com.intsoftdev.nrstations.cache.DBWrapper // ktlint-disable import-ordering
 import com.intsoftdev.nrstations.cache.DBWrapperImpl
 import com.intsoftdev.nrstations.cache.StationsCache
 import com.intsoftdev.nrstations.cache.StationsCacheImpl
 import com.intsoftdev.nrstations.database.NRStationsDb
 import com.intsoftdev.nrstations.mock.ClockMock
+import com.intsoftdev.nrstations.StationsProxyTest.Companion.MOCK_SERVER_STATIONS_URL
 import com.russhwolf.settings.MapSettings
 import com.russhwolf.settings.Settings
-import io.ktor.client.*
-import io.ktor.client.engine.mock.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.engine.mock.respond
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.headersOf
+import io.ktor.serialization.kotlinx.json.json
+import kotlin.test.assertEquals
 import kotlinx.datetime.Clock
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import kotlin.test.assertEquals
 
 internal val testModule = module {
 
@@ -75,5 +79,5 @@ internal val testModule = module {
 
     single<DBWrapper> { DBWrapperImpl(get()) }
 
-    single{NRStationsDb(testDbConnection()) }
+    single { NRStationsDb(testDbConnection()) }
 }

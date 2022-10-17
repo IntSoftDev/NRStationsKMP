@@ -47,7 +47,8 @@ internal fun initStationsSDKAndroid(
 internal fun initSDKiOS(
     apiConfig: APIConfig,
     iOSModule: Module,
-    koinApp: KoinApplication? = null): KoinApplication {
+    koinApp: KoinApplication? = null
+): KoinApplication {
     return if (koinApp == null) {
         startKoin {
             properties(apiConfig.toKoinProperties())
