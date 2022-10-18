@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations
 
-import com.intsoftdev.nrstations.data.StationsProxy
+import com.intsoftdev.nrstations.data.StationsProxy // ktlint-disable import-ordering
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ClientRequestException
 import kotlin.test.AfterTest
