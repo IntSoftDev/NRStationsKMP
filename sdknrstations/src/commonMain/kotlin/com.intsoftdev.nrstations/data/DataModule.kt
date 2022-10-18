@@ -1,4 +1,6 @@
+import com.intsoftdev.nrstations.common.APIConfig.Companion.LICENSE_PROP_KEY
 import com.intsoftdev.nrstations.common.APIConfig.Companion.SERVER_PROP_KEY
+import com.intsoftdev.nrstations.common.APIConfig.Companion.SUBSCRIPTION_PROP_KEY
 import com.intsoftdev.nrstations.common.DefaultRetryPolicy
 import com.intsoftdev.nrstations.data.StationsAPI
 import com.intsoftdev.nrstations.data.StationsProxy
@@ -10,6 +12,10 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.header
+import io.ktor.client.request.headers
+import io.ktor.client.request.request
+import io.ktor.client.utils.EmptyContent.headers
 import io.ktor.serialization.kotlinx.json.json
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -27,7 +33,7 @@ internal val stationsDataModule = module(createdAtStart = true) {
                         Napier.d(message)
                     }
                 }
-                level = LogLevel.INFO
+                level = LogLevel.HEADERS
             }
         }
     }
@@ -35,7 +41,8 @@ internal val stationsDataModule = module(createdAtStart = true) {
     factory<StationsAPI> {
         StationsProxy(
             httpClient = get(named("NRStationsHttpClient")),
-            baseUrl = getProperty(SERVER_PROP_KEY)
+            baseUrl = getProperty(SERVER_PROP_KEY),
+            azureSubscriptionKey = getProperty(LICENSE_PROP_KEY)
         )
     }
 
