@@ -21,7 +21,7 @@ class StationsCacheImplTest : KoinTest {
 
     private val testStation = StationLocation("London Waterloo", "WAT", 0.0, 0.0)
 
-    private val stationsCache : StationsCache by inject()
+    private val stationsCache: StationsCache by inject()
 
     @BeforeTest
     fun setUp() {

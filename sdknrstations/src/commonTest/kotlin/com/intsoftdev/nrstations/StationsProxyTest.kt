@@ -3,17 +3,17 @@ package com.intsoftdev.nrstations
 import com.intsoftdev.nrstations.data.StationsProxy
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ClientRequestException
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlinx.coroutines.test.runTest
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
 import org.koin.test.KoinTest
 import org.koin.test.get
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 class StationsProxyTest : KoinTest {
 
@@ -31,7 +31,6 @@ class StationsProxyTest : KoinTest {
 
     @Test
     fun success() = runTest {
-
         val httpClientSuccess = get<HttpClient>(named("HttpTestClientSuccess"))
 
         val stationsApi = StationsProxy(httpClientSuccess, MOCK_SERVER_BASE_URL)
@@ -46,7 +45,6 @@ class StationsProxyTest : KoinTest {
 
     @Test
     fun failure() = runTest {
-
         val httpClientFailure = get<HttpClient>(named("HttpTestClientError"))
 
         val stationsApi = StationsProxy(httpClientFailure, MOCK_SERVER_BASE_URL)
