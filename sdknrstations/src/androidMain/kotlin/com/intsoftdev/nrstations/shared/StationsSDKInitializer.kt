@@ -1,6 +1,7 @@
 package com.intsoftdev.nrstations.shared
 
 import android.content.Context
+import com.intsoftdev.nrstations.common.APIConfig
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import org.koin.android.ext.koin.androidContext
@@ -8,8 +9,9 @@ import org.koin.core.KoinApplication
 
 fun initStationsSDK(
     context: Context,
+    apiConfig: APIConfig = APIConfig(),
     koinApp: KoinApplication? = null,
-    enableLogging: Boolean = false,
+    enableLogging: Boolean = false
 ) {
     appContext = context
     if (enableLogging) {
@@ -18,6 +20,7 @@ fun initStationsSDK(
 
     initStationsSDKAndroid(
         appDeclaration = { androidContext(androidContext = context) },
-        koinApp = koinApp
+        koinApp = koinApp,
+        apiConfig = apiConfig
     )
 }

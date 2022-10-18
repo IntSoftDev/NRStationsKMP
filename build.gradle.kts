@@ -1,23 +1,15 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-        maven("https://plugins.gradle.org/m2/")
-    }
-    dependencies {
-        classpath(isdlibs.bundles.gradlePlugins)
-        classpath(kotlin("gradle-plugin", isdlibs.versions.kotlin.get()))
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build gradle files
-    }
-}
 
 // https://youtrack.jetbrains.com/issue/KTIJ-19369
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(isdlibs.plugins.gradleDependencyUpdate)
+    alias(isdlibs.plugins.gradleVersions)
+    alias(isdlibs.plugins.ktlint) apply false
+
+    //trick: for the same plugin versions in all sub-modules
+    kotlin("multiplatform") version isdlibs.versions.kotlin.get() apply false
+    kotlin("plugin.serialization") version isdlibs.versions.kotlin.get() apply false
+    id("com.squareup.sqldelight") version isdlibs.versions.sqlDelight.get() apply false
+    id("com.android.application") version isdlibs.versions.androidGradle.get() apply false
 }
 
 allprojects {

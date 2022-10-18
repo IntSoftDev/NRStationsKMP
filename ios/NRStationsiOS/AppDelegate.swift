@@ -14,7 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let defaults = UserDefaults(suiteName: "NRSTATIONS_SETTINGS")!
         
+        let config = APIConfig(serverUrl: "https://onrails-test.azurewebsites.net", licenseKey: "")
+        
         SDKInitializerKt.doInitStationsSDK(
+            apiConfig: config,
             userDefaults: defaults,
             koinApp: nil,
             enableLogging: true)
