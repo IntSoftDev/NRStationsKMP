@@ -37,7 +37,7 @@ internal val stationsDataModule = module(createdAtStart = true) {
         StationsProxy(
             httpClient = get(named("NRStationsHttpClient")),
             baseUrl = getProperty(SERVER_PROP_KEY),
-            azureSubscriptionKey = getProperty(LICENSE_PROP_KEY)
+            azureSubscriptionKey = getPropertyOrNull(LICENSE_PROP_KEY)
         )
     }
 
