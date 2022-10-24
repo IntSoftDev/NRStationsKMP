@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 
 import SwiftUI
-import sdknrstations
+import nrstations
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

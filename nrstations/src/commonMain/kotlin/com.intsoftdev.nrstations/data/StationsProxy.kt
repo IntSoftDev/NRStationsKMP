@@ -8,20 +8,19 @@ import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
-import io.ktor.client.request.request
 
 internal class StationsProxy(
     private val httpClient: HttpClient,
     private val baseUrl: String,
-    private val azureSubscriptionKey: String? =  null
+    private val azureSubscriptionKey: String? = null
 ) : StationsAPI {
 
     private val stationsUrl = "$baseUrl/stations"
     private val versionUrl = "$baseUrl/config/stationsversion.json"
 
     override suspend fun getAllStations(): List<StationModel> {
-        val response = httpClient.get(stationsUrl)  {
-           this.appendHeaders()
+        val response = httpClient.get(stationsUrl) {
+            this.appendHeaders()
         }
         return response.body()
     }

@@ -21,7 +21,7 @@ dependencyResolutionManagement {
     }
 }
 
-include(":app", ":sdknrstations")
+include(":app", ":nrstations")
 rootProject.name = "StationsSDK"
 
 includeBuild("convention-plugins")

@@ -542,7 +542,7 @@
 					"-ObjC",
 					"-l\"c++\"",
 					"-framework",
-					"\"sdknrstations\"",
+					"\"nrstations\"",
 					"-lsqlite3",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.intsoftdev.nrstations.ios;
@@ -569,7 +569,7 @@
 					"-ObjC",
 					"-l\"c++\"",
 					"-framework",
-					"\"sdknrstations\"",
+					"\"nrstations\"",
 					"-lsqlite3",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.intsoftdev.nrstations.ios;

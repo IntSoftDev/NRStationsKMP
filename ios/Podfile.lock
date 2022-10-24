@@ -1,9 +1,9 @@
 PODS:
-  - sdknrstations (3.0.4-SNAPSHOT)
+  - nrstations (0.0.1-SNAPSHOT)
   - SwiftLint (0.49.1)
 
 DEPENDENCIES:
-  - sdknrstations (from `../sdknrstations/`)
+  - nrstations (from `../nrstations/`)
   - SwiftLint
 
 SPEC REPOS:
@@ -11,13 +11,13 @@ SPEC REPOS:
     - SwiftLint
 
 EXTERNAL SOURCES:
-  sdknrstations:
-    :path: "../sdknrstations/"
+  nrstations:
+    :path: "../nrstations/"
 
 SPEC CHECKSUMS:
-  sdknrstations: dbf7c60b29cea12185c7a94f97af8d4628be67ec
+  nrstations: 576bf1e8a0d841dda09466a4dca163232034ca74
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
 
-PODFILE CHECKSUM: be5385557f933a1f654a7a76f654471809e2195d
+PODFILE CHECKSUM: 6feed04243ba1a52c644968756fc1ac873a426f6
 
 COCOAPODS: 1.10.1

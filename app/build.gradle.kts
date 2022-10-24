@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":sdknrstations"))
+    implementation(project(":nrstations"))
     // Use the line below for a compiled library rather than source code
     // implementation(isdlibs.intsoftdev.stations)
     implementation(isdlibs.androidx.recyclerview)

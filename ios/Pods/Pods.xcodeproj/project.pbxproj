@@ -16,15 +16,15 @@
 			);
 			name = SwiftLint;
 		};
-		E93CAC20CB326BFCEB9D7377B50DD0DE /* sdknrstations */ = {
+		63C503D182D0E445694AECB1570CA4FD /* nrstations */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 46EB2E000001A0 /* Build configuration list for PBXAggregateTarget "sdknrstations" */;
+			buildConfigurationList = 46EB2E000001A0 /* Build configuration list for PBXAggregateTarget "nrstations" */;
 			buildPhases = (
-				46EB2E00000380 /* [CP-User] Build sdknrstations */,
+				46EB2E00000380 /* [CP-User] Build nrstations */,
 			);
 			dependencies = (
 			);
-			name = sdknrstations;
+			name = nrstations;
 		};
 /* End PBXAggregateTarget section */
 
@@ -46,20 +46,20 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 46EB2E00000000 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E93CAC20CB326BFCEB9D7377B50DD0DE;
-			remoteInfo = sdknrstations;
+			remoteGlobalIDString = 63C503D182D0E445694AECB1570CA4FD;
+			remoteInfo = nrstations;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		39B3CE1837E0ED2DA29937B2D6B8F9F1 /* Pods_NRStationsiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NRStationsiOS.framework; path = "Pods-NRStationsiOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46EB2E000000D0 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		46EB2E000000F0 /* sdknrstations.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = sdknrstations.framework; path = build/cocoapods/framework/sdknrstations.framework; sourceTree = "<group>"; };
-		46EB2E00000110 /* sdknrstations.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = sdknrstations.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		46EB2E000000F0 /* nrstations.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = nrstations.framework; path = build/cocoapods/framework/nrstations.framework; sourceTree = "<group>"; };
+		46EB2E00000110 /* nrstations.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = nrstations.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		46EB2E00000170 /* SwiftLint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.debug.xcconfig; sourceTree = "<group>"; };
 		46EB2E00000180 /* SwiftLint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.release.xcconfig; sourceTree = "<group>"; };
-		46EB2E000001E0 /* sdknrstations.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = sdknrstations.debug.xcconfig; sourceTree = "<group>"; };
-		46EB2E000001F0 /* sdknrstations.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = sdknrstations.release.xcconfig; sourceTree = "<group>"; };
+		46EB2E000001E0 /* nrstations.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = nrstations.debug.xcconfig; sourceTree = "<group>"; };
+		46EB2E000001F0 /* nrstations.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = nrstations.release.xcconfig; sourceTree = "<group>"; };
 		46EB2E000002A0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		46EB2E000002D0 /* Pods-NRStationsiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NRStationsiOS.release.xcconfig"; sourceTree = "<group>"; };
 		46EB2E000002E0 /* Pods-NRStationsiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NRStationsiOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -131,7 +131,7 @@
 		46EB2E00000090 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				46EB2E000000C0 /* sdknrstations */,
+				46EB2E000000C0 /* nrstations */,
 			);
 			name = "Development Pods";
 			sourceTree = "<group>";
@@ -145,21 +145,21 @@
 			path = SwiftLint;
 			sourceTree = "<group>";
 		};
-		46EB2E000000C0 /* sdknrstations */ = {
+		46EB2E000000C0 /* nrstations */ = {
 			isa = PBXGroup;
 			children = (
 				46EB2E000000E0 /* Frameworks */,
 				46EB2E00000100 /* Pod */,
 				46EB2E000001D0 /* Support Files */,
 			);
-			name = sdknrstations;
-			path = ../../sdknrstations;
+			name = nrstations;
+			path = ../../nrstations;
 			sourceTree = "<group>";
 		};
 		46EB2E000000E0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				46EB2E000000F0 /* sdknrstations.framework */,
+				46EB2E000000F0 /* nrstations.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -167,7 +167,7 @@
 		46EB2E00000100 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				46EB2E00000110 /* sdknrstations.podspec */,
+				46EB2E00000110 /* nrstations.podspec */,
 			);
 			name = Pod;
 			sourceTree = "<group>";
@@ -185,11 +185,11 @@
 		46EB2E000001D0 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				46EB2E000001E0 /* sdknrstations.debug.xcconfig */,
-				46EB2E000001F0 /* sdknrstations.release.xcconfig */,
+				46EB2E000001E0 /* nrstations.debug.xcconfig */,
+				46EB2E000001F0 /* nrstations.release.xcconfig */,
 			);
 			name = "Support Files";
-			path = "../ios/Pods/Target Support Files/sdknrstations";
+			path = "../ios/Pods/Target Support Files/nrstations";
 			sourceTree = "<group>";
 		};
 		46EB2E00000290 /* iOS */ = {
@@ -273,8 +273,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				63C503D182D0E445694AECB1570CA4FD /* nrstations */,
 				39B9CC4E193C1F48B1DC8726C94DAA73 /* Pods-NRStationsiOS */,
-				E93CAC20CB326BFCEB9D7377B50DD0DE /* sdknrstations */,
 				52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */,
 			);
 		};
@@ -291,12 +291,12 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		46EB2E00000380 /* [CP-User] Build sdknrstations */ = {
+		46EB2E00000380 /* [CP-User] Build nrstations */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			name = "[CP-User] Build sdknrstations";
+			name = "[CP-User] Build nrstations";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "                if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n                  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \"YES\"\"\n                  exit 0\n                fi\n                set -ev\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" $KOTLIN_PROJECT_PATH:syncFramework                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME                     -Pkotlin.native.cocoapods.archs=\"$ARCHS\"                     -Pkotlin.native.cocoapods.configuration=\"$CONFIGURATION\"\n";
@@ -323,8 +323,8 @@
 		};
 		46EB2E000003C0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = sdknrstations;
-			target = E93CAC20CB326BFCEB9D7377B50DD0DE /* sdknrstations */;
+			name = nrstations;
+			target = 63C503D182D0E445694AECB1570CA4FD /* nrstations */;
 			targetProxy = 46EB2E000003B0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -493,7 +493,7 @@
 		};
 		46EB2E000001B0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 46EB2E000001F0 /* sdknrstations.release.xcconfig */;
+			baseConfigurationReference = 46EB2E000001F0 /* nrstations.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -511,7 +511,7 @@
 		};
 		46EB2E000001C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 46EB2E000001E0 /* sdknrstations.debug.xcconfig */;
+			baseConfigurationReference = 46EB2E000001E0 /* nrstations.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -622,7 +622,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		46EB2E000001A0 /* Build configuration list for PBXAggregateTarget "sdknrstations" */ = {
+		46EB2E000001A0 /* Build configuration list for PBXAggregateTarget "nrstations" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				46EB2E000001C0 /* Debug */,

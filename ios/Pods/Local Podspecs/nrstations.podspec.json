@@ -1,6 +1,6 @@
 {
-  "name": "sdknrstations",
-  "version": "3.0.4-SNAPSHOT",
+  "name": "nrstations",
+  "version": "0.0.1-SNAPSHOT",
   "homepage": "https://github.com/intsoftdev/NRStationsKMP",
   "source": {
     "http": ""
@@ -8,18 +8,18 @@
   "authors": "",
   "license": "",
   "summary": "KMP Stations",
-  "vendored_frameworks": "build/cocoapods/framework/sdknrstations.framework",
+  "vendored_frameworks": "build/cocoapods/framework/nrstations.framework",
   "libraries": "c++",
   "platforms": {
     "ios": "12.4"
   },
   "pod_target_xcconfig": {
-    "KOTLIN_PROJECT_PATH": ":sdknrstations",
-    "PRODUCT_MODULE_NAME": "sdknrstations"
+    "KOTLIN_PROJECT_PATH": ":nrstations",
+    "PRODUCT_MODULE_NAME": "nrstations"
   },
   "script_phases": [
     {
-      "name": "Build sdknrstations",
+      "name": "Build nrstations",
       "execution_position": "before_compile",
       "shell_path": "/bin/sh",
       "script": "                if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n                  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \"YES\"\"\n                  exit 0\n                fi\n                set -ev\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" $KOTLIN_PROJECT_PATH:syncFramework                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME                     -Pkotlin.native.cocoapods.archs=\"$ARCHS\"                     -Pkotlin.native.cocoapods.configuration=\"$CONFIGURATION\"\n"
