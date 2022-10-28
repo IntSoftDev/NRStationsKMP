@@ -30,8 +30,9 @@ class NRStationsApplication : Application() {
             koinApp = koinApp,
             enableLogging = BuildConfig.DEBUG,
             apiConfig = APIConfig(
-                serverUrl = "https://onrailstest.azure-api.net",
-                licenseKey = BuildConfig.ISD_API_KEY
+                serverUrl = "https://onrails-test.azurewebsites.net/"
+                // Can pass in license key here
+                // licenseKey = BuildConfig.ISD_API_KEY
             )
         )
     }
