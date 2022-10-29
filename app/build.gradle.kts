@@ -42,10 +42,17 @@ android {
     }
 }
 
+val IMPORT_LOCAL_NRSTATIONS_KMP: String by project
+
 dependencies {
-    implementation(project(":nrstations"))
-    // Use the line below for a compiled library rather than source code
-    // implementation(isdlibs.intsoftdev.stations)
+    // Import NRStations KMP as local dependency
+    if (IMPORT_LOCAL_NRSTATIONS_KMP == "true") {
+        implementation(project(":nrstations"))
+    } else {
+        // use build from Maven Central
+        implementation(isdlibs.intsoftdev.stations)
+    }
+
     implementation(isdlibs.androidx.recyclerview)
     implementation(isdlibs.androidx.swipelayout)
     implementation(isdlibs.androidx.constraintlayout)

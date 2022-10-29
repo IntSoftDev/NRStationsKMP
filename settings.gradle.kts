@@ -21,7 +21,12 @@ dependencyResolutionManagement {
     }
 }
 
-include(":app", ":nrstations")
+include(":app")
 rootProject.name = "StationsSDK"
 
-includeBuild("convention-plugins")
+val IMPORT_LOCAL_NRSTATIONS_KMP: String by settings
+
+if (IMPORT_LOCAL_NRSTATIONS_KMP == "true") {
+    include(":nrstations")
+    includeBuild("convention-plugins")
+}
