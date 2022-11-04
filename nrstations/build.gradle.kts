@@ -52,20 +52,17 @@ kotlin {
                 implementation(isdlibs.coroutines.core)
                 implementation(isdlibs.sqlDelight.coroutinesExt)
                 implementation(isdlibs.bundles.ktor.common)
-                implementation(isdlibs.touchlab.stately)
                 implementation(isdlibs.multiplatformSettings.common)
                 implementation(isdlibs.kotlinx.dateTime)
                 implementation(isdlibs.kolinx.serialization)
                 implementation(isdlibs.bundles.ktor.common)
                 implementation(isdlibs.napier.logger)
                 api(isdlibs.moko.parcelize)
-                api(isdlibs.touchlab.kermit)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(isdlibs.bundles.sdknrstations.commonTest)
-                implementation("com.russhwolf:multiplatform-settings-test:1.0.0-RC")
+                implementation(isdlibs.bundles.commonTest)
             }
         }
         val androidMain by getting {
@@ -78,7 +75,7 @@ kotlin {
         }
         val androidTest by getting {
             dependencies {
-                implementation(isdlibs.bundles.sdknrstations.androidTest)
+                implementation(isdlibs.bundles.androidTest)
             }
         }
         val iosMain by getting {

@@ -1,3 +1,4 @@
+import com.intsoftdev.nrstations.common.APIConfig.Companion.LICENSE_PROP_KEY
 import com.intsoftdev.nrstations.common.APIConfig.Companion.SERVER_PROP_KEY
 import com.intsoftdev.nrstations.common.DefaultRetryPolicy
 import com.intsoftdev.nrstations.data.StationsAPI
@@ -27,7 +28,7 @@ internal val stationsDataModule = module(createdAtStart = true) {
                         Napier.d(message)
                     }
                 }
-                level = LogLevel.INFO
+                level = LogLevel.HEADERS
             }
         }
     }
@@ -35,7 +36,8 @@ internal val stationsDataModule = module(createdAtStart = true) {
     factory<StationsAPI> {
         StationsProxy(
             httpClient = get(named("NRStationsHttpClient")),
-            baseUrl = getProperty(SERVER_PROP_KEY)
+            baseUrl = getProperty(SERVER_PROP_KEY),
+            azureSubscriptionKey = getPropertyOrNull(LICENSE_PROP_KEY)
         )
     }
 

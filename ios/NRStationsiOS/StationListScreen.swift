@@ -3,7 +3,7 @@
 
 import Combine
 import SwiftUI
-import sdknrstations
+import nrstations
 
 class ObservableStationModel: ObservableObject {
     private var viewModel: StationsCallbackViewModel?

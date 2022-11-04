@@ -1,24 +1,24 @@
 Pod::Spec.new do |spec|
-    spec.name                     = 'sdknrstations'
-    spec.version                  = '3.0.3-SNAPSHOT'
+    spec.name                     = 'nrstations'
+    spec.version                  = '0.0.1'
     spec.homepage                 = 'https://github.com/intsoftdev/NRStationsKMP'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
     spec.license                  = ''
     spec.summary                  = 'KMP Stations'
-    spec.vendored_frameworks      = 'build/cocoapods/framework/sdknrstations.framework'
+    spec.vendored_frameworks      = 'build/cocoapods/framework/nrstations.framework'
     spec.libraries                = 'c++'
     spec.ios.deployment_target = '12.4'
                 
                 
     spec.pod_target_xcconfig = {
-        'KOTLIN_PROJECT_PATH' => ':sdknrstations',
-        'PRODUCT_MODULE_NAME' => 'sdknrstations',
+        'KOTLIN_PROJECT_PATH' => ':nrstations',
+        'PRODUCT_MODULE_NAME' => 'nrstations',
     }
                 
     spec.script_phases = [
         {
-            :name => 'Build sdknrstations',
+            :name => 'Build nrstations',
             :execution_position => :before_compile,
             :shell_path => '/bin/sh',
             :script => <<-SCRIPT

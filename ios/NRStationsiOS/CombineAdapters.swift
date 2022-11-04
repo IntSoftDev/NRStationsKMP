@@ -1,5 +1,5 @@
 import Combine
-import sdknrstations
+import nrstations
 
 /// Create a Combine publisher from the supplied `FlowAdapter`. Use this in contexts where more transformation will be
 /// done on the Swift side before the value is bound to UI

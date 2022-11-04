@@ -3,6 +3,7 @@ package com.intsoftdev.nrstations.app
 import android.app.Application
 import android.util.Log
 import com.intsoftdev.nrstations.app.di.viewModelModule
+import com.intsoftdev.nrstations.common.APIConfig
 import com.intsoftdev.nrstations.shared.initStationsSDK
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.logger.AndroidLogger
@@ -27,7 +28,12 @@ class NRStationsApplication : Application() {
         initStationsSDK(
             context = this@NRStationsApplication,
             koinApp = koinApp,
-            enableLogging = BuildConfig.DEBUG
+            enableLogging = BuildConfig.DEBUG,
+            apiConfig = APIConfig(
+                serverUrl = "https://onrails-test.azurewebsites.net/"
+                // Can pass in license key here
+                // licenseKey = BuildConfig.ISD_API_KEY
+            )
         )
     }
 }

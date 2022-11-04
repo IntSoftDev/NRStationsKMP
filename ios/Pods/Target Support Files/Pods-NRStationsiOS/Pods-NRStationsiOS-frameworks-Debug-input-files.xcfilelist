@@ -1,2 +1,2 @@
 ${PODS_ROOT}/Target Support Files/Pods-NRStationsiOS/Pods-NRStationsiOS-frameworks.sh
-${PODS_ROOT}/../../sdknrstations/build/cocoapods/framework/sdknrstations.framework
+${PODS_ROOT}/../../nrstations/build/cocoapods/framework/nrstations.framework

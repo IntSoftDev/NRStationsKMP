@@ -16,12 +16,17 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("isdlibs") {
-            from("com.intsoftdev:isdversioncatalog:3.1.1-SNAPSHOT")
+            from("com.intsoftdev:isdversioncatalog:0.0.1")
         }
     }
 }
 
-include(":app", ":sdknrstations")
+include(":app")
 rootProject.name = "StationsSDK"
 
-includeBuild("convention-plugins")
+val IMPORT_LOCAL_NRSTATIONS_KMP: String by settings
+
+if (IMPORT_LOCAL_NRSTATIONS_KMP == "true") {
+    include(":nrstations")
+    includeBuild("convention-plugins")
+}

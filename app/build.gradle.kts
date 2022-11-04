@@ -3,6 +3,9 @@ plugins {
     kotlin("android")
 }
 
+// TODO add BuildConfig and integrate with GHA
+// val ISD_API_KEY = com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir).getProperty("ISD_API_KEY")
+
 android {
     compileSdk = isdlibs.versions.compileSdk.get().toInt()
     defaultConfig {
@@ -12,6 +15,8 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // TODO add BuildConfig
+        // buildConfigField("String", "ISD_API_KEY", ISD_API_KEY)
     }
     packagingOptions {
         resources.excludes.add("META-INF/*.kotlin_module")
@@ -37,10 +42,17 @@ android {
     }
 }
 
+val IMPORT_LOCAL_NRSTATIONS_KMP: String by project
+
 dependencies {
-    implementation(project(":sdknrstations"))
-    // Use the line below for a compiled library rather than source code
-    // implementation(isdlibs.intsoftdev.stations)
+    // Import NRStations KMP as local dependency
+    if (IMPORT_LOCAL_NRSTATIONS_KMP == "true") {
+        implementation(project(":nrstations"))
+    } else {
+        // use build from Maven Central
+        implementation(isdlibs.intsoftdev.stations)
+    }
+
     implementation(isdlibs.androidx.recyclerview)
     implementation(isdlibs.androidx.swipelayout)
     implementation(isdlibs.androidx.constraintlayout)

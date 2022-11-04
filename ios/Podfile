@@ -5,6 +5,6 @@ platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
 
 target 'NRStationsiOS' do
-    pod 'sdknrstations', :path => '../sdknrstations/'
+    pod 'nrstations', :path => '../nrstations/'
     pod 'SwiftLint'
 end
