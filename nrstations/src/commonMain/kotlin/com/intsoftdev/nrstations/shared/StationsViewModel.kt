@@ -7,6 +7,7 @@ import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class StationsViewModel(
@@ -28,29 +29,30 @@ class StationsViewModel(
         Napier.d("getAllStations enter")
         viewModelScope.launch {
             Napier.d("getAllStations launch")
-            stationsSDK.getAllStations()
-                .catch { throwable ->
-                    _uiState.emit(StationsViewState.Error(throwable))
-                }.collect { stationsResult ->
-                    when (stationsResult) {
-                        is StationsResultState.Success -> {
-                            Napier.d("got stations count ${stationsResult.data.stations.size}")
-                            _uiState.emit(
-                                StationsViewState.StationsLoaded(stationsResult.data.stations)
-                            )
-                        }
-                        is StationsResultState.Failure -> {
-                            _uiState.emit(StationsViewState.Error(stationsResult.error))
-                            Napier.e("error")
-                        }
+            stationsSDK.getAllStations().onStart {
+                _uiState.emit(StationsViewState(isLoading = true))
+            }.catch { throwable ->
+                _uiState.emit(StationsViewState(error = throwable.message))
+            }.collect { stationsResult ->
+                when (stationsResult) {
+                    is StationsResultState.Success -> {
+                        Napier.d("got stations count ${stationsResult.data.stations.size}")
+                        _uiState.emit(
+                            StationsViewState(stations = stationsResult.data.stations)
+                        )
+                    }
+                    is StationsResultState.Failure -> {
+                        _uiState.emit(StationsViewState(error = stationsResult.error?.message))
+                        Napier.e("error")
                     }
                 }
+            }
         }
     }
 }
 
-sealed class StationsViewState {
-    object Loading : StationsViewState()
-    data class StationsLoaded(val stationsData: List<StationLocation>) : StationsViewState()
-    data class Error(val throwable: Throwable?) : StationsViewState()
-}
+data class StationsViewState(
+    val stations: List<StationLocation>? = null,
+    val error: String? = null,
+    val isLoading: Boolean = false
+)

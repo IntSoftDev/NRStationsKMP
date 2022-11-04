@@ -45,17 +45,14 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
                 stationsViewModel.uiState.collect { uiState ->
-                    when (uiState) {
-                        StationsViewState.Loading -> {
-                        }
-
-                        is StationsViewState.StationsLoaded -> {
-                            Napier.d("StationsLoaded ${uiState.stationsData.count()}")
-                            stationAdapter.updateData(uiState.stationsData)
-                        }
-
-                        is StationsViewState.Error -> {
-                            Napier.d("Error ${uiState.throwable}")
+                    if (uiState.error != null) {
+                        Napier.e("Error ${uiState.error}")
+                    } else with(uiState.stations) {
+                        when (this.isNullOrEmpty()) {
+                            false ->  stationAdapter.updateData(this)
+                            true -> {
+                                Napier.e("empty stations")
+                            }
                         }
                     }
                 }
