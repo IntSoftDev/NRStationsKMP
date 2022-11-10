@@ -21,13 +21,14 @@ class ObservableStationModel: ObservableObject {
     
     func activate() {
         let viewModel = KotlinDependencies.shared.getStationsViewModel()
-        viewModel.refreshStations()
         
         doPublish(viewModel.stations) { [weak self] stationsViewState in
             self?.stations = stationsViewState.stations
             self?.error = stationsViewState.error
         }.store(in: &cancellables)
         
+        viewModel.refreshStations()
+       
         self.viewModel = viewModel
     }
     
@@ -70,11 +71,14 @@ struct StationListContent: View {
     var error: String?
     var refresh: () -> Void
     
+    @State var showNearestView = false
+    
     var body: some View {
-        ZStack {
-            VStack {
-                if let stations = stations {
-                    NavigationView {
+        NavigationView {
+            ZStack {
+                VStack {
+                    if let stations = stations {
+                        
                         List(stations, id: \.crsCode) { station in
                             NavigationLink {
                                 StationDetail(station: station)
@@ -84,17 +88,29 @@ struct StationListContent: View {
                             
                         }
                         .navigationTitle("Stations")
+                        .toolbar {
+                            Button("Help") {
+                                self.showNearestView = true
+                            }
+                        }
+                        NavigationLink(
+                            destination: NearestStations(),
+                            isActive: $showNearestView
+                        ) {
+                            
+                        }
+                    }
+                    
+                    if let error = error {
+                        Text(error)
+                            .foregroundColor(.red)
+                    }
+                    Button("Refresh") {
+                        refresh()
                     }
                 }
-                if let error = error {
-                    Text(error)
-                        .foregroundColor(.red)
-                }
-                Button("Refresh") {
-                    refresh()
-                }
+                if loading { Text("Loading...") }
             }
-            if loading { Text("Loading...") }
         }
     }
 }

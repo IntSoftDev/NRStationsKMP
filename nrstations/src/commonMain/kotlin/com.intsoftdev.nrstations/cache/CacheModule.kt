@@ -5,7 +5,7 @@ import kotlinx.datetime.Clock
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-internal val stationsCacheModule = module(createdAtStart = true) {
+internal val stationsCacheModule = module {
     factory<StationsCache> {
         StationsCacheImpl(dbWrapper = get(), settings = get(), clock = get())
     }

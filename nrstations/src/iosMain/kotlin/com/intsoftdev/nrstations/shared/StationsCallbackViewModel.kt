@@ -8,7 +8,7 @@ class StationsCallbackViewModel(
     private val stationsSDK: NREStationsSDK
 ) : CallbackSdkViewModel() {
 
-    override val viewModel = StationsViewModel(stationsSDK)
+    override val viewModel = StationsSDKViewModel(stationsSDK)
 
     val stations = viewModel.uiState.asCallbacks()
 

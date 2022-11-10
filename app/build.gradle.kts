@@ -36,9 +36,17 @@ android {
         abortOnError = true
     }
 
+    buildFeatures {
+        compose = true
+    }
+
     kotlinOptions {
         jvmTarget = "1.8"
         freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = isdlibs.versions.composeCompiler.get()
     }
 }
 
@@ -53,6 +61,10 @@ dependencies {
         implementation(isdlibs.intsoftdev.stations)
     }
 
+    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.27.0")
+
+    // TODO remove the extra deps
     implementation(isdlibs.androidx.recyclerview)
     implementation(isdlibs.androidx.swipelayout)
     implementation(isdlibs.androidx.constraintlayout)

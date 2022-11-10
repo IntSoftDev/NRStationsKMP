@@ -15,7 +15,7 @@ import io.ktor.serialization.kotlinx.json.json
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-internal val stationsDataModule = module(createdAtStart = true) {
+internal val stationsDataModule = module {
     factory(named("NRStationsHttpClient")) {
         HttpClient(engine = get(named("StationsHttpEngine"))) {
             expectSuccess = true
