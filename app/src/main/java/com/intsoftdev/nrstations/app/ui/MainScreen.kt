@@ -38,14 +38,13 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.intsoftdev.nrstations.common.StationLocation
-import com.intsoftdev.nrstations.shared.StationsSDKViewModel
 import com.intsoftdev.nrstations.shared.StationsSDKViewState
 import io.github.aakira.napier.Napier
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun StationsNavHost(
-    stationsViewModel: StationsSDKViewModel,
+    stationsViewModel: StationsViewModel,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberAnimatedNavController(),
     startDestination: String = "mainscreen"
@@ -102,7 +101,7 @@ fun StationsNavHost(
 
 @Composable
 fun MainScreen(
-    stationsViewModel: StationsSDKViewModel,
+    stationsViewModel: StationsViewModel,
     onNavigateToNearbyStations: (StationLocation) -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current

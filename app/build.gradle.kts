@@ -76,6 +76,5 @@ dependencies {
     implementation(isdlibs.kotlinx.dateTime)
     implementation(isdlibs.napier.logger)
     coreLibraryDesugaring(isdlibs.android.desugaring)
-    implementation(isdlibs.koin.android)
     testImplementation(isdlibs.junit)
 }
