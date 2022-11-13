@@ -6,10 +6,7 @@ import com.intsoftdev.nrstations.common.toKoinProperties
 import com.intsoftdev.nrstations.sdk.stationsSdkModule
 import kotlin.native.concurrent.ThreadLocal
 import org.koin.core.KoinApplication
-import org.koin.core.context.loadKoinModules
-import org.koin.core.context.startKoin
 import org.koin.core.module.Module
-import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 import stationsDataModule

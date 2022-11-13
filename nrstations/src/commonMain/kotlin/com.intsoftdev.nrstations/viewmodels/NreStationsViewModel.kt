@@ -1,8 +1,8 @@
-package com.intsoftdev.nrstations.shared
+package com.intsoftdev.nrstations.viewmodels
 
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResultState
-import com.intsoftdev.nrstations.sdk.NREStationsSDK
+import com.intsoftdev.nrstations.sdk.NreStationsSDK
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
 import com.intsoftdev.nrstations.sdk.provide
 import io.github.aakira.napier.Napier
@@ -12,16 +12,16 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-class StationsSDKViewModel: SdkViewModel(), StationsSdkDiComponent {
+class NreStationsViewModel: NreViewModel(), StationsSdkDiComponent {
 
-    private var stationsSDK = this.provide<NREStationsSDK>()
+    private var stationsSDK = this.provide<NreStationsSDK>()
 
     // Backing property to avoid state updates from other classes
     // consider replacing with MutableSharedFlow if it doesn't re-emit same value
-    private val _uiState = MutableStateFlow(StationsSDKViewState(isLoading = true))
+    private val _uiState = MutableStateFlow(NreStationsViewState(isLoading = true))
 
     // The UI collects from this StateFlow to get its state updates
-    val uiState: StateFlow<StationsSDKViewState> = _uiState
+    val uiState: StateFlow<NreStationsViewState> = _uiState
 
     override fun onCleared() {
         Napier.d("onCleared")
@@ -32,19 +32,19 @@ class StationsSDKViewModel: SdkViewModel(), StationsSdkDiComponent {
         viewModelScope.launch {
             Napier.d("getAllStations launch")
             stationsSDK.getAllStations().onStart {
-                _uiState.emit(StationsSDKViewState(isLoading = true))
+                _uiState.emit(NreStationsViewState(isLoading = true))
             }.catch { throwable ->
-                _uiState.emit(StationsSDKViewState(error = throwable.message))
+                _uiState.emit(NreStationsViewState(error = throwable.message))
             }.collect { stationsResult ->
                 when (stationsResult) {
                     is StationsResultState.Success -> {
                         Napier.d("got stations count ${stationsResult.data.stations.size}")
                         _uiState.emit(
-                            StationsSDKViewState(stations = stationsResult.data.stations)
+                            NreStationsViewState(stations = stationsResult.data.stations)
                         )
                     }
                     is StationsResultState.Failure -> {
-                        _uiState.emit(StationsSDKViewState(error = stationsResult.error?.message))
+                        _uiState.emit(NreStationsViewState(error = stationsResult.error?.message))
                         Napier.e("error")
                     }
                 }
@@ -53,7 +53,7 @@ class StationsSDKViewModel: SdkViewModel(), StationsSdkDiComponent {
     }
 }
 
-data class StationsSDKViewState(
+data class NreStationsViewState(
     val stations: List<StationLocation>? = null,
     val error: String? = null,
     val isLoading: Boolean = false

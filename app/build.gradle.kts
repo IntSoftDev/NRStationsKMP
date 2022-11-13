@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 // TODO add BuildConfig and integrate with GHA
@@ -75,6 +76,8 @@ dependencies {
     implementation(isdlibs.multiplatformSettings.common)
     implementation(isdlibs.kotlinx.dateTime)
     implementation(isdlibs.napier.logger)
+    implementation("com.google.maps.android:maps-compose:2.7.2")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
     coreLibraryDesugaring(isdlibs.android.desugaring)
     testImplementation(isdlibs.junit)
 }

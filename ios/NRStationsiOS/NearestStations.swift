@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import nrstations
+
 
 struct NearestStations: View {
     @StateObject var locationManager = LocationManager()

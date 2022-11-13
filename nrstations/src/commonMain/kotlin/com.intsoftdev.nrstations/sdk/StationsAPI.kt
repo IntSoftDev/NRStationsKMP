@@ -1,5 +1,6 @@
 package com.intsoftdev.nrstations.sdk
 
+import com.intsoftdev.nrstations.common.StationDistances
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.common.StationsResultState
@@ -9,7 +10,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
 /**
- * Use this interface to get access to [NREStationsSDK]
+ * Use this interface to get access to [NreStationsSDK]
  * Call [initStationsSDK] to setup the SDK DI
  * then [org.koin.core.component.inject] & [org.koin.core.component.get] will target [SDKKoinHolder]
  */
@@ -26,4 +27,8 @@ inline fun <reified T> StationsSdkDiComponent.provide(): T = get()
 interface StationsAPI {
     fun getAllStations(): CFlow<StationsResultState<StationsResult>>
     fun getStationLocation(crsCode: String): StationLocation
+    fun getNearbyStations(
+        latitude: Double,
+        longitude: Double
+    ): CFlow<StationsResultState<StationDistances>>
 }

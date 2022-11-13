@@ -1,12 +1,11 @@
-package com.intsoftdev.nrstations.shared
+package com.intsoftdev.nrstations.viewmodels
 
-import com.intsoftdev.nrstations.sdk.NREStationsSDK
 import io.github.aakira.napier.Napier
 
 @Suppress("Unused") // Members are called from Swift
 class StationsCallbackViewModel() : CallbackSdkViewModel() {
 
-    override val viewModel = StationsSDKViewModel()
+    override val viewModel = NreStationsViewModel()
 
     val stations = viewModel.uiState.asCallbacks()
 

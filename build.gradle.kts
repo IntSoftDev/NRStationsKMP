@@ -10,6 +10,7 @@ plugins {
     kotlin("plugin.serialization") version isdlibs.versions.kotlin.get() apply false
     id("com.squareup.sqldelight") version isdlibs.versions.sqlDelight.get() apply false
     id("com.android.application") version isdlibs.versions.androidGradle.get() apply false
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1" apply false
 }
 
 allprojects {

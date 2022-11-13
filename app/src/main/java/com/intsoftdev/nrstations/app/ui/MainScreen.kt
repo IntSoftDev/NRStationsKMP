@@ -2,9 +2,6 @@ package com.intsoftdev.nrstations.app.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -38,7 +36,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.intsoftdev.nrstations.common.StationLocation
-import com.intsoftdev.nrstations.shared.StationsSDKViewState
+import com.intsoftdev.nrstations.viewmodels.NreStationsViewState
 import io.github.aakira.napier.Napier
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -55,19 +53,10 @@ fun StationsNavHost(
         startDestination = startDestination
     ) {
         composable(
-            "mainscreen",
-            enterTransition = {
-                slideInHorizontally(
-                    initialOffsetX = { it / 2 },
-                    animationSpec = tween(500)
-                )
-            },
-            exitTransition = {
-                slideOutHorizontally(
-                    targetOffsetX = { it / 2 },
-                    animationSpec = tween(500)
-                )
-            }
+            "mainscreen"
+            /*
+               TODO add transitions
+              */
         ) {
             MainScreen(
                 stationsViewModel = stationsViewModel,
@@ -80,21 +69,11 @@ fun StationsNavHost(
             route = "nearbystationslist/{stationCrsCode}",
             arguments = listOf(
                 navArgument("stationCrsCode") { type = NavType.StringType }
-            ),
-            enterTransition = {
-                slideInHorizontally(
-                    initialOffsetX = { it / 2 },
-                    animationSpec = tween(500)
-                )
-            },
-            exitTransition = {
-                slideOutHorizontally(
-                    targetOffsetX = { it / 2 },
-                    animationSpec = tween(500)
-                )
-            }
+            ) /*
+               TODO add transitions
+              */
         ) {
-            NearbyStationsScreen()
+            NearbyStationsScreen(nearbyStationsViewModel = viewModel())
         }
     }
 }
@@ -115,7 +94,7 @@ fun MainScreen(
     MainScreenContent(
         stationsState = stationsState,
         onRefresh = { stationsViewModel.getAllStations() },
-        onSuccess = { data -> Napier.d("View updating with ${data.size} breeds") },
+        onSuccess = { data -> Napier.d("View updating with ${data.size} stations") },
         onError = { exception -> Napier.e { "Displaying error: $exception" } },
         onStationSelect = onNavigateToNearbyStations
     )
@@ -123,7 +102,7 @@ fun MainScreen(
 
 @Composable
 fun MainScreenContent(
-    stationsState: StationsSDKViewState,
+    stationsState: NreStationsViewState,
     onRefresh: () -> Unit = {},
     onSuccess: (List<StationLocation>) -> Unit = {},
     onError: (String) -> Unit = {},

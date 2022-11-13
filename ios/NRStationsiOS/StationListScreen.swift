@@ -28,7 +28,7 @@ class ObservableStationModel: ObservableObject {
         }.store(in: &cancellables)
         
         viewModel.refreshStations()
-       
+        
         self.viewModel = viewModel
     }
     

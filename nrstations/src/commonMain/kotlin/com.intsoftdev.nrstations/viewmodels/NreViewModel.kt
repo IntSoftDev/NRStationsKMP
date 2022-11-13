@@ -1,8 +1,8 @@
-package com.intsoftdev.nrstations.shared
+package com.intsoftdev.nrstations.viewmodels
 
 import kotlinx.coroutines.CoroutineScope
 
-expect abstract class SdkViewModel() {
+expect abstract class NreViewModel() {
     val viewModelScope: CoroutineScope
     protected open fun onCleared()
 }
