@@ -51,6 +51,12 @@ android {
     }
 }
 
+secrets {
+    // A properties file containing default secret values. This file can be
+    // checked in version control.
+    defaultPropertiesFileName = "local.defaults.properties"
+}
+
 val IMPORT_LOCAL_NRSTATIONS_KMP: String by project
 
 dependencies {
