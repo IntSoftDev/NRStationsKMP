@@ -1,5 +1,6 @@
 package com.intsoftdev.nrstations.viewmodels
 
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 
@@ -24,7 +25,9 @@ actual abstract class NreViewModel {
      * no longer be used.
      */
     fun clear() {
+        Napier.d("clear enter")
         onCleared()
         viewModelScope.cancel()
+        Napier.d("clear exit")
     }
 }

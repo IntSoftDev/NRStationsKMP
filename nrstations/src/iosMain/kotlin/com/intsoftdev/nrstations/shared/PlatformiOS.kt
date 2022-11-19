@@ -18,9 +18,9 @@ internal actual val stationsPlatformModule = module {
 
     single(named("StationsHttpEngine")) { Darwin.create() }
 
-    single { StationsCallbackViewModel() }
+    factory { StationsCallbackViewModel() }
 
-    single { NearbyCallbackViewModel() }
+    factory { NearbyCallbackViewModel() }
 
     single<SqlDriver>(named("StationsSqlDriver")) { NativeSqliteDriver(NRStationsDb.Schema, "NRStationsDb") }
 }

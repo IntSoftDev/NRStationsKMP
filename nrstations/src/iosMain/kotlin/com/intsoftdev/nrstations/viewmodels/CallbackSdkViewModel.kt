@@ -1,6 +1,7 @@
 package com.intsoftdev.nrstations.viewmodels
 
 import com.intsoftdev.nrstations.shared.FlowAdapter
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
 
 abstract class CallbackSdkViewModel {
@@ -13,5 +14,8 @@ abstract class CallbackSdkViewModel {
         FlowAdapter(viewModel.viewModelScope, this)
 
     @Suppress("Unused") // Called from Swift
-    fun clear() = viewModel.clear()
+    fun clear() {
+        Napier.d("clear enter")
+        viewModel.clear()
+    }
 }

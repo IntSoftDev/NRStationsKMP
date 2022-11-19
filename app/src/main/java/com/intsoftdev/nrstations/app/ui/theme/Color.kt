@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-package com.intsoftdev.nrservices.app.ui.theme
+package com.intsoftdev.nrstations.app.ui.theme
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 val Blue900 = Color(0xff1f2449)

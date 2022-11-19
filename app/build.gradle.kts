@@ -64,7 +64,7 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation("com.google.accompanist:accompanist-navigation-animation:0.27.0")
-
+    implementation("com.google.accompanist:accompanist-permissions:0.27.0")
     // TODO remove the extra deps
     implementation(isdlibs.androidx.recyclerview)
     implementation(isdlibs.androidx.swipelayout)

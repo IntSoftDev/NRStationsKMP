@@ -13,9 +13,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -36,13 +42,14 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.intsoftdev.nrstations.common.StationLocation
+import com.intsoftdev.nrstations.viewmodels.NreStationsViewModel
 import com.intsoftdev.nrstations.viewmodels.NreStationsViewState
 import io.github.aakira.napier.Napier
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun StationsNavHost(
-    stationsViewModel: StationsViewModel,
+    stationsViewModel: NreStationsViewModel,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberAnimatedNavController(),
     startDestination: String = "mainscreen"
@@ -60,15 +67,20 @@ fun StationsNavHost(
         ) {
             MainScreen(
                 stationsViewModel = stationsViewModel,
+                navController = navController,
                 onNavigateToNearbyStations = {
-                    navController.navigate("nearbystationslist/${it.crsCode}")
+                    navController.navigate("nearbystationslist?stationCrsCode=${it.crsCode}")
                 }
             )
         }
         composable(
-            route = "nearbystationslist/{stationCrsCode}",
+            route = "nearbystationslist?stationCrsCode={stationCrsCode}",
             arguments = listOf(
-                navArgument("stationCrsCode") { type = NavType.StringType }
+                navArgument("stationCrsCode") {
+                    type = NavType.StringType
+                    defaultValue = null
+                    nullable = true
+                }
             ) /*
                TODO add transitions
               */
@@ -78,10 +90,12 @@ fun StationsNavHost(
     }
 }
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainScreen(
-    stationsViewModel: StationsViewModel,
-    onNavigateToNearbyStations: (StationLocation) -> Unit,
+    stationsViewModel: NreStationsViewModel,
+    navController: NavHostController,
+    onNavigateToNearbyStations: (StationLocation) -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val lifecycleAwareStationsFlow = remember(stationsViewModel.uiState, lifecycleOwner) {
@@ -91,13 +105,33 @@ fun MainScreen(
     @SuppressLint("StateFlowValueCalledInComposition") // False positive lint check when used inside collectAsState()
     val stationsState by lifecycleAwareStationsFlow.collectAsState(stationsViewModel.uiState.value)
 
-    MainScreenContent(
-        stationsState = stationsState,
-        onRefresh = { stationsViewModel.getAllStations() },
-        onSuccess = { data -> Napier.d("View updating with ${data.size} stations") },
-        onError = { exception -> Napier.e { "Displaying error: $exception" } },
-        onStationSelect = onNavigateToNearbyStations
-    )
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Stations") },
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            Napier.d("click Nearby")
+                            // PermissionsSample()
+                            navController.navigate("nearbystationslist")
+                        }
+                    ) {
+                        Icon(Icons.Filled.LocationOn, "locationIcon")
+                    }
+                }
+            )
+        }
+    ) {
+        // Screen content
+        MainScreenContent(
+            stationsState = stationsState,
+            onRefresh = { stationsViewModel.getAllStations() },
+            onSuccess = { data -> Napier.d("View updating with ${data.size} stations") },
+            onError = { exception -> Napier.e { "Displaying error: $exception" } },
+            onStationSelect = onNavigateToNearbyStations
+        )
+    }
 }
 
 @Composable
@@ -177,17 +211,3 @@ fun StationRow(station: StationLocation, onClick: (StationLocation) -> Unit) {
         Text(station.stationName, Modifier.weight(1F))
     }
 }
-/*
-@Preview
-@Composable
-fun MainScreenContentPreview_Success() {
-    MainScreenContent(
-        stationsState = StationsViewState(
-            breeds = listOf(
-                Breed(0, "appenzeller", false),
-                Breed(1, "australian", true)
-            )
-        )
-    )
-}
-*/

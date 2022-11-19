@@ -74,7 +74,9 @@ internal class StationsRepositoryImpl(
                 }
                 else -> {
                     val sortedStations = getSortedStations(
-                        latitude, longitude, stationsCache.getAllStations()
+                        latitude,
+                        longitude,
+                        stationsCache.getAllStations()
                     ).subList(
                         0,
                         MAX_NEARBY_STATIONS - 1

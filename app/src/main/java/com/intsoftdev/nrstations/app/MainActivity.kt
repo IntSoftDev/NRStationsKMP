@@ -6,11 +6,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.intsoftdev.nrservices.app.ui.theme.NRStationsTheme
 import com.intsoftdev.nrstations.app.ui.StationsNavHost
-import com.intsoftdev.nrstations.app.ui.StationsViewModel
+import com.intsoftdev.nrstations.viewmodels.NreStationsViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val stationsViewModel: StationsViewModel by viewModels()
+    private val stationsViewModel: NreStationsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

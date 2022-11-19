@@ -13,6 +13,11 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 open class NreNearbyViewModel : NreViewModel(), StationsSdkDiComponent {
+
+    init {
+        Napier.d("init")
+    }
+
     private var stationsSDK = this.provide<NreStationsSDK>()
 
     // Backing property to avoid state updates from other classes
@@ -24,14 +29,42 @@ open class NreNearbyViewModel : NreViewModel(), StationsSdkDiComponent {
 
     override fun onCleared() {
         Napier.d("onCleared")
+        super.onCleared()
     }
 
     fun getNearbyStations(crsCode: String) {
-        Napier.d("getNearbyStations enter")
+        Napier.d("getNearbyStations $crsCode enter")
         viewModelScope.launch {
             val stationLocation = stationsSDK.getStationLocation(crsCode)
             stationsSDK.getNearbyStations(stationLocation.latitude, stationLocation.longitude)
                 .onStart {
+                    Napier.d("onStart")
+                    _uiState.emit(NreNearbyViewState(isLoading = true))
+                }.catch { throwable ->
+                    _uiState.emit(NreNearbyViewState(error = throwable.message))
+                }.collect { result ->
+                    when (result) {
+                        is StationsResultState.Success -> {
+                            Napier.d("got stations count ${result.data.size}")
+                            _uiState.emit(
+                                NreNearbyViewState(stations = result.data)
+                            )
+                        }
+                        is StationsResultState.Failure -> {
+                            _uiState.emit(NreNearbyViewState(error = result.error?.message))
+                            Napier.e("error")
+                        }
+                    }
+                }
+        }
+    }
+
+    fun getNearbyStations(latitude: Double, longitude: Double) {
+        Napier.d("getNearbyStations $latitude $longitude enter")
+        viewModelScope.launch {
+            stationsSDK.getNearbyStations(latitude, longitude)
+                .onStart {
+                    Napier.d("onStart")
                     _uiState.emit(NreNearbyViewState(isLoading = true))
                 }.catch { throwable ->
                     _uiState.emit(NreNearbyViewState(error = throwable.message))

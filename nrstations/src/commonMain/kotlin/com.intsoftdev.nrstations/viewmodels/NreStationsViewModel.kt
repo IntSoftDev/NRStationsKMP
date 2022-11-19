@@ -12,7 +12,11 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-class NreStationsViewModel: NreViewModel(), StationsSdkDiComponent {
+class NreStationsViewModel : NreViewModel(), StationsSdkDiComponent {
+
+    init {
+        Napier.d("init")
+    }
 
     private var stationsSDK = this.provide<NreStationsSDK>()
 

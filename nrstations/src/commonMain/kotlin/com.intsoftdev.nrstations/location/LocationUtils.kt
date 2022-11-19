@@ -13,13 +13,13 @@ import kotlin.math.sin
 internal fun getSortedStations(
     latitude: Double,
     longitude: Double,
-    allStations: List<StationLocation>,
+    allStations: List<StationLocation>
 ): List<StationLocation> {
     val stationComparator = Comparator<StationLocation> { station1, station2 ->
         val distanceFromStation1 =
-            distanceInMiles(station1.latitude, station1.longitude, latitude, longitude)
+            distanceInMetres(station1.latitude, station1.longitude, latitude, longitude)
         val distanceFromStation2 =
-            distanceInMiles(station2.latitude, station2.longitude, latitude, longitude)
+            distanceInMetres(station2.latitude, station2.longitude, latitude, longitude)
 
         val diff = distanceFromStation1 - distanceFromStation2
         diff.toInt()
@@ -31,9 +31,11 @@ internal fun getStationDistancesfromRefPoint(
     geolocation: Geolocation,
     stationsList: StationsList
 ): StationDistances =
-    mapOf(geolocation to stationsList.map {
-        it.toStationDistance(geolocation)
-    })
+    mapOf(
+        geolocation to stationsList.map {
+            it.toStationDistance(geolocation)
+        }
+    )
 
 private fun StationLocation.toStationDistance(geolocation: Geolocation): StationsDistance {
     val distance =
@@ -51,6 +53,10 @@ private fun distanceInMiles(lat1: Double, lon1: Double, lat2: Double, lon2: Doub
     dist = rad2deg(dist)
     dist *= 60 * 1.1515
     return dist
+}
+
+private fun distanceInMetres(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+    return distanceInMiles(lat1, lon1, lat2, lon2) * 1609.344
 }
 
 private fun deg2rad(deg: Double): Double {

@@ -2,7 +2,6 @@ package com.intsoftdev.nrstations.domain
 
 import com.intsoftdev.nrstations.common.StationDistances
 import com.intsoftdev.nrstations.common.StationLocation
-import com.intsoftdev.nrstations.common.StationsList
 import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.common.StationsResultState
 import kotlinx.coroutines.flow.Flow
@@ -14,5 +13,8 @@ import kotlinx.coroutines.flow.Flow
 internal interface StationsRepository {
     fun getAllStations(): Flow<StationsResultState<StationsResult>>
     fun getStationLocation(crsCode: String?): StationLocation
-    fun getNearbyStations(latitude: Double, longitude: Double): Flow<StationsResultState<StationDistances>>
+    fun getNearbyStations(
+        latitude: Double,
+        longitude: Double
+    ): Flow<StationsResultState<StationDistances>>
 }

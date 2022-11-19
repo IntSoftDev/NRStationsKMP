@@ -93,7 +93,6 @@ private fun NearbyScreenContent(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
     ) {
-
         val isLoading = stationsState.isLoading
         if (isLoading) {
             CircularProgressIndicator(
@@ -151,7 +150,7 @@ fun NearbyStationsSuccess(
                 cameraPositionState = cameraPositionState,
                 onMapLoaded = {
                     isMapLoaded = true
-                },
+                }
             )
             if (!isMapLoaded) {
                 androidx.compose.animation.AnimatedVisibility(
@@ -225,7 +224,7 @@ fun NearbyError(error: String) {
 private fun GoogleMapViewInColumn(
     modifier: Modifier,
     cameraPositionState: CameraPositionState,
-    onMapLoaded: () -> Unit,
+    onMapLoaded: () -> Unit
 ) {
     val uiSettings by remember { mutableStateOf(MapUiSettings(compassEnabled = false)) }
     val mapProperties by remember {
