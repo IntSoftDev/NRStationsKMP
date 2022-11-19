@@ -61,23 +61,17 @@ dependencies {
         // use build from Maven Central
         implementation(isdlibs.intsoftdev.stations)
     }
-
+    // extra compose dependencies, add to central catalog
     implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation("com.google.accompanist:accompanist-navigation-animation:0.27.0")
     implementation("com.google.accompanist:accompanist-permissions:0.27.0")
-    // TODO remove the extra deps
-    implementation(isdlibs.androidx.recyclerview)
-    implementation(isdlibs.androidx.swipelayout)
-    implementation(isdlibs.androidx.constraintlayout)
-    implementation(isdlibs.androidx.lifecycle.livedata)
-    implementation(isdlibs.androidx.lifecycle.extensions)
-    implementation(isdlibs.androidx.appcompat)
+    implementation("com.google.maps.android:maps-compose:2.7.2")
+
     implementation(isdlibs.bundles.app.ui)
     implementation(isdlibs.multiplatformSettings.common)
     implementation(isdlibs.kotlinx.dateTime)
     implementation(isdlibs.napier.logger)
-    implementation("com.google.maps.android:maps-compose:2.7.2")
-    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation(isdlibs.google.gms.maps)
     coreLibraryDesugaring(isdlibs.android.desugaring)
     testImplementation(isdlibs.junit)
 }
