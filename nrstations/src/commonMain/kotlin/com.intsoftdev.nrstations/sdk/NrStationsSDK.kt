@@ -9,7 +9,7 @@ import com.intsoftdev.nrstations.shared.CFlow
 import com.intsoftdev.nrstations.shared.wrap
 import org.koin.core.component.get
 
-class NreStationsSDK : StationsAPI, StationsSdkDiComponent {
+class NrStationsSDK : StationsAPI, StationsSdkDiComponent {
     private val getStationsUseCase by lazy { get<GetStationsUseCase>() }
 
     override fun getAllStations(): CFlow<StationsResultState<StationsResult>> =

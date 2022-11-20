@@ -9,7 +9,7 @@ class NearbyCallbackViewModel : CallbackSdkViewModel() {
         Napier.d("init")
     }
 
-    override val viewModel = NreNearbyViewModel()
+    override val viewModel = NrNearbyViewModel()
 
     val stations = viewModel.uiState.asCallbacks()
 

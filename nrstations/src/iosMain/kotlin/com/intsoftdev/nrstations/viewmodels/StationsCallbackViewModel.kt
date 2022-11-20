@@ -9,7 +9,7 @@ class StationsCallbackViewModel : CallbackSdkViewModel() {
         Napier.d("init")
     }
 
-    override val viewModel = NreStationsViewModel()
+    override val viewModel = NrStationsViewModel()
 
     val stations = viewModel.uiState.asCallbacks()
 

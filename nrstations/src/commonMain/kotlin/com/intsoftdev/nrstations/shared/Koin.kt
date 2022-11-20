@@ -1,13 +1,13 @@
 package com.intsoftdev.nrstations.shared
 
-import com.intsoftdev.nrstations.cache.stationsCacheModule
+import com.intsoftdev.nrstations.cache.stationsCacheModule // ktlint-disable import-ordering
 import com.intsoftdev.nrstations.common.APIConfig
 import com.intsoftdev.nrstations.common.toKoinProperties
 import com.intsoftdev.nrstations.sdk.stationsSdkModule
 import kotlin.native.concurrent.ThreadLocal
-import org.koin.core.KoinApplication
 import org.koin.core.module.Module
 import org.koin.dsl.koinApplication
+import org.koin.core.KoinApplication
 import org.koin.dsl.module
 import stationsDataModule
 import stationsDomainModule

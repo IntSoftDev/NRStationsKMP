@@ -42,14 +42,14 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.intsoftdev.nrstations.common.StationLocation
-import com.intsoftdev.nrstations.viewmodels.NreStationsViewModel
+import com.intsoftdev.nrstations.viewmodels.NrStationsViewModel
 import com.intsoftdev.nrstations.viewmodels.NreStationsViewState
 import io.github.aakira.napier.Napier
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun StationsNavHost(
-    stationsViewModel: NreStationsViewModel,
+    stationsViewModel: NrStationsViewModel,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberAnimatedNavController(),
     startDestination: String = "mainscreen"
@@ -93,7 +93,7 @@ fun StationsNavHost(
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainScreen(
-    stationsViewModel: NreStationsViewModel,
+    stationsViewModel: NrStationsViewModel,
     navController: NavHostController,
     onNavigateToNearbyStations: (StationLocation) -> Unit
 ) {

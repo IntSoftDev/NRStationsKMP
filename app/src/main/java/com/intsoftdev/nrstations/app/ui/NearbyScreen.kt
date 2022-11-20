@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations.app.ui
 
-import android.annotation.SuppressLint
+import android.annotation.SuppressLint // ktlint-disable import-ordering
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -47,10 +47,10 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.intsoftdev.nrstations.common.Geolocation
 import com.intsoftdev.nrstations.common.StationLocation
-import com.intsoftdev.nrstations.common.StationsDistance
-import com.intsoftdev.nrstations.viewmodels.NreNearbyViewState
+import com.intsoftdev.nrstations.common.StationDistance
+import com.intsoftdev.nrstations.common.StationDistances
+import com.intsoftdev.nrstations.viewmodels.NrNearbyViewState
 import io.github.aakira.napier.Napier
 import java.util.Locale
 
@@ -83,9 +83,9 @@ internal fun NearbyStationsScreen(
 
 @Composable
 private fun NearbyScreenContent(
-    stationsState: NreNearbyViewState,
+    stationsState: NrNearbyViewState,
     onRefresh: () -> Unit = {},
-    onSuccess: (List<StationsDistance>) -> Unit = {},
+    onSuccess: (List<StationDistance>) -> Unit = {},
     onError: (String) -> Unit = {},
     onStationSelect: (StationLocation) -> Unit = {}
 ) {
@@ -101,14 +101,12 @@ private fun NearbyScreenContent(
                     .wrapContentSize()
             )
         } else {
-            val nearbyStations = stationsState.stations?.values?.firstOrNull()
-            val geolocation = stationsState.stations?.keys?.firstOrNull()
-            if (nearbyStations != null && geolocation != null) {
+            val nearbyStations = stationsState.stations
+            if (nearbyStations != null) {
                 LaunchedEffect(nearbyStations) {
-                    onSuccess(nearbyStations)
+                    onSuccess(nearbyStations.stationDistances)
                 }
                 NearbyStationsSuccess(
-                    geolocation = geolocation,
                     successData = nearbyStations,
                     stationSelect = onStationSelect
                 )
@@ -126,13 +124,12 @@ private fun NearbyScreenContent(
 
 @Composable
 fun NearbyStationsSuccess(
-    geolocation: Geolocation,
-    successData: List<StationsDistance>,
+    successData: StationDistances,
     stationSelect: (StationLocation) -> Unit
 ) {
     val cameraPositionState = rememberCameraPositionState {
         position =
-            CameraPosition.fromLatLngZoom(LatLng(geolocation.latitude, geolocation.longitude), 15f)
+            CameraPosition.fromLatLngZoom(LatLng(successData.geolocation.latitude, successData.geolocation.longitude), 15f)
     }
     var isMapLoaded by remember { mutableStateOf(false) }
 
@@ -177,13 +174,13 @@ fun NearbyStationsSuccess(
                 .padding(8.dp),
             contentAlignment = Alignment.Center
         ) {
-            NearbyStationsList(stations = successData, stationSelect)
+            NearbyStationsList(stations = successData.stationDistances, stationSelect)
         }
     }
 }
 
 @Composable
-fun NearbyStationsList(stations: List<StationsDistance>, onItemClick: (StationLocation) -> Unit) {
+fun NearbyStationsList(stations: List<StationDistance>, onItemClick: (StationLocation) -> Unit) {
     LazyColumn {
         items(stations) { station ->
             NearbyStationRow(station) {
@@ -195,8 +192,8 @@ fun NearbyStationsList(stations: List<StationsDistance>, onItemClick: (StationLo
 }
 
 @Composable
-fun NearbyStationRow(station: StationsDistance, onClick: (StationLocation) -> Unit) {
-    val distance = String.format(Locale.UK, "%.1f miles", station.distanceFromRefInMiles)
+fun NearbyStationRow(station: StationDistance, onClick: (StationLocation) -> Unit) {
+    val distance = String.format(Locale.UK, "%.1f miles", station.distanceInMiles)
     Row(
         Modifier
             .clickable { onClick(station.station) }

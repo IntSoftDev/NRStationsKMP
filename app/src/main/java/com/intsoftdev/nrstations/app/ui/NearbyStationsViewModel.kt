@@ -3,11 +3,11 @@ package com.intsoftdev.nrstations.app.ui
 import androidx.lifecycle.SavedStateHandle
 import com.google.android.gms.maps.model.LatLng
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
-import com.intsoftdev.nrstations.viewmodels.NreNearbyViewModel
+import com.intsoftdev.nrstations.viewmodels.NrNearbyViewModel
 
 internal class NearbyStationsViewModel(
     savedStateHandle: SavedStateHandle
-) : NreNearbyViewModel(), StationsSdkDiComponent {
+) : NrNearbyViewModel(), StationsSdkDiComponent {
 
     private val crsCode: String? = savedStateHandle["stationCrsCode"]
 

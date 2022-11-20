@@ -5,7 +5,7 @@ import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
 
 abstract class CallbackSdkViewModel {
-    protected abstract val viewModel: NreViewModel
+    protected abstract val viewModel: NrViewModel
 
     /**
      * Create a [FlowAdapter] from this [Flow] to make it easier to interact with from Swift.

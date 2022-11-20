@@ -2,7 +2,7 @@ package com.intsoftdev.nrstations.viewmodels
 
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResultState
-import com.intsoftdev.nrstations.sdk.NreStationsSDK
+import com.intsoftdev.nrstations.sdk.NrStationsSDK
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
 import com.intsoftdev.nrstations.sdk.provide
 import io.github.aakira.napier.Napier
@@ -12,13 +12,13 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-class NreStationsViewModel : NreViewModel(), StationsSdkDiComponent {
+class NrStationsViewModel : NrViewModel(), StationsSdkDiComponent {
 
     init {
         Napier.d("init")
     }
 
-    private var stationsSDK = this.provide<NreStationsSDK>()
+    private var stationsSDK = this.provide<NrStationsSDK>()
 
     // Backing property to avoid state updates from other classes
     // consider replacing with MutableSharedFlow if it doesn't re-emit same value

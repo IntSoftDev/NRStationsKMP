@@ -9,7 +9,7 @@ import kotlinx.coroutines.cancel
  * a [CoroutineScope][kotlinx.coroutines.CoroutineScope] which uses [Dispatchers.Main][kotlinx.coroutines.Dispatchers.Main]
  * and can be tied into an arbitrary lifecycle by calling [clear] at the appropriate time.
  */
-actual abstract class NreViewModel {
+actual abstract class NrViewModel {
 
     actual val viewModelScope = MainScope()
 

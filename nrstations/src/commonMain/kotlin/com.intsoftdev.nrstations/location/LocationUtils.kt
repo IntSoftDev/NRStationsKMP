@@ -1,9 +1,9 @@
 package com.intsoftdev.nrstations.location
 
 import com.intsoftdev.nrstations.common.Geolocation
+import com.intsoftdev.nrstations.common.StationDistance
 import com.intsoftdev.nrstations.common.StationDistances
 import com.intsoftdev.nrstations.common.StationLocation
-import com.intsoftdev.nrstations.common.StationsDistance
 import com.intsoftdev.nrstations.common.StationsList
 import kotlin.math.PI
 import kotlin.math.acos
@@ -30,17 +30,17 @@ internal fun getSortedStations(
 internal fun getStationDistancesfromRefPoint(
     geolocation: Geolocation,
     stationsList: StationsList
-): StationDistances =
-    mapOf(
-        geolocation to stationsList.map {
-            it.toStationDistance(geolocation)
-        }
-    )
+) = StationDistances(
+    geolocation = geolocation,
+    stationDistances = stationsList.map {
+        it.toStationDistance(geolocation)
+    }
+)
 
-private fun StationLocation.toStationDistance(geolocation: Geolocation): StationsDistance {
+private fun StationLocation.toStationDistance(geolocation: Geolocation): StationDistance {
     val distance =
         distanceInMiles(geolocation.latitude, geolocation.longitude, latitude, longitude)
-    return StationsDistance(this, distance)
+    return StationDistance(this, distance)
 }
 
 private fun distanceInMiles(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
