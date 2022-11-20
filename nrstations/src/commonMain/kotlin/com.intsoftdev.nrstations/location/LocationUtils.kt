@@ -1,8 +1,8 @@
 package com.intsoftdev.nrstations.location
 
 import com.intsoftdev.nrstations.common.Geolocation
-import com.intsoftdev.nrstations.common.StationDistance
 import com.intsoftdev.nrstations.common.NearestStations
+import com.intsoftdev.nrstations.common.StationDistance
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsList
 import kotlin.math.PI
