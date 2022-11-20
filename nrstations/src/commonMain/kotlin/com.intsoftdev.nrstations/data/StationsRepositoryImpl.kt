@@ -4,7 +4,7 @@ import com.intsoftdev.nrstations.cache.CacheState
 import com.intsoftdev.nrstations.cache.StationsCache
 import com.intsoftdev.nrstations.common.Geolocation
 import com.intsoftdev.nrstations.common.RequestRetryPolicy
-import com.intsoftdev.nrstations.common.StationDistances
+import com.intsoftdev.nrstations.common.NearestStations
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.common.StationsResultState
@@ -65,7 +65,7 @@ internal class StationsRepositoryImpl(
     override fun getNearbyStations(
         latitude: Double,
         longitude: Double
-    ): Flow<StationsResultState<StationDistances>> =
+    ): Flow<StationsResultState<NearestStations>> =
         flow {
             when (val cacheState = stationsCache.getCacheState()) {
                 is CacheState.Empty -> {

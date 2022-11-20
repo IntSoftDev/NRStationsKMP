@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations.sdk
 
-import com.intsoftdev.nrstations.common.StationDistances
+import com.intsoftdev.nrstations.common.NearestStations
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.common.StationsResultState
@@ -21,6 +21,6 @@ class NrStationsSDK : StationsAPI, StationsSdkDiComponent {
     override fun getNearbyStations(
         latitude: Double,
         longitude: Double
-    ): CFlow<StationsResultState<StationDistances>> =
+    ): CFlow<StationsResultState<NearestStations>> =
         getStationsUseCase.getNearbyStations(latitude, longitude).wrap()
 }

@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations.domain
 
-import com.intsoftdev.nrstations.common.StationDistances
+import com.intsoftdev.nrstations.common.NearestStations
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.common.StationsResultState
@@ -16,5 +16,5 @@ internal interface StationsRepository {
     fun getNearbyStations(
         latitude: Double,
         longitude: Double
-    ): Flow<StationsResultState<StationDistances>>
+    ): Flow<StationsResultState<NearestStations>>
 }

@@ -1,12 +1,12 @@
 package com.intsoftdev.nrstations.common
 
 /**
- * Representation of a list of stations distances relative to a geo-location point
+ * Representation of a list of stations relative sorted by distance from a geo-location point
  *
  * @property geolocation the coordinate relative to which the distance is calculated
  * @property stationDistances the list of stations and their respective distance in miles
  */
-data class StationDistances(
+data class NearestStations(
     val geolocation: Geolocation,
     val stationDistances: List<StationDistance>
 )
