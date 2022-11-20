@@ -25,9 +25,9 @@ internal actual val stationsPlatformModule = module {
 
     single<SqlDriver>(named("StationsSqlDriver")) {
         AndroidSqliteDriver(
-            NRStationsDb.Schema,
-            get(),
-            "NRStationsDb"
+            schema = NRStationsDb.Schema,
+            context = appContext,
+            name = "NRStationsDb"
         )
     }
 

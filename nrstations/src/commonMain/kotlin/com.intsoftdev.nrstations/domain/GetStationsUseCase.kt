@@ -13,4 +13,7 @@ internal class GetStationsUseCase(private val stationsRepository: StationsReposi
     }
 
     fun getStationLocation(crsCode: String?) = stationsRepository.getStationLocation(crsCode)
+
+    fun getNearbyStations(latitude: Double, longitude: Double) =
+        stationsRepository.getNearbyStations(latitude, longitude)
 }

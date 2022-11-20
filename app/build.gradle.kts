@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 // TODO add BuildConfig and integrate with GHA
@@ -36,10 +37,24 @@ android {
         abortOnError = true
     }
 
+    buildFeatures {
+        compose = true
+    }
+
     kotlinOptions {
         jvmTarget = "1.8"
         freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = isdlibs.versions.composeCompiler.get()
+    }
+}
+
+secrets {
+    // A properties file containing default secret values. This file can be
+    // checked in version control.
+    defaultPropertiesFileName = "local.defaults.properties"
 }
 
 val IMPORT_LOCAL_NRSTATIONS_KMP: String by project
@@ -52,18 +67,17 @@ dependencies {
         // use build from Maven Central
         implementation(isdlibs.intsoftdev.stations)
     }
+    // extra compose dependencies, add to central catalog
+    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.27.0")
+    implementation("com.google.accompanist:accompanist-permissions:0.27.0")
+    implementation("com.google.maps.android:maps-compose:2.7.2")
 
-    implementation(isdlibs.androidx.recyclerview)
-    implementation(isdlibs.androidx.swipelayout)
-    implementation(isdlibs.androidx.constraintlayout)
-    implementation(isdlibs.androidx.lifecycle.livedata)
-    implementation(isdlibs.androidx.lifecycle.extensions)
-    implementation(isdlibs.androidx.appcompat)
     implementation(isdlibs.bundles.app.ui)
     implementation(isdlibs.multiplatformSettings.common)
     implementation(isdlibs.kotlinx.dateTime)
     implementation(isdlibs.napier.logger)
+    implementation(isdlibs.google.gms.maps)
     coreLibraryDesugaring(isdlibs.android.desugaring)
-    implementation(isdlibs.koin.android)
     testImplementation(isdlibs.junit)
 }

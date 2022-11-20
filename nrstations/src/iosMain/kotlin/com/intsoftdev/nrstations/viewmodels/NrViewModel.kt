@@ -1,15 +1,15 @@
-package com.intsoftdev.nrstations.shared
+package com.intsoftdev.nrstations.viewmodels
 
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.Flow
 
 /**
  * Base class that provides a Kotlin/Native equivalent to the AndroidX `ViewModel`. In particular, this provides
  * a [CoroutineScope][kotlinx.coroutines.CoroutineScope] which uses [Dispatchers.Main][kotlinx.coroutines.Dispatchers.Main]
  * and can be tied into an arbitrary lifecycle by calling [clear] at the appropriate time.
  */
-actual abstract class SdkViewModel {
+actual abstract class NrViewModel {
 
     actual val viewModelScope = MainScope()
 
@@ -25,20 +25,9 @@ actual abstract class SdkViewModel {
      * no longer be used.
      */
     fun clear() {
+        Napier.d("clear enter")
         onCleared()
         viewModelScope.cancel()
+        Napier.d("clear exit")
     }
-}
-
-abstract class CallbackSdkViewModel {
-    protected abstract val viewModel: SdkViewModel
-
-    /**
-     * Create a [FlowAdapter] from this [Flow] to make it easier to interact with from Swift.
-     */
-    fun <T : Any> Flow<T>.asCallbacks() =
-        FlowAdapter(viewModel.viewModelScope, this)
-
-    @Suppress("Unused") // Called from Swift
-    fun clear() = viewModel.clear()
 }

@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SDKInitializerKt.doInitStationsSDK(
             apiConfig: config,
             userDefaults: defaults,
-            koinApp: nil,
             enableLogging: true)
         
         NSLog("started SDK")

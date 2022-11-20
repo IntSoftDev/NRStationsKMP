@@ -2,7 +2,9 @@ package com.intsoftdev.nrstations.data
 
 import com.intsoftdev.nrstations.cache.CacheState
 import com.intsoftdev.nrstations.cache.StationsCache
+import com.intsoftdev.nrstations.common.Geolocation
 import com.intsoftdev.nrstations.common.RequestRetryPolicy
+import com.intsoftdev.nrstations.common.StationDistances
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.common.StationsResultState
@@ -11,6 +13,8 @@ import com.intsoftdev.nrstations.data.model.station.DataVersion
 import com.intsoftdev.nrstations.data.model.station.toStationLocation
 import com.intsoftdev.nrstations.data.model.station.toUpdateVersion
 import com.intsoftdev.nrstations.domain.StationsRepository
+import com.intsoftdev.nrstations.location.getSortedStations
+import com.intsoftdev.nrstations.location.getStationDistancesfromRefPoint
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -58,6 +62,35 @@ internal class StationsRepositoryImpl(
         }
     }
 
+    override fun getNearbyStations(
+        latitude: Double,
+        longitude: Double
+    ): Flow<StationsResultState<StationDistances>> =
+        flow {
+            when (val cacheState = stationsCache.getCacheState()) {
+                is CacheState.Empty -> {
+                    Napier.d("cacheState is $cacheState")
+                    emit(StationsResultState.Failure(IllegalStateException("cache empty")))
+                }
+                else -> {
+                    val sortedStations = getSortedStations(
+                        latitude,
+                        longitude,
+                        stationsCache.getAllStations()
+                    ).subList(
+                        0,
+                        MAX_NEARBY_STATIONS - 1
+                    )
+                    val distances = getStationDistancesfromRefPoint(
+                        Geolocation(latitude, longitude),
+                        sortedStations
+                    )
+                    Napier.d("getNearbyStations Success")
+                    emit(StationsResultState.Success(distances))
+                }
+            }
+        }.flowOn(requestDispatcher)
+
     private suspend fun getServerDataVersion(): DataVersion {
         return stationsProxyService.getDataVersion().first()
     }
@@ -96,5 +129,9 @@ internal class StationsRepositoryImpl(
                 }
             }
         }
+    }
+
+    companion object {
+        private const val MAX_NEARBY_STATIONS = 10
     }
 }

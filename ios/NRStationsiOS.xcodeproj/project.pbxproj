@@ -10,6 +10,9 @@
 		461C74AA2788F5F3004B1FFC /* CombineAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C74A92788F5F3004B1FFC /* CombineAdapters.swift */; };
 		46A5B60826B04921002EFEAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A5B60626B04920002EFEAA /* Main.storyboard */; };
 		854D6FB028D1D77300BBEA47 /* StationListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854D6FAF28D1D77300BBEA47 /* StationListScreen.swift */; };
+		857ED02A2915C24E00D5B544 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857ED0292915C24E00D5B544 /* LocationManager.swift */; };
+		85A3F3C32911BEF7003A5456 /* NearbyStationsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A3F3C22911BEF7003A5456 /* NearbyStationsScreen.swift */; };
+		85A3F3C52911C0C0003A5456 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A3F3C42911C0C0003A5456 /* MapView.swift */; };
 		A69C9F4539A39A136B339DE1 /* Pods_NRStationsiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B19337D83F78D48298DA1A44 /* Pods_NRStationsiOS.framework */; };
 		F1465F0123AA94BF0055F7C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1465F0023AA94BF0055F7C3 /* AppDelegate.swift */; };
 		F1465F0A23AA94BF0055F7C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1465F0923AA94BF0055F7C3 /* Assets.xcassets */; };
@@ -41,6 +44,9 @@
 		49BD251E1DF615A0D12655D1 /* Pods-NRStationsiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NRStationsiOS.release.xcconfig"; path = "Target Support Files/Pods-NRStationsiOS/Pods-NRStationsiOS.release.xcconfig"; sourceTree = "<group>"; };
 		811D8894AF3A1955B3B77653 /* Pods-NRStationsiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NRStationsiOS.debug.xcconfig"; path = "Target Support Files/Pods-NRStationsiOS/Pods-NRStationsiOS.debug.xcconfig"; sourceTree = "<group>"; };
 		854D6FAF28D1D77300BBEA47 /* StationListScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationListScreen.swift; sourceTree = "<group>"; };
+		857ED0292915C24E00D5B544 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		85A3F3C22911BEF7003A5456 /* NearbyStationsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyStationsScreen.swift; sourceTree = "<group>"; };
+		85A3F3C42911C0C0003A5456 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		B19337D83F78D48298DA1A44 /* Pods_NRStationsiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NRStationsiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1465EFD23AA94BF0055F7C3 /* NRStationsiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NRStationsiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1465F0023AA94BF0055F7C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +121,7 @@
 		F1465EFF23AA94BF0055F7C3 /* NRStationsiOS */ = {
 			isa = PBXGroup;
 			children = (
+				85A3F3C42911C0C0003A5456 /* MapView.swift */,
 				F1465F0023AA94BF0055F7C3 /* AppDelegate.swift */,
 				46A5B60626B04920002EFEAA /* Main.storyboard */,
 				F1465F0923AA94BF0055F7C3 /* Assets.xcassets */,
@@ -122,6 +129,8 @@
 				F1465F0E23AA94BF0055F7C3 /* Info.plist */,
 				854D6FAF28D1D77300BBEA47 /* StationListScreen.swift */,
 				461C74A92788F5F3004B1FFC /* CombineAdapters.swift */,
+				85A3F3C22911BEF7003A5456 /* NearbyStationsScreen.swift */,
+				857ED0292915C24E00D5B544 /* LocationManager.swift */,
 			);
 			path = NRStationsiOS;
 			sourceTree = "<group>";
@@ -348,7 +357,10 @@
 			files = (
 				854D6FB028D1D77300BBEA47 /* StationListScreen.swift in Sources */,
 				461C74AA2788F5F3004B1FFC /* CombineAdapters.swift in Sources */,
+				857ED02A2915C24E00D5B544 /* LocationManager.swift in Sources */,
+				85A3F3C52911C0C0003A5456 /* MapView.swift in Sources */,
 				F1465F0123AA94BF0055F7C3 /* AppDelegate.swift in Sources */,
+				85A3F3C32911BEF7003A5456 /* NearbyStationsScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,10 +448,10 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Development: brady.aiello@gmail.com (94U525PPDD)";
+				CODE_SIGN_IDENTITY = "Apple Development: az@intsoftdev.com (9YW4PSYCXB)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 6A5MWU525T;
+				DEVELOPMENT_TEAM = CS2L267N92;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -499,10 +511,10 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Development: brady.aiello@gmail.com (94U525PPDD)";
+				CODE_SIGN_IDENTITY = "Apple Development: az@intsoftdev.com (9YW4PSYCXB)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 6A5MWU525T;
+				DEVELOPMENT_TEAM = CS2L267N92;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -530,9 +542,11 @@
 			baseConfigurationReference = 811D8894AF3A1955B3B77653 /* Pods-NRStationsiOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development: az@intsoftdev.com (9YW4PSYCXB)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = NRStationsiOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -557,9 +571,11 @@
 			baseConfigurationReference = 49BD251E1DF615A0D12655D1 /* Pods-NRStationsiOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development: az@intsoftdev.com (9YW4PSYCXB)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = NRStationsiOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
