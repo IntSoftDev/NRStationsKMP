@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations.viewmodels
 
-import com.intsoftdev.nrstations.common.StationDistances
+import com.intsoftdev.nrstations.common.NearestStations
 import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NrStationsSDK
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
@@ -87,7 +87,7 @@ open class NrNearbyViewModel : NrViewModel(), StationsSdkDiComponent {
 }
 
 data class NrNearbyViewState(
-    val stations: StationDistances? = null,
+    val stations: NearestStations? = null,
     val error: String? = null,
     val isLoading: Boolean = false
 )

@@ -1,8 +1,8 @@
 package com.intsoftdev.nrstations.location
 
 import com.intsoftdev.nrstations.common.Geolocation
+import com.intsoftdev.nrstations.common.NearestStations
 import com.intsoftdev.nrstations.common.StationDistance
-import com.intsoftdev.nrstations.common.StationDistances
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsList
 import kotlin.math.PI
@@ -30,7 +30,7 @@ internal fun getSortedStations(
 internal fun getStationDistancesfromRefPoint(
     geolocation: Geolocation,
     stationsList: StationsList
-) = StationDistances(
+) = NearestStations(
     geolocation = geolocation,
     stationDistances = stationsList.map {
         it.toStationDistance(geolocation)

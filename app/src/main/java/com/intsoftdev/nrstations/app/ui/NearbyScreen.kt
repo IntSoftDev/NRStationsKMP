@@ -49,7 +49,7 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationDistance
-import com.intsoftdev.nrstations.common.StationDistances
+import com.intsoftdev.nrstations.common.NearestStations
 import com.intsoftdev.nrstations.viewmodels.NrNearbyViewState
 import io.github.aakira.napier.Napier
 import java.util.Locale
@@ -124,7 +124,7 @@ private fun NearbyScreenContent(
 
 @Composable
 fun NearbyStationsSuccess(
-    successData: StationDistances,
+    successData: NearestStations,
     stationSelect: (StationLocation) -> Unit
 ) {
     val cameraPositionState = rememberCameraPositionState {

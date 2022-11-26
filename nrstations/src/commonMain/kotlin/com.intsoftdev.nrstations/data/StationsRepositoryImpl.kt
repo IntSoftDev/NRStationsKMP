@@ -3,8 +3,8 @@ package com.intsoftdev.nrstations.data
 import com.intsoftdev.nrstations.cache.CacheState
 import com.intsoftdev.nrstations.cache.StationsCache
 import com.intsoftdev.nrstations.common.Geolocation
+import com.intsoftdev.nrstations.common.NearestStations
 import com.intsoftdev.nrstations.common.RequestRetryPolicy
-import com.intsoftdev.nrstations.common.StationDistances
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.common.StationsResultState
@@ -65,28 +65,32 @@ internal class StationsRepositoryImpl(
     override fun getNearbyStations(
         latitude: Double,
         longitude: Double
-    ): Flow<StationsResultState<StationDistances>> =
+    ): Flow<StationsResultState<NearestStations>> =
         flow {
             when (val cacheState = stationsCache.getCacheState()) {
                 is CacheState.Empty -> {
                     Napier.d("cacheState is $cacheState")
-                    emit(StationsResultState.Failure(IllegalStateException("cache empty")))
+                    with(refreshStations()) {
+                        when (this) {
+                            is StationsResultState.Success -> {
+                                val stations = sortStationsFromCache(latitude, longitude)
+                                Napier.d("getNearbyStations Success")
+                                emit(StationsResultState.Success(stations))
+                            }
+                            is StationsResultState.Failure -> {
+                                emit(
+                                    StationsResultState.Failure(
+                                        IllegalStateException("cache empty")
+                                    )
+                                )
+                            }
+                        }
+                    }
                 }
                 else -> {
-                    val sortedStations = getSortedStations(
-                        latitude,
-                        longitude,
-                        stationsCache.getAllStations()
-                    ).subList(
-                        0,
-                        MAX_NEARBY_STATIONS - 1
-                    )
-                    val distances = getStationDistancesfromRefPoint(
-                        Geolocation(latitude, longitude),
-                        sortedStations
-                    )
+                    val stations = sortStationsFromCache(latitude, longitude)
                     Napier.d("getNearbyStations Success")
-                    emit(StationsResultState.Success(distances))
+                    emit(StationsResultState.Success(stations))
                 }
             }
         }.flowOn(requestDispatcher)
@@ -129,6 +133,24 @@ internal class StationsRepositoryImpl(
                 }
             }
         }
+    }
+
+    private fun sortStationsFromCache(
+        latitude: Double,
+        longitude: Double
+    ): NearestStations {
+        val sortedStations = getSortedStations(
+            latitude,
+            longitude,
+            stationsCache.getAllStations()
+        ).subList(
+            0,
+            MAX_NEARBY_STATIONS - 1
+        )
+        return getStationDistancesfromRefPoint(
+            Geolocation(latitude, longitude),
+            sortedStations
+        )
     }
 
     companion object {
