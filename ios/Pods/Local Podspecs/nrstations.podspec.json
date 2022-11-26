@@ -1,6 +1,6 @@
 {
   "name": "nrstations",
-  "version": "0.0.1",
+  "version": "0.0.2-SNAPSHOT",
   "homepage": "https://github.com/intsoftdev/NRStationsKMP",
   "source": {
     "http": ""

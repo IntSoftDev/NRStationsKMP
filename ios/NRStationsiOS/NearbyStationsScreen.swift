@@ -15,7 +15,7 @@ class ObservableNearbyStationsModel: ObservableObject {
     @Published
     var loading = false
     @Published
-    var stations: [StationsDistance]?
+    var stations: [StationDistance]?
     @Published
     var error: String?
     private var cancellables = [AnyCancellable]()
@@ -33,7 +33,7 @@ class ObservableNearbyStationsModel: ObservableObject {
     func setupViewModel() {
         let viewModel = KotlinDependencies.shared.getNearbyViewModel()
         doPublish(viewModel.stations) { [weak self] stationsViewState in
-            self?.stations = stationsViewState.stations?.values.first
+            self?.stations = stationsViewState.stations?.stationDistances
             self?.error = stationsViewState.error
         }.store(in: &cancellables)
         self.viewModel = viewModel
@@ -78,7 +78,7 @@ struct NearbyStationsScreen: View {
 
 struct NearbyStationsContent: View {
     var loading: Bool
-    var stations: [StationsDistance]?
+    var stations: [StationDistance]?
     var error: String?
     var refresh: () -> Void
     var body: some View {
@@ -98,12 +98,12 @@ struct NearbyStationsContent: View {
 }
 
 struct NearbyStationsRowView: View {
-    var station: StationsDistance
+    var station: StationDistance
     var body: some View {
         HStack {
             Text(station.station.stationName)
             Spacer()
-            Text(String(format: "%f miles", station.distanceFromRefInMiles))
+            Text(String(format: "%f miles", station.distanceInMiles))
         }
     }
 }
