@@ -16,7 +16,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("isdlibs") {
-            from("com.intsoftdev:isdversioncatalog:0.0.2-SNAPSHOT")
+            from("com.intsoftdev:isdversioncatalog:0.0.2")
         }
     }
 }
