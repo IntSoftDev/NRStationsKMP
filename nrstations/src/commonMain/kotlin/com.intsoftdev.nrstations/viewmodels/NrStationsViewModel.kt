@@ -1,16 +1,16 @@
 package com.intsoftdev.nrstations.viewmodels
 
+import StationsSdkDiComponent
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NrStationsSDK
-import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
-import com.intsoftdev.nrstations.sdk.provide
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import provide
 
 class NrStationsViewModel : NrViewModel(), StationsSdkDiComponent {
 

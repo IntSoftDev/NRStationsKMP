@@ -1,11 +1,10 @@
 package com.intsoftdev.nrstations.app.ui
 
+import StationsSdkDiComponent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NrStationsSDK
-import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
-import com.intsoftdev.nrstations.sdk.provide
 import com.intsoftdev.nrstations.viewmodels.NreStationsViewState
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import provide
 
 class StationsViewModel : ViewModel(), StationsSdkDiComponent {
 

@@ -1,8 +1,7 @@
 package com.intsoftdev.nrstations.shared
 
+import StationsSdkDiComponent
 import com.intsoftdev.nrstations.database.NRStationsDb
-import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
-import com.intsoftdev.nrstations.sdk.provide
 import com.intsoftdev.nrstations.viewmodels.NearbyCallbackViewModel
 import com.intsoftdev.nrstations.viewmodels.StationsCallbackViewModel
 import com.squareup.sqldelight.db.SqlDriver
@@ -12,6 +11,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import provide
 
 internal actual val stationsPlatformModule = module {
     factory<CoroutineDispatcher>(named("NRStationsCoroutineDispatcher")) { Dispatchers.Main }

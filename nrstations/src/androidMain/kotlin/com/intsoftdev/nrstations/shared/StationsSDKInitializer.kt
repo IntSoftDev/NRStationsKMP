@@ -2,6 +2,7 @@ package com.intsoftdev.nrstations.shared
 
 import android.content.Context
 import com.intsoftdev.nrstations.common.APIConfig
+import com.intsoftdev.nrstations.di.SDKDiInitialiser
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 

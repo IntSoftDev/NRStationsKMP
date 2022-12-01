@@ -1,5 +1,6 @@
 package com.intsoftdev.nrstations.sdk
 
+import StationsSdkDiComponent
 import com.intsoftdev.nrstations.common.NearestStations
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
