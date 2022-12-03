@@ -1,8 +1,8 @@
 package com.intsoftdev.nrstations.app.ui
 
-import StationsSdkDiComponent
 import androidx.lifecycle.SavedStateHandle
 import com.google.android.gms.maps.model.LatLng
+import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
 import com.intsoftdev.nrstations.viewmodels.NrNearbyViewModel
 
 internal class NearbyStationsViewModel(

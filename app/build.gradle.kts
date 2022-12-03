@@ -65,7 +65,7 @@ dependencies {
         implementation(project(":nrstations"))
     } else {
         // use build from Maven Central
-        implementation(isdlibs.intsoftdev.stations)
+        implementation("com.intsoftdev:nrstations:0.0.3-SNAPSHOT")
     }
     // extra compose dependencies, add to central catalog
     implementation("androidx.navigation:navigation-compose:2.5.3")

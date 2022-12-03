@@ -2,7 +2,7 @@ package com.intsoftdev.nrstations.shared
 
 import com.intsoftdev.nrstations.common.APIConfig
 import com.intsoftdev.nrstations.di.SDKDiInitialiser
-import com.intsoftdev.nrstations.di.SDKKoinHolder
+import com.intsoftdev.nrstations.di.StationsSdkKoinHolder
 import com.russhwolf.settings.NSUserDefaultsSettings
 import com.russhwolf.settings.Settings
 import io.github.aakira.napier.DebugAntilog
@@ -28,11 +28,10 @@ fun initStationsSDK(
     )
 }
 
-
 internal fun initSDKiOS(
     apiConfig: APIConfig,
     iOSModule: Module
 ): KoinApplication {
-    SDKDiInitialiser.setupDi(apiConfig, listOf(iOSModule))
-    return SDKKoinHolder.koinApplication
+    SDKDiInitialiser.setupDi(apiConfig, null, listOf(iOSModule))
+    return StationsSdkKoinHolder.koinApplication
 }
