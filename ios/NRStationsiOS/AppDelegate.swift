@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let config = APIConfig(serverUrl: "https://onrails-test.azurewebsites.net", licenseKey: "")
         
-        SDKInitializerKt.doInitStationsSDK(
+        StationsSDKInitializerKt.doInitStationsSDK(
             apiConfig: config,
             userDefaults: defaults,
             enableLogging: true)

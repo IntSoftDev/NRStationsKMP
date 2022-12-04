@@ -4,7 +4,7 @@ import com.intsoftdev.nrstations.common.NearestStations
 import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NrStationsSDK
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
-import com.intsoftdev.nrstations.sdk.provide
+import com.intsoftdev.nrstations.sdk.injectStations
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +18,7 @@ open class NrNearbyViewModel : NrViewModel(), StationsSdkDiComponent {
         Napier.d("init")
     }
 
-    private var stationsSDK = this.provide<NrStationsSDK>()
+    private var stationsSDK = this.injectStations<NrStationsSDK>()
 
     // Backing property to avoid state updates from other classes
     // consider replacing with MutableSharedFlow if it doesn't re-emit same value

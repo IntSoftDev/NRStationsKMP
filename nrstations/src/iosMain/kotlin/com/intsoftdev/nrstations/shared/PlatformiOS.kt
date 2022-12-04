@@ -2,7 +2,7 @@ package com.intsoftdev.nrstations.shared
 
 import com.intsoftdev.nrstations.database.NRStationsDb
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
-import com.intsoftdev.nrstations.sdk.provide
+import com.intsoftdev.nrstations.sdk.injectStations
 import com.intsoftdev.nrstations.viewmodels.NearbyCallbackViewModel
 import com.intsoftdev.nrstations.viewmodels.StationsCallbackViewModel
 import com.squareup.sqldelight.db.SqlDriver
@@ -27,6 +27,6 @@ internal actual val stationsPlatformModule = module {
 
 @Suppress("unused") // Called from Swift
 object KotlinDependencies : StationsSdkDiComponent {
-    fun getStationsViewModel() = this.provide<StationsCallbackViewModel>()
-    fun getNearbyViewModel() = this.provide<NearbyCallbackViewModel>()
+    fun getStationsViewModel() = this.injectStations<StationsCallbackViewModel>()
+    fun getNearbyViewModel() = this.injectStations<NearbyCallbackViewModel>()
 }

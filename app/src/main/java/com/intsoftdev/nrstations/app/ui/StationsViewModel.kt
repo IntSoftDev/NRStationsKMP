@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NrStationsSDK
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
-import com.intsoftdev.nrstations.sdk.provide
+import com.intsoftdev.nrstations.sdk.injectStations
 import com.intsoftdev.nrstations.viewmodels.NreStationsViewState
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class StationsViewModel : ViewModel(), StationsSdkDiComponent {
 
-    private val stationsSDK = this.provide<NrStationsSDK>()
+    private val stationsSDK = this.injectStations<NrStationsSDK>()
 
     // Backing property to avoid state updates from other classes
     // consider replacing with MutableSharedFlow if it doesn't re-emit same value

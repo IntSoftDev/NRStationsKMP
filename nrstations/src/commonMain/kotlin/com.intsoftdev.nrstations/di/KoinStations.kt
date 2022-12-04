@@ -1,13 +1,14 @@
-package com.intsoftdev.nrstations.shared
+package com.intsoftdev.nrstations.di
 
 import com.intsoftdev.nrstations.cache.stationsCacheModule // ktlint-disable import-ordering
 import com.intsoftdev.nrstations.common.APIConfig
 import com.intsoftdev.nrstations.common.toKoinProperties
+import com.intsoftdev.nrstations.sdk.SdkDiContext
 import com.intsoftdev.nrstations.sdk.stationsSdkModule
+import com.intsoftdev.nrstations.shared.stationsPlatformModule
 import kotlin.native.concurrent.ThreadLocal
 import org.koin.core.module.Module
 import org.koin.dsl.koinApplication
-import org.koin.core.KoinApplication
 import org.koin.dsl.module
 import stationsDataModule
 import stationsDomainModule
@@ -23,7 +24,7 @@ private val stationsDIModules = module {
 }
 
 @ThreadLocal
-internal object SDKKoinHolder {
+internal object StationsSdkKoinHolder {
     var koinApplication = koinApplication { }
 }
 
@@ -31,18 +32,11 @@ internal object SDKDiInitialiser {
     internal fun setupDi(
         apiConfig: APIConfig = APIConfig(),
         clientModules: List<Module> = emptyList()
-    ) {
-        SDKKoinHolder.koinApplication = koinApplication {
+    ): SdkDiContext {
+        StationsSdkKoinHolder.koinApplication = koinApplication {
             properties(apiConfig.toKoinProperties())
             modules(stationsDIModules.plus(clientModules))
         }
+        return StationsSdkKoinHolder.koinApplication
     }
-}
-
-internal fun initSDKiOS(
-    apiConfig: APIConfig,
-    iOSModule: Module
-): KoinApplication {
-    SDKDiInitialiser.setupDi(apiConfig, listOf(iOSModule))
-    return SDKKoinHolder.koinApplication
 }
