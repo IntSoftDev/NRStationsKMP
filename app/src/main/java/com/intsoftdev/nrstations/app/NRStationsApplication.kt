@@ -14,7 +14,6 @@ class NRStationsApplication : Application() {
         initStationsSDK(
             context = this@NRStationsApplication,
             enableLogging = BuildConfig.DEBUG,
-            sdkDiContext = null,
             apiConfig = APIConfig(
                 serverUrl = "https://onrails-test.azurewebsites.net"
                 // Can pass in license key here

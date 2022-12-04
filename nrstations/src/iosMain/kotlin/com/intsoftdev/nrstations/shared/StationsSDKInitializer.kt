@@ -32,6 +32,6 @@ internal fun initSDKiOS(
     apiConfig: APIConfig,
     iOSModule: Module
 ): KoinApplication {
-    SDKDiInitialiser.setupDi(apiConfig, null, listOf(iOSModule))
+    SDKDiInitialiser.setupDi(apiConfig, listOf(iOSModule))
     return StationsSdkKoinHolder.koinApplication
 }

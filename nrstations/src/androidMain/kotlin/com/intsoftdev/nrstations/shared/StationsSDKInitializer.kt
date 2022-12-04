@@ -10,13 +10,12 @@ import io.github.aakira.napier.Napier
 fun initStationsSDK(
     context: Context,
     apiConfig: APIConfig = APIConfig(),
-    sdkDiContext: SdkDiContext? = null,
     enableLogging: Boolean = false
-) {
+): SdkDiContext {
     appContext = context
     if (enableLogging) {
         Napier.base(DebugAntilog())
     }
 
-    SDKDiInitialiser.setupDi(apiConfig, sdkDiContext)
+    return SDKDiInitialiser.setupDi(apiConfig)
 }
