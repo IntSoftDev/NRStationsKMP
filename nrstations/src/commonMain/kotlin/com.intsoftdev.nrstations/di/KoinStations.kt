@@ -7,7 +7,6 @@ import com.intsoftdev.nrstations.sdk.SdkDiContext
 import com.intsoftdev.nrstations.sdk.stationsSdkModule
 import com.intsoftdev.nrstations.shared.stationsPlatformModule
 import kotlin.native.concurrent.ThreadLocal
-import org.koin.core.KoinApplication
 import org.koin.core.module.Module
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
@@ -33,7 +32,7 @@ internal object SDKDiInitialiser {
     internal fun setupDi(
         apiConfig: APIConfig = APIConfig(),
         clientModules: List<Module> = emptyList()
-    ) : SdkDiContext {
+    ): SdkDiContext {
         StationsSdkKoinHolder.koinApplication = koinApplication {
             properties(apiConfig.toKoinProperties())
             modules(stationsDIModules.plus(clientModules))
