@@ -15,8 +15,8 @@ class NrStationsSDK : StationsAPI, StationsSdkDiComponent {
     override fun getAllStations(): CFlow<StationsResultState<StationsResult>> =
         getStationsUseCase.getAllStations().wrap()
 
-    override fun getStationLocation(crsCode: String): StationLocation =
-        getStationsUseCase.getStationLocation(crsCode)
+    override suspend fun getStationLocation(vararg crsCodes: String?): CFlow<StationsResultState<List<StationLocation>>> =
+        getStationsUseCase.getStationLocation(*crsCodes).wrap()
 
     override fun getNearbyStations(
         latitude: Double,

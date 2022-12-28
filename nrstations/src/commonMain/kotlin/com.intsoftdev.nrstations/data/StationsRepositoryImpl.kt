@@ -50,17 +50,17 @@ internal class StationsRepositoryImpl(
             emit(StationsResultState.Failure(throwable))
         }.flowOn(requestDispatcher)
 
-    override fun getStationLocation(crsCode: String?): StationLocation {
-        requireNotNull(crsCode)
-        return when (stationsCache.getCacheState()) {
+    override suspend fun getStationLocation(vararg crsCodes: String): List<StationLocation> =
+        when (stationsCache.getCacheState()) {
             is CacheState.Empty -> {
                 throw IllegalStateException("cache empty")
             }
             else -> {
-                stationsCache.getStationLocation(crsCode)
+                crsCodes.map {
+                    stationsCache.getStationLocation(it)
+                }
             }
         }
-    }
 
     override fun getNearbyStations(
         latitude: Double,

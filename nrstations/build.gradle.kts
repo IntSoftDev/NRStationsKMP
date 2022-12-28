@@ -4,7 +4,6 @@ plugins {
     id("kotlinx-serialization")
     id("com.android.library")
     id("com.squareup.sqldelight")
-    id("kotlin-parcelize")
     id("convention.publication")
     `maven-publish`
 }
@@ -57,7 +56,6 @@ kotlin {
                 implementation(isdlibs.kolinx.serialization)
                 implementation(isdlibs.bundles.ktor.common)
                 implementation(isdlibs.napier.logger)
-                api(isdlibs.moko.parcelize)
             }
         }
         val commonTest by getting {

@@ -8,7 +8,7 @@ import com.intsoftdev.nrstations.shared.CFlow
 
 interface StationsAPI {
     fun getAllStations(): CFlow<StationsResultState<StationsResult>>
-    fun getStationLocation(crsCode: String): StationLocation
+    suspend fun getStationLocation(vararg crsCodes: String?): CFlow<StationsResultState<List<StationLocation>>>
     fun getNearbyStations(
         latitude: Double,
         longitude: Double
