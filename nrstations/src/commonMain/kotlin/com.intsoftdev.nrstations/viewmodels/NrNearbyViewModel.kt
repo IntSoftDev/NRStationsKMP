@@ -35,23 +35,23 @@ open class NrNearbyViewModel : NrViewModel(), StationsSdkDiComponent {
     fun getNearbyStations(crsCode: String) {
         Napier.d("getNearbyStations $crsCode enter")
         viewModelScope.launch {
-            val stationLocation = stationsSDK.getStationLocation(crsCode)
-            stationsSDK.getNearbyStations(stationLocation.latitude, stationLocation.longitude)
+            stationsSDK.getStationLocation(crsCode)
                 .onStart {
                     Napier.d("onStart")
                     _uiState.emit(NrNearbyViewState(isLoading = true))
                 }.catch { throwable ->
                     _uiState.emit(NrNearbyViewState(error = throwable.message))
-                }.collect { result ->
-                    when (result) {
+                }.collect { results ->
+                    when (results) {
                         is StationsResultState.Success -> {
-                            Napier.d("got stations count ${result.data.stationDistances.size}")
-                            _uiState.emit(
-                                NrNearbyViewState(stations = result.data)
+                            Napier.d("got stationLocation")
+                            getNearbyStations(
+                                results.data.first().latitude,
+                                results.data.first().longitude
                             )
                         }
                         is StationsResultState.Failure -> {
-                            _uiState.emit(NrNearbyViewState(error = result.error?.message))
+                            _uiState.emit(NrNearbyViewState(error = results.error?.message))
                             Napier.e("error")
                         }
                     }

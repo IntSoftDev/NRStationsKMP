@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
  */
 internal interface StationsRepository {
     fun getAllStations(): Flow<StationsResultState<StationsResult>>
-    fun getStationLocation(crsCode: String?): StationLocation
+    suspend fun getStationLocation(vararg crsCodes: String): List<StationLocation>
     fun getNearbyStations(
         latitude: Double,
         longitude: Double
