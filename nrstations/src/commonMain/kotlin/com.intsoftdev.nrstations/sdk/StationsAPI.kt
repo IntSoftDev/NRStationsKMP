@@ -7,8 +7,32 @@ import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.shared.CFlow
 
 interface StationsAPI {
+    /**
+     * Retrieves all the NRE stations from a compatible server
+     * The server is typically an instance of [Huxley2](https://github.com/azaka01/Huxley2)
+     * this method is an asynchronous [kotlinx.coroutines.flow.Flow]
+     *
+     * @return [StationsResult] encapsulated in [StationsResultState]
+     */
     fun getAllStations(): CFlow<StationsResultState<StationsResult>>
+
+    /**
+     * Retrieves a list of [StationLocation] for each of the NRE CRS station alpha codes passed in
+     *
+     * @param crsCodes vararg of nullable CRS codes
+     * the API will only operate on non-null CRS codes
+     *
+     * @return list of [StationLocation] encapsulated in [StationsResultState]
+     */
     suspend fun getStationLocation(vararg crsCodes: String?): CFlow<StationsResultState<List<StationLocation>>>
+
+    /**
+     * Returns a list of stations near the geo-location passed in
+     * @param [latitude] latitude of geo-location for which nearby stations are required
+     * @param [longitude] longitude of geo-location for which nearby stations are required
+     *
+     * @return an instance of [NearestStations] encapsulated in [StationsResultState]
+     */
     fun getNearbyStations(
         latitude: Double,
         longitude: Double
