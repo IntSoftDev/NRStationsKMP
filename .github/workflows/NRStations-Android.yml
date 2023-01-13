@@ -38,7 +38,9 @@ jobs:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
 
         run: ./gradlew publishAndroidReleasePublicationToSonatypeRepository
-             ./gradlew publishAndroidDebugPublicationToSonatypeRepository
+
+      - name: Publish Android debug to MavenCentral
+        run: ./gradlew publishAndroidDebugPublicationToSonatypeRepository
 
 
 
