@@ -100,7 +100,7 @@ publishing {
 signing {
     useInMemoryPgpKeys(
         getExtraString("signing.keyId"),
-        getExtraString("signing.secretKey"),
+        getExtraString("signing.key"),
         getExtraString("signing.password")
     )
     sign(publishing.publications)
