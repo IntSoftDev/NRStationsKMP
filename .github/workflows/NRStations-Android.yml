@@ -27,7 +27,7 @@ jobs:
       #  - name: Build
       #    run: ./gradlew build
         
-      - name: Publish Android release to MavenCentral
+      - name: Publish Android artifacts to MavenCentral
 
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
@@ -37,10 +37,6 @@ jobs:
           # gpg --export-secret-keys YOUR_ID_HERE | base64 > private.key
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
 
-        run: ./gradlew publishAndroidReleasePublicationToSonatypeRepository
-
-      - name: Publish Android debug to MavenCentral
-        run: ./gradlew publishAndroidDebugPublicationToSonatypeRepository
-
+        run: ./gradlew publishAndroidReleasePublicationToSonatypeRepository publishAndroidDebugPublicationToSonatypeRepository
 
 
