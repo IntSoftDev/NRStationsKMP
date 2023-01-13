@@ -30,6 +30,7 @@ if (secretPropsFile.exists()) {
     ext["signing.keyId"] = System.getenv("SIGNING_KEY_ID")
     ext["signing.password"] = System.getenv("SIGNING_PASSWORD")
     ext["signing.secretKeyRingFile"] = System.getenv("SIGNING_SECRET_KEY_RING_FILE")
+    ext["signing.key"] = System.getenv("SIGNING_KEY")
     ext["ossrhUsername"] = System.getenv("OSSRH_USERNAME")
     ext["ossrhPassword"] = System.getenv("OSSRH_PASSWORD")
 }
@@ -43,7 +44,7 @@ fun getExtraString(name: String) = ext[name]?.toString()
 group = "com.intsoftdev"
 // the version generated can be either release or snapshot
 // current version is 0.0.1-SNAPSHOT (update this)
-version = "0.0.4-SNAPSHOT"
+version = "0.0.4"
 
 publishing {
     // Configure maven central repository
@@ -97,5 +98,10 @@ publishing {
 // Signing artifacts. Signing.* extra properties values will be used
 
 signing {
+    useInMemoryPgpKeys(
+        getExtraString("signing.keyId"),
+        getExtraString("signing.key"),
+        getExtraString("signing.password")
+    )
     sign(publishing.publications)
 }
