@@ -61,9 +61,7 @@ fun StationsNavHost(
     ) {
         composable(
             "mainscreen"
-            /*
-               TODO add transitions
-              */
+            // TODO add transitions
         ) {
             MainScreen(
                 stationsViewModel = stationsViewModel,
@@ -81,9 +79,7 @@ fun StationsNavHost(
                     defaultValue = null
                     nullable = true
                 }
-            ) /*
-               TODO add transitions
-              */
+            ) // TODO add transitions
         ) {
             NearbyStationsScreen(nearbyStationsViewModel = viewModel())
         }

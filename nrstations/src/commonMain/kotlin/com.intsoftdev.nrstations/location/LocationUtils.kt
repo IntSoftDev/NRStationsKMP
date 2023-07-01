@@ -66,3 +66,11 @@ private fun deg2rad(deg: Double): Double {
 private fun rad2deg(rad: Double): Double {
     return rad * 180.0 / PI
 }
+
+fun StationLocation.distanceInMetres(geolocation: Geolocation): Double {
+    return distanceInMetres(
+        geolocation.latitude,
+        geolocation.longitude,
+        this.latitude,
+        this.longitude)
+}

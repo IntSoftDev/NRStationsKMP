@@ -19,17 +19,12 @@ android {
         // TODO add BuildConfig
         // buildConfigField("String", "ISD_API_KEY", ISD_API_KEY)
     }
-    packagingOptions {
-        resources.excludes.add("META-INF/*.kotlin_module")
-    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
-    }
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
     }
 
     lint {
@@ -72,6 +67,8 @@ dependencies {
     implementation("com.google.accompanist:accompanist-navigation-animation:0.27.0")
     implementation("com.google.accompanist:accompanist-permissions:0.27.0")
     implementation("com.google.maps.android:maps-compose:2.7.2")
+
+    implementation(isdlibs.kmm.viewmodel)
 
     implementation(isdlibs.bundles.app.ui)
     implementation(isdlibs.multiplatformSettings.common)

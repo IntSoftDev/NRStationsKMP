@@ -3,15 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		461C74AA2788F5F3004B1FFC /* CombineAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C74A92788F5F3004B1FFC /* CombineAdapters.swift */; };
 		46A5B60826B04921002EFEAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A5B60626B04920002EFEAA /* Main.storyboard */; };
 		854D6FB028D1D77300BBEA47 /* StationListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854D6FAF28D1D77300BBEA47 /* StationListScreen.swift */; };
+		857A502B29BE5C3800976A8B /* KMMViewModelCore in Frameworks */ = {isa = PBXBuildFile; productRef = 857A502A29BE5C3800976A8B /* KMMViewModelCore */; };
+		857A502D29BE5C3800976A8B /* KMMViewModelSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 857A502C29BE5C3800976A8B /* KMMViewModelSwiftUI */; };
+		857A502F29BE5C5A00976A8B /* KMMViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857A502E29BE5C5A00976A8B /* KMMViewModel.swift */; };
+		857A503129BE6E4200976A8B /* NearbyStationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857A503029BE6E4200976A8B /* NearbyStationsView.swift */; };
 		857ED02A2915C24E00D5B544 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857ED0292915C24E00D5B544 /* LocationManager.swift */; };
-		85A3F3C32911BEF7003A5456 /* NearbyStationsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A3F3C22911BEF7003A5456 /* NearbyStationsScreen.swift */; };
 		85A3F3C52911C0C0003A5456 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A3F3C42911C0C0003A5456 /* MapView.swift */; };
 		A69C9F4539A39A136B339DE1 /* Pods_NRStationsiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B19337D83F78D48298DA1A44 /* Pods_NRStationsiOS.framework */; };
 		F1465F0123AA94BF0055F7C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1465F0023AA94BF0055F7C3 /* AppDelegate.swift */; };
@@ -39,13 +41,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		461C74A92788F5F3004B1FFC /* CombineAdapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineAdapters.swift; sourceTree = "<group>"; };
 		46A5B60726B04920002EFEAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		49BD251E1DF615A0D12655D1 /* Pods-NRStationsiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NRStationsiOS.release.xcconfig"; path = "Target Support Files/Pods-NRStationsiOS/Pods-NRStationsiOS.release.xcconfig"; sourceTree = "<group>"; };
 		811D8894AF3A1955B3B77653 /* Pods-NRStationsiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NRStationsiOS.debug.xcconfig"; path = "Target Support Files/Pods-NRStationsiOS/Pods-NRStationsiOS.debug.xcconfig"; sourceTree = "<group>"; };
 		854D6FAF28D1D77300BBEA47 /* StationListScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationListScreen.swift; sourceTree = "<group>"; };
+		857A502E29BE5C5A00976A8B /* KMMViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KMMViewModel.swift; sourceTree = "<group>"; };
+		857A503029BE6E4200976A8B /* NearbyStationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyStationsView.swift; sourceTree = "<group>"; };
 		857ED0292915C24E00D5B544 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		85A3F3C22911BEF7003A5456 /* NearbyStationsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyStationsScreen.swift; sourceTree = "<group>"; };
 		85A3F3C42911C0C0003A5456 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		B19337D83F78D48298DA1A44 /* Pods_NRStationsiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NRStationsiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1465EFD23AA94BF0055F7C3 /* NRStationsiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NRStationsiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +68,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				857A502B29BE5C3800976A8B /* KMMViewModelCore in Frameworks */,
+				857A502D29BE5C3800976A8B /* KMMViewModelSwiftUI in Frameworks */,
 				A69C9F4539A39A136B339DE1 /* Pods_NRStationsiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -128,9 +132,9 @@
 				F1465F0B23AA94BF0055F7C3 /* LaunchScreen.storyboard */,
 				F1465F0E23AA94BF0055F7C3 /* Info.plist */,
 				854D6FAF28D1D77300BBEA47 /* StationListScreen.swift */,
-				461C74A92788F5F3004B1FFC /* CombineAdapters.swift */,
-				85A3F3C22911BEF7003A5456 /* NearbyStationsScreen.swift */,
 				857ED0292915C24E00D5B544 /* LocationManager.swift */,
+				857A502E29BE5C5A00976A8B /* KMMViewModel.swift */,
+				857A503029BE6E4200976A8B /* NearbyStationsView.swift */,
 			);
 			path = NRStationsiOS;
 			sourceTree = "<group>";
@@ -180,6 +184,10 @@
 			dependencies = (
 			);
 			name = NRStationsiOS;
+			packageProductDependencies = (
+				857A502A29BE5C3800976A8B /* KMMViewModelCore */,
+				857A502C29BE5C3800976A8B /* KMMViewModelSwiftUI */,
+			);
 			productName = NRStationsiOS;
 			productReference = F1465EFD23AA94BF0055F7C3 /* NRStationsiOS.app */;
 			productType = "com.apple.product-type.application";
@@ -252,6 +260,9 @@
 				Base,
 			);
 			mainGroup = F1465EF423AA94BF0055F7C3;
+			packageReferences = (
+				857A502929BE5C3800976A8B /* XCRemoteSwiftPackageReference "KMM-ViewModel" */,
+			);
 			productRefGroup = F1465EFE23AA94BF0055F7C3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -356,11 +367,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				854D6FB028D1D77300BBEA47 /* StationListScreen.swift in Sources */,
-				461C74AA2788F5F3004B1FFC /* CombineAdapters.swift in Sources */,
 				857ED02A2915C24E00D5B544 /* LocationManager.swift in Sources */,
 				85A3F3C52911C0C0003A5456 /* MapView.swift in Sources */,
+				857A503129BE6E4200976A8B /* NearbyStationsView.swift in Sources */,
 				F1465F0123AA94BF0055F7C3 /* AppDelegate.swift in Sources */,
-				85A3F3C32911BEF7003A5456 /* NearbyStationsScreen.swift in Sources */,
+				857A502F29BE5C5A00976A8B /* KMMViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,6 +726,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		857A502929BE5C3800976A8B /* XCRemoteSwiftPackageReference "KMM-ViewModel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rickclephas/KMM-ViewModel.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		857A502A29BE5C3800976A8B /* KMMViewModelCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 857A502929BE5C3800976A8B /* XCRemoteSwiftPackageReference "KMM-ViewModel" */;
+			productName = KMMViewModelCore;
+		};
+		857A502C29BE5C3800976A8B /* KMMViewModelSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 857A502929BE5C3800976A8B /* XCRemoteSwiftPackageReference "KMM-ViewModel" */;
+			productName = KMMViewModelSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F1465EF523AA94BF0055F7C3 /* Project object */;
 }

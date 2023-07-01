@@ -2,11 +2,16 @@
 //  AppDelegate.swift
 
 import SwiftUI
+import KMMViewModelCore
+import KMMViewModelSwiftUI
 import nrstations
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    @StateViewModel var stationsViewModel = NrStationsViewModel()
+    @StateViewModel var nearbyViewModel = NrNearbyViewModel()
+    
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions
@@ -23,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         NSLog("started SDK")
 
-        let viewController = UIHostingController(rootView: StationListScreen())
+        let viewController = UIHostingController(rootView: StationListScreen(stationsViewModel: $stationsViewModel, nearbyViewModel: $nearbyViewModel))
 
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.rootViewController = viewController

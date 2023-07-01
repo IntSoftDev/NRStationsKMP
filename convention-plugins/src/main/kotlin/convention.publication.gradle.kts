@@ -16,6 +16,8 @@ ext["signing.secretKeyRingFile"] = null
 ext["ossrhUsername"] = null
 ext["ossrhPassword"] = null
 
+val IMPORT_LOCAL_NRSTATIONS_KMP: String by project
+
 // Grabbing secrets from local.properties file or from environment variables, which could be used on CI
 val secretPropsFile = project.rootProject.file("local.properties")
 if (secretPropsFile.exists()) {
@@ -44,7 +46,7 @@ fun getExtraString(name: String) = ext[name]?.toString()
 group = "com.intsoftdev"
 // the version generated can be either release or snapshot
 // current version is 0.0.1-SNAPSHOT (update this)
-version = "0.0.4"
+version = "0.0.5"
 
 publishing {
     // Configure maven central repository
@@ -96,12 +98,14 @@ publishing {
 }
 
 // Signing artifacts. Signing.* extra properties values will be used
-
-signing {
-    useInMemoryPgpKeys(
-        getExtraString("signing.keyId"),
-        getExtraString("signing.key"),
-        getExtraString("signing.password")
-    )
-    sign(publishing.publications)
+// "signing.key" gradle is throwing build errors, comment out for local builds pending investigation
+if (IMPORT_LOCAL_NRSTATIONS_KMP == "false") {
+    signing {
+        useInMemoryPgpKeys(
+            getExtraString("signing.keyId"),
+            getExtraString("signing.key"),
+            getExtraString("signing.password")
+        )
+        sign(publishing.publications)
+    }
 }

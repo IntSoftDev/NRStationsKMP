@@ -5,14 +5,21 @@ import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NrStationsSDK
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
 import com.intsoftdev.nrstations.sdk.injectStations
+import com.rickclephas.kmm.viewmodel.KMMViewModel
+import com.rickclephas.kmm.viewmodel.coroutineScope
+import com.rickclephas.kmm.viewmodel.stateIn
+import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-open class NrNearbyViewModel : NrViewModel(), StationsSdkDiComponent {
+open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
 
     init {
         Napier.d("init")
@@ -25,7 +32,8 @@ open class NrNearbyViewModel : NrViewModel(), StationsSdkDiComponent {
     private val _uiState = MutableStateFlow(NrNearbyViewState(isLoading = true))
 
     // The UI collects from this StateFlow to get its state updates
-    val uiState: StateFlow<NrNearbyViewState> = _uiState
+    @NativeCoroutinesState
+    val uiState: StateFlow<NrNearbyViewState> = _uiState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), NrNearbyViewState(isLoading = true))
 
     override fun onCleared() {
         Napier.d("onCleared")
@@ -34,7 +42,7 @@ open class NrNearbyViewModel : NrViewModel(), StationsSdkDiComponent {
 
     fun getNearbyStations(crsCode: String) {
         Napier.d("getNearbyStations $crsCode enter")
-        viewModelScope.launch {
+        viewModelScope.coroutineScope.launch {
             stationsSDK.getStationLocation(crsCode)
                 .onStart {
                     Napier.d("onStart")
@@ -61,7 +69,8 @@ open class NrNearbyViewModel : NrViewModel(), StationsSdkDiComponent {
 
     fun getNearbyStations(latitude: Double, longitude: Double) {
         Napier.d("getNearbyStations $latitude $longitude enter")
-        viewModelScope.launch {
+        stationsSDK.getNearbyStations(latitude, longitude)
+        viewModelScope.coroutineScope.launch {
             stationsSDK.getNearbyStations(latitude, longitude)
                 .onStart {
                     Napier.d("onStart")

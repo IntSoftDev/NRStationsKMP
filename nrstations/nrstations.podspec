@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'nrstations'
-    spec.version                  = '0.0.4'
+    spec.version                  = '0.0.5'
     spec.homepage                 = 'https://github.com/intsoftdev/NRStationsKMP'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''

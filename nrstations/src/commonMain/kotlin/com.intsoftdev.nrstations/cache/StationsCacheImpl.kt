@@ -41,7 +41,9 @@ internal class StationsCacheImpl(
 
     override fun getCacheState(serverVersion: Double?): CacheState {
         // 1. is cache empty
-        if (isCacheEmpty()) return CacheState.Empty
+        if (isCacheEmpty()) {
+            return CacheState.Empty
+        }
 
         // 2. is higher data version available
         serverVersion?.let {
@@ -54,9 +56,10 @@ internal class StationsCacheImpl(
         return if (doUpdate()) {
             CacheState.Stale
         }
-
         // 4. else cache is ok
-        else CacheState.Usable
+        else {
+            CacheState.Usable
+        }
     }
 
     private fun isCacheEmpty(): Boolean = dbWrapper.isEmpty()

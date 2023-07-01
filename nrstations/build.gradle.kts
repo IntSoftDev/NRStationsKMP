@@ -5,6 +5,8 @@ plugins {
     id("com.android.library")
     id("com.squareup.sqldelight")
     id("convention.publication")
+    id("com.google.devtools.ksp")
+    id("com.rickclephas.kmp.nativecoroutines")
     `maven-publish`
 }
 
@@ -56,6 +58,7 @@ kotlin {
                 implementation(isdlibs.kolinx.serialization)
                 implementation(isdlibs.bundles.ktor.common)
                 implementation(isdlibs.napier.logger)
+                implementation(isdlibs.kmm.viewmodel)
             }
         }
         val commonTest by getting {
@@ -105,6 +108,10 @@ kotlin {
         ios.deploymentTarget = "12.4"
         podfile = project.file("../ios/Podfile")
     }
+}
+
+kotlin.sourceSets.all {
+    languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
 }
 
 sqldelight {

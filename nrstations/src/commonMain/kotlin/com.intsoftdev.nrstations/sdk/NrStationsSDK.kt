@@ -7,6 +7,7 @@ import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.domain.GetStationsUseCase
 import com.intsoftdev.nrstations.shared.CFlow
 import com.intsoftdev.nrstations.shared.wrap
+import kotlin.native.ObjCName
 import org.koin.core.component.get
 
 class NrStationsSDK : StationsAPI, StationsSdkDiComponent {

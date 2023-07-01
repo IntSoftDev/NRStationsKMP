@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -52,7 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		39B3CE1837E0ED2DA29937B2D6B8F9F1 /* Pods_NRStationsiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NRStationsiOS.framework; path = "Pods-NRStationsiOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		39B3CE1837E0ED2DA29937B2D6B8F9F1 /* Pods-NRStationsiOS */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-NRStationsiOS"; path = Pods_NRStationsiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46EB2E000000D0 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		46EB2E000000F0 /* nrstations.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = nrstations.framework; path = build/cocoapods/framework/nrstations.framework; sourceTree = "<group>"; };
 		46EB2E00000110 /* nrstations.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = nrstations.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -99,7 +99,7 @@
 		46EB2E00000020 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				39B3CE1837E0ED2DA29937B2D6B8F9F1 /* Pods_NRStationsiOS.framework */,
+				39B3CE1837E0ED2DA29937B2D6B8F9F1 /* Pods-NRStationsiOS */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -247,8 +247,8 @@
 				46EB2E000003C0 /* PBXTargetDependency */,
 			);
 			name = "Pods-NRStationsiOS";
-			productName = "Pods-NRStationsiOS";
-			productReference = 39B3CE1837E0ED2DA29937B2D6B8F9F1 /* Pods_NRStationsiOS.framework */;
+			productName = Pods_NRStationsiOS;
+			productReference = 39B3CE1837E0ED2DA29937B2D6B8F9F1 /* Pods-NRStationsiOS */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -257,16 +257,16 @@
 		46EB2E00000000 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1300;
 			};
 			buildConfigurationList = 46EB2E00000030 /* Build configuration list for PBXProject "Pods" */;
-			compatibilityVersion = "Xcode 10.0";
+			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 			);
 			mainGroup = 46EB2E00000010;
 			productRefGroup = 46EB2E00000020 /* Products */;
