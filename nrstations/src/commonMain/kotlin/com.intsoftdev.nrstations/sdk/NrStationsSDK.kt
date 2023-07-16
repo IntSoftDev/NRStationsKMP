@@ -1,5 +1,6 @@
 package com.intsoftdev.nrstations.sdk
 
+import com.intsoftdev.nrstations.cache.CachePolicy
 import com.intsoftdev.nrstations.common.NearestStations
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
@@ -12,8 +13,8 @@ import org.koin.core.component.get
 class NrStationsSDK : StationsAPI, StationsSdkDiComponent {
     private val getStationsUseCase by lazy { get<GetStationsUseCase>() }
 
-    override fun getAllStations(): CFlow<StationsResultState<StationsResult>> =
-        getStationsUseCase.getAllStations().wrap()
+    override fun getAllStations(cachePolicy: CachePolicy): CFlow<StationsResultState<StationsResult>> =
+        getStationsUseCase.getAllStations(cachePolicy).wrap()
 
     override suspend fun getStationLocation(vararg crsCodes: String?): CFlow<StationsResultState<List<StationLocation>>> =
         getStationsUseCase.getStationLocation(*crsCodes).wrap()

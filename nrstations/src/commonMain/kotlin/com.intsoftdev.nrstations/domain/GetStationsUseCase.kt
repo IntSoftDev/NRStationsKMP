@@ -1,5 +1,6 @@
 package com.intsoftdev.nrstations.domain
 
+import com.intsoftdev.nrstations.cache.CachePolicy
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.common.StationsResultState
@@ -15,9 +16,9 @@ internal class GetStationsUseCase(
     private val coroutineDispatcher: CoroutineDispatcher
 ) {
 
-    fun getAllStations(): Flow<StationsResultState<StationsResult>> {
-        Napier.d("getAllStations")
-        return stationsRepository.getAllStations()
+    fun getAllStations(cachePolicy: CachePolicy): Flow<StationsResultState<StationsResult>> {
+        Napier.d("getAllStations cachePolicy $cachePolicy")
+        return stationsRepository.getAllStations(cachePolicy = cachePolicy)
     }
 
     suspend fun getStationLocation(vararg crsCodes: String?): Flow<StationsResultState<List<StationLocation>>> {
