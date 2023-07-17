@@ -13,10 +13,11 @@ dependencyResolutionManagement {
         mavenLocal()
         mavenCentral()
         maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+        maven("https://s01.oss.sonatype.org/content/repositories/releases/")
     }
     versionCatalogs {
         create("isdlibs") {
-            from("com.intsoftdev:isdversioncatalog:0.0.4")
+            from("com.intsoftdev:isdversioncatalog:0.0.52")
         }
     }
 }
