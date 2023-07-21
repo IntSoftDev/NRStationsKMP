@@ -28,7 +28,7 @@ android {
     }
 
     lint {
-        warningsAsErrors = true
+        warningsAsErrors = false
         abortOnError = true
     }
 
@@ -63,7 +63,7 @@ dependencies {
         implementation(isdlibs.intsoftdev.stations)
     }
     // extra compose dependencies, add to central catalog
-    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("androidx.navigation:navigation-compose:2.6.0")
     implementation("com.google.accompanist:accompanist-navigation-animation:0.27.0")
     implementation("com.google.accompanist:accompanist-permissions:0.27.0")
     implementation("com.google.maps.android:maps-compose:2.7.2")

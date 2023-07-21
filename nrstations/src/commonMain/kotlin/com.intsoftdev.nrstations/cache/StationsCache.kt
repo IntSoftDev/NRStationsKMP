@@ -8,6 +8,10 @@ internal interface StationsCache {
     fun insertVersion(version: DataVersion)
     fun getAllStations(): List<StationLocation>
     fun getStationLocation(crsCode: String): StationLocation
-    fun getCacheState(serverVersion: Double? = null): CacheState
+    fun getCacheState(
+        serverVersion: Double? = null,
+        cachePolicy: CachePolicy = CachePolicy.USE_CACHE_WITH_EXPIRY
+    ): CacheState
+
     fun getVersion(): DataVersion
 }

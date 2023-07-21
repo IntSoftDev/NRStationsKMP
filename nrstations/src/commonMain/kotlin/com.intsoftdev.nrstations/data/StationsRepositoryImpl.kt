@@ -1,5 +1,6 @@
 package com.intsoftdev.nrstations.data
 
+import com.intsoftdev.nrstations.cache.CachePolicy
 import com.intsoftdev.nrstations.cache.CacheState
 import com.intsoftdev.nrstations.cache.StationsCache
 import com.intsoftdev.nrstations.common.Geolocation
@@ -29,9 +30,9 @@ internal class StationsRepositoryImpl(
     private val requestRetryPolicy: RequestRetryPolicy
 ) : StationsRepository {
 
-    override fun getAllStations(): Flow<StationsResultState<StationsResult>> =
+    override fun getAllStations(cachePolicy: CachePolicy): Flow<StationsResultState<StationsResult>> =
         flow {
-            when (val cacheState = stationsCache.getCacheState()) {
+            when (val cacheState = stationsCache.getCacheState(cachePolicy = cachePolicy)) {
                 is CacheState.Empty, CacheState.Stale -> {
                     Napier.d("cacheState is $cacheState")
                     emit(refreshStations())

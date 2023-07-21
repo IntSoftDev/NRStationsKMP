@@ -1,5 +1,6 @@
 package com.intsoftdev.nrstations.sdk
 
+import com.intsoftdev.nrstations.cache.CachePolicy
 import com.intsoftdev.nrstations.common.NearestStations
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
@@ -12,9 +13,10 @@ interface StationsAPI {
      * The server is typically an instance of [Huxley2](https://github.com/azaka01/Huxley2)
      * this method is an asynchronous [kotlinx.coroutines.flow.Flow]
      *
+     * @param cachePolicy specify the [CachePolicy]
      * @return [StationsResult] encapsulated in [StationsResultState]
      */
-    fun getAllStations(): CFlow<StationsResultState<StationsResult>>
+    fun getAllStations(cachePolicy: CachePolicy = CachePolicy.USE_CACHE_WITH_EXPIRY): CFlow<StationsResultState<StationsResult>>
 
     /**
      * Retrieves a list of [StationLocation] for each of the NRE CRS station alpha codes passed in
