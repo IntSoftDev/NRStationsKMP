@@ -12,7 +12,7 @@ fun <T> Flow<T>.wrap(): CFlow<T> = CFlow(this)
 
 class CFlow<T>(private val origin: Flow<T>) : Flow<T> by origin {
     fun watch(block: (T) -> Unit): Closeable {
-        val job = Job(/*ConferenceService.coroutineContext[Job]*/)
+        val job = Job()
 
         onEach {
             block(it)

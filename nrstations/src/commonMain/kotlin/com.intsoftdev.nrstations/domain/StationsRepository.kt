@@ -1,5 +1,6 @@
 package com.intsoftdev.nrstations.domain
 
+import com.intsoftdev.nrstations.cache.CachePolicy
 import com.intsoftdev.nrstations.common.NearestStations
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
  * This specifies the operations that need to be implemented in the data layer
  */
 internal interface StationsRepository {
-    fun getAllStations(): Flow<StationsResultState<StationsResult>>
+    fun getAllStations(cachePolicy: CachePolicy): Flow<StationsResultState<StationsResult>>
     suspend fun getStationLocation(vararg crsCodes: String): List<StationLocation>
     fun getNearbyStations(
         latitude: Double,

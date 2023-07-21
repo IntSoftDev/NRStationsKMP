@@ -9,6 +9,12 @@ import com.russhwolf.settings.Settings
 import io.github.aakira.napier.Napier
 import kotlinx.datetime.Clock
 
+enum class CachePolicy {
+    FORCE_REFRESH,
+    ALWAYS_USE_CACHE,
+    USE_CACHE_WITH_EXPIRY
+}
+
 internal class StationsCacheImpl(
     private val dbWrapper: DBWrapper,
     private val settings: Settings,
@@ -39,24 +45,38 @@ internal class StationsCacheImpl(
             ?: throw IllegalStateException("station code $crsCode not found")
     }
 
-    override fun getCacheState(serverVersion: Double?): CacheState {
-        // 1. is cache empty
+    override fun getCacheState(serverVersion: Double?, cachePolicy: CachePolicy): CacheState {
+        Napier.d("getCacheState serverVersion $serverVersion cachePolic $cachePolicy")
+
+        // is cache empty
         if (isCacheEmpty()) return CacheState.Empty
 
-        // 2. is higher data version available
+        // force refresh the cache
+        if (cachePolicy == CachePolicy.FORCE_REFRESH) {
+            return CacheState.Stale
+        }
+
+        // is higher data version available
         serverVersion?.let {
             if (it > getVersion().version) {
                 return CacheState.Stale
             }
         }
 
-        // 3. has cache time expiry reached
+        // use cache regardless of expiry
+        if (cachePolicy == CachePolicy.ALWAYS_USE_CACHE) {
+            return CacheState.Usable
+        }
+
+        // has cache time expiry reached
         return if (doUpdate()) {
             CacheState.Stale
         }
 
-        // 4. else cache is ok
-        else CacheState.Usable
+        // else cache is ok
+        else {
+            CacheState.Usable
+        }
     }
 
     private fun isCacheEmpty(): Boolean = dbWrapper.isEmpty()
