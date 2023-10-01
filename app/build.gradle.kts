@@ -75,6 +75,5 @@ dependencies {
     implementation(isdlibs.kotlinx.dateTime)
     implementation(isdlibs.napier.logger)
     implementation(isdlibs.google.gms.maps)
-    coreLibraryDesugaring(isdlibs.android.desugaring)
     testImplementation(isdlibs.junit)
 }

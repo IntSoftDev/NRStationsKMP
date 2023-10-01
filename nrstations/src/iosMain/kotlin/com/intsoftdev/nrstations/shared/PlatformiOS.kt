@@ -12,7 +12,5 @@ import org.koin.dsl.module
 internal actual val stationsPlatformModule = module {
     factory<CoroutineDispatcher>(named("NRStationsCoroutineDispatcher")) { Dispatchers.Main }
 
-    single(named("StationsHttpEngine")) { Darwin.create() }
-
     single<SqlDriver>(named("StationsSqlDriver")) { NativeSqliteDriver(NRStationsDb.Schema, "NRStationsDb") }
 }

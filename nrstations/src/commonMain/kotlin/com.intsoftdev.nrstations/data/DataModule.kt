@@ -12,15 +12,18 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
+private val nonStrictJson = Json { isLenient = true; ignoreUnknownKeys = true }
+
 internal val stationsDataModule = module {
+
     factory(named("NRStationsHttpClient")) {
-        HttpClient(engine = get(named("StationsHttpEngine"))) {
-            expectSuccess = true
+        HttpClient {
             install(ContentNegotiation) {
-                json()
+                json(nonStrictJson)
             }
             install(Logging) {
                 logger = object : Logger {

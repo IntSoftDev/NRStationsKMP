@@ -30,8 +30,4 @@ internal actual val stationsPlatformModule = module {
             name = "NRStationsDb"
         )
     }
-
-    single(named("StationsHttpEngine")) {
-        OkHttp.create()
-    }
 }

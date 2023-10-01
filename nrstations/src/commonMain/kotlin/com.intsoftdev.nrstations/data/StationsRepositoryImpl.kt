@@ -109,7 +109,7 @@ internal class StationsRepositoryImpl(
                     val stationLocations = stationsProxyService.getAllStations().map {
                         it.toStationLocation()
                     }
-
+                    Napier.d("inserting ${stationLocations.size} int DB")
                     stationsCache.insertStations(stationLocations)
                     stationsCache.insertVersion(serverDataVersion)
 

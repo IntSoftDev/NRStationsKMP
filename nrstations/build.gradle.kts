@@ -1,3 +1,4 @@
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -15,7 +16,6 @@ android {
     defaultConfig {
         minSdk = isdlibs.versions.minSdk.get().toInt()
         targetSdk = isdlibs.versions.targetSdk.get().toInt()
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     testOptions {
         unitTests {
@@ -30,7 +30,13 @@ android {
 }
 
 kotlin {
-    android {
+
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "1.8"
+            }
+        }
         publishLibraryVariants("release", "debug")
     }
     ios()
@@ -41,6 +47,7 @@ kotlin {
         all {
             languageSettings.apply {
                 optIn("kotlin.RequiresOptIn")
+                optIn("kotlin.time.ExperimentalTime")
                 optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
             }
         }
@@ -66,6 +73,7 @@ kotlin {
                 implementation(isdlibs.bundles.commonTest)
             }
         }
+
         val androidMain by getting {
             dependencies {
                 api(isdlibs.koin.android)
@@ -74,11 +82,12 @@ kotlin {
                 implementation(isdlibs.ktor.client.okHttp)
             }
         }
-        val androidTest by getting {
+        val androidUnitTest by getting {
             dependencies {
                 implementation(isdlibs.bundles.androidTest)
             }
         }
+
         val iosMain by getting {
             dependencies {
                 implementation(isdlibs.sqlDelight.native)
@@ -96,7 +105,12 @@ kotlin {
 
     sourceSets.matching { it.name.endsWith("Test") }
         .configureEach {
-            languageSettings.optIn("kotlin.time.ExperimentalTime")
+            languageSettings.apply {
+                optIn("kotlin.RequiresOptIn")
+                optIn("kotlin.time.ExperimentalTime")
+                optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+                optIn("kotlin.experimental.ExperimentalObjCName")
+            }
         }
 
     cocoapods {
