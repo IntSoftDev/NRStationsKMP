@@ -110,17 +110,22 @@ internal class StationsRepositoryImpl(
                         it.toStationLocation()
                     }
                     Napier.d("inserting ${stationLocations.size} int DB")
-                    stationsCache.insertStations(stationLocations)
-                    stationsCache.insertVersion(serverDataVersion)
 
-                    Napier.d("got stations ${stationLocations.size} version ${serverDataVersion.version}")
+                    if (stationLocations.isEmpty()) {
+                        StationsResultState.Failure(IllegalStateException("no stations downloaded"))
+                    } else {
+                        stationsCache.insertStations(stationLocations)
+                        stationsCache.insertVersion(serverDataVersion)
 
-                    StationsResultState.Success(
-                        StationsResult(
-                            version = serverDataVersion.toUpdateVersion(),
-                            stations = stationLocations
+                        Napier.d("got stations ${stationLocations.size} version ${serverDataVersion.version}")
+
+                        StationsResultState.Success(
+                            StationsResult(
+                                version = serverDataVersion.toUpdateVersion(),
+                                stations = stationLocations
+                            )
                         )
-                    )
+                    }
                 }
 
                 is CacheState.Usable -> {

@@ -31,7 +31,7 @@ internal val stationsDataModule = module {
                         Napier.d(message)
                     }
                 }
-                level = LogLevel.HEADERS
+                level = LogLevel.ALL
             }
         }
     }
