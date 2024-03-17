@@ -11,7 +11,6 @@ import com.intsoftdev.nrstations.viewmodels.NrStationsViewModel
 class MainActivity : AppCompatActivity() {
 
     private val stationsViewModel: NrStationsViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         stationsViewModel.getAllStations()

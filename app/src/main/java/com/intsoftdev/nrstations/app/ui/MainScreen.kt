@@ -1,7 +1,6 @@
 package com.intsoftdev.nrstations.app.ui
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,15 +12,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -35,10 +30,10 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.intsoftdev.nrstations.common.StationLocation
@@ -46,15 +41,14 @@ import com.intsoftdev.nrstations.viewmodels.NrStationsViewModel
 import com.intsoftdev.nrstations.viewmodels.NreStationsViewState
 import io.github.aakira.napier.Napier
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun StationsNavHost(
     stationsViewModel: NrStationsViewModel,
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberAnimatedNavController(),
+    navController: NavHostController = rememberNavController(),
     startDestination: String = "mainscreen"
 ) {
-    AnimatedNavHost(
+    NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
@@ -67,21 +61,30 @@ fun StationsNavHost(
                 stationsViewModel = stationsViewModel,
                 navController = navController,
                 onNavigateToNearbyStations = {
-                    navController.navigate("nearbystationslist?stationCrsCode=${it.crsCode}")
+                    navController.navigate("nearbystationslist?latitude=${it.latitude}&longitude=${it.longitude}")
                 }
             )
         }
         composable(
-            route = "nearbystationslist?stationCrsCode={stationCrsCode}",
+            route = "nearbystationslist?latitude={latitude}&longitude={longitude}",
             arguments = listOf(
-                navArgument("stationCrsCode") {
-                    type = NavType.StringType
-                    defaultValue = null
-                    nullable = true
+                navArgument("latitude") {
+                    type = NavType.FloatType
+                },
+                navArgument("longitude") {
+                    type = NavType.FloatType
                 }
             ) // TODO add transitions
         ) {
-            NearbyStationsScreen(nearbyStationsViewModel = viewModel())
+            val latitude = it.arguments?.getFloat("latitude")
+            val longitude = it.arguments?.getFloat("longitude")
+            if (latitude != null && longitude != null) {
+                NearbyStationsScreen(
+                    nrNearbyViewModel = viewModel(),
+                    latitude,
+                    longitude
+                )
+            }
         }
     }
 }
@@ -104,18 +107,7 @@ fun MainScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Stations") },
-                navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            Napier.d("click Nearby")
-                            // PermissionsSample()
-                            navController.navigate("nearbystationslist")
-                        }
-                    ) {
-                        Icon(Icons.Filled.LocationOn, "locationIcon")
-                    }
-                }
+                title = { Text("Stations") }
             )
         }
     ) {

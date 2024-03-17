@@ -12,6 +12,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import platform.Foundation.NSUserDefaults
 
+@Suppress("unused")
 fun initStationsSDK(
     apiConfig: APIConfig = APIConfig(),
     userDefaults: NSUserDefaults,

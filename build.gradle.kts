@@ -4,6 +4,8 @@
 plugins {
     alias(isdlibs.plugins.gradleVersions)
     alias(isdlibs.plugins.ktlint) apply false
+    alias(isdlibs.plugins.ksp) apply false
+    alias(isdlibs.plugins.kmp.nativecoroutines) apply false
 
     //trick: for the same plugin versions in all sub-modules
     kotlin("multiplatform") version isdlibs.versions.kotlin.get() apply false

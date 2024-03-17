@@ -3,11 +3,13 @@ package com.intsoftdev.nrstations.data
 import com.intsoftdev.nrstations.common.APIConfig
 import com.intsoftdev.nrstations.data.model.station.DataVersion
 import com.intsoftdev.nrstations.data.model.station.StationModel
+import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
+import io.ktor.util.InternalAPI
 
 internal class StationsProxy(
     private val httpClient: HttpClient,
@@ -18,10 +20,12 @@ internal class StationsProxy(
     private val stationsUrl = "$baseUrl/stations"
     private val versionUrl = "$baseUrl/config/stationsversion.json"
 
+    @OptIn(InternalAPI::class)
     override suspend fun getAllStations(): List<StationModel> {
         val response = httpClient.get(stationsUrl) {
             this.appendHeaders()
         }
+        Napier.d("getAllStations totalBytesRead: ${response.content.totalBytesRead}")
         return response.body()
     }
 

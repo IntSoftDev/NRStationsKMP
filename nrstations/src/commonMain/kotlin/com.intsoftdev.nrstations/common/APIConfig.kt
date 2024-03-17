@@ -5,7 +5,8 @@ import com.intsoftdev.nrstations.common.APIConfig.Companion.SERVER_PROP_KEY
 
 data class APIConfig(
     val serverUrl: String = DEFAULT_SERVER_URL,
-    val licenseKey: String? = null
+    val licenseKey: String? = null,
+    val serverToken: String? = null
 ) {
     companion object {
         const val DEFAULT_SERVER_URL = "https://onrails-test.azurewebsites.net"
