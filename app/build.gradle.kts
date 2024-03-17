@@ -4,6 +4,10 @@ plugins {
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 // TODO add BuildConfig and integrate with GHA
 // val ISD_API_KEY = com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir).getProperty("ISD_API_KEY")
 
@@ -36,18 +40,9 @@ android {
         compose = true
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
     composeOptions {
         kotlinCompilerExtensionVersion = isdlibs.versions.composeCompiler.get()
     }
-}
-
-kotlin {
-    jvmToolchain(11)
 }
 
 secrets {
