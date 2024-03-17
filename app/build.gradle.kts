@@ -36,14 +36,18 @@ android {
         compose = true
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     composeOptions {
         kotlinCompilerExtensionVersion = isdlibs.versions.composeCompiler.get()
     }
+}
+
+kotlin {
+    jvmToolchain(11)
 }
 
 secrets {
@@ -62,11 +66,9 @@ dependencies {
         // use build from Maven Central
         implementation(isdlibs.intsoftdev.stations)
     }
-    // extra compose dependencies, add to central catalog
-    implementation("androidx.navigation:navigation-compose:2.6.0")
-    implementation("com.google.accompanist:accompanist-navigation-animation:0.27.0")
-    implementation("com.google.accompanist:accompanist-permissions:0.27.0")
-    implementation("com.google.maps.android:maps-compose:2.7.2")
+    // extra compose dependencies
+    implementation(isdlibs.androidx.navigation.compose)
+    implementation(isdlibs.compose.maps)
 
     implementation(isdlibs.kmm.viewmodel)
 

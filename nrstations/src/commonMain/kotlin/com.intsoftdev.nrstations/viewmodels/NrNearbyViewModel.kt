@@ -5,7 +5,6 @@ import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NrStationsSDK
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
 import com.intsoftdev.nrstations.sdk.injectStations
-import com.rickclephas.kmm.viewmodel.KMMViewModel
 import com.rickclephas.kmm.viewmodel.coroutineScope
 import com.rickclephas.kmm.viewmodel.stateIn
 import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
@@ -14,8 +13,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
@@ -33,7 +30,11 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
 
     // The UI collects from this StateFlow to get its state updates
     @NativeCoroutinesState
-    val uiState: StateFlow<NrNearbyViewState> = _uiState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), NrNearbyViewState(isLoading = true))
+    val uiState: StateFlow<NrNearbyViewState> = _uiState.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        NrNearbyViewState(isLoading = true)
+    )
 
     override fun onCleared() {
         Napier.d("onCleared")
@@ -58,6 +59,7 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
                                 results.data.first().longitude
                             )
                         }
+
                         is StationsResultState.Failure -> {
                             _uiState.emit(NrNearbyViewState(error = results.error?.message))
                             Napier.e("error")
@@ -85,6 +87,7 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
                                 NrNearbyViewState(stations = result.data)
                             )
                         }
+
                         is StationsResultState.Failure -> {
                             _uiState.emit(NrNearbyViewState(error = result.error?.message))
                             Napier.e("error")

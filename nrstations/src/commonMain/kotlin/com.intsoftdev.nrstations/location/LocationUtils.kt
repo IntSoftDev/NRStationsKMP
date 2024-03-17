@@ -72,5 +72,6 @@ fun StationLocation.distanceInMetres(geolocation: Geolocation): Double {
         geolocation.latitude,
         geolocation.longitude,
         this.latitude,
-        this.longitude)
+        this.longitude
+    )
 }

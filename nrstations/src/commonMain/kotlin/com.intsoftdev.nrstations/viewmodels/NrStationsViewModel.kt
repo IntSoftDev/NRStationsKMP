@@ -5,7 +5,6 @@ import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NrStationsSDK
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
 import com.intsoftdev.nrstations.sdk.injectStations
-import com.rickclephas.kmm.viewmodel.KMMViewModel
 import com.rickclephas.kmm.viewmodel.coroutineScope
 import com.rickclephas.kmm.viewmodel.stateIn
 import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
@@ -31,7 +30,11 @@ open class NrStationsViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
 
     // The UI collects from this StateFlow to get its state updates
     @NativeCoroutinesState
-    val uiState: StateFlow<NreStationsViewState> = _uiState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), NreStationsViewState(isLoading = true))
+    val uiState: StateFlow<NreStationsViewState> = _uiState.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        NreStationsViewState(isLoading = true)
+    )
 
     override fun onCleared() {
         Napier.d("onCleared")
@@ -54,6 +57,7 @@ open class NrStationsViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
                             NreStationsViewState(stations = stationsResult.data.stations)
                         )
                     }
+
                     is StationsResultState.Failure -> {
                         _uiState.emit(NreStationsViewState(error = stationsResult.error?.message))
                         Napier.e("error")

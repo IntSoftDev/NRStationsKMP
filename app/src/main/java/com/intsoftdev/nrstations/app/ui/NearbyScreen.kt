@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations.app.ui
 
-import android.annotation.SuppressLint // ktlint-disable import-ordering
+import android.annotation.SuppressLint
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -47,30 +47,34 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.intsoftdev.nrstations.common.StationLocation
-import com.intsoftdev.nrstations.common.StationDistance
 import com.intsoftdev.nrstations.common.NearestStations
+import com.intsoftdev.nrstations.common.StationDistance
+import com.intsoftdev.nrstations.common.StationLocation
+import com.intsoftdev.nrstations.viewmodels.NrNearbyViewModel
 import com.intsoftdev.nrstations.viewmodels.NrNearbyViewState
 import io.github.aakira.napier.Napier
 import java.util.Locale
 
 @Composable
 internal fun NearbyStationsScreen(
-    nearbyStationsViewModel: NearbyStationsViewModel
+    nrNearbyViewModel: NrNearbyViewModel,
+    latitude: Float,
+    longitude: Float
 ) {
     Napier.d("NearbyStationsScreen enter")
+
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    val lifecycleAwareStationsFlow = remember(nearbyStationsViewModel.uiState, lifecycleOwner) {
-        nearbyStationsViewModel.uiState.flowWithLifecycle(lifecycleOwner.lifecycle)
+    val lifecycleAwareStationsFlow = remember(nrNearbyViewModel.uiState, lifecycleOwner) {
+        nrNearbyViewModel.uiState.flowWithLifecycle(lifecycleOwner.lifecycle)
     }
 
     LaunchedEffect(Unit) {
-        nearbyStationsViewModel.getNearbyStations()
+        nrNearbyViewModel.getNearbyStations(latitude.toDouble(), longitude.toDouble())
     }
 
     @SuppressLint("StateFlowValueCalledInComposition") // False positive lint check when used inside collectAsState()
-    val stationsState by lifecycleAwareStationsFlow.collectAsState(nearbyStationsViewModel.uiState.value)
+    val stationsState by lifecycleAwareStationsFlow.collectAsState(nrNearbyViewModel.uiState.value)
 
     NearbyScreenContent(
         stationsState = stationsState,
@@ -129,7 +133,13 @@ fun NearbyStationsSuccess(
 ) {
     val cameraPositionState = rememberCameraPositionState {
         position =
-            CameraPosition.fromLatLngZoom(LatLng(successData.geolocation.latitude, successData.geolocation.longitude), 15f)
+            CameraPosition.fromLatLngZoom(
+                LatLng(
+                    successData.geolocation.latitude,
+                    successData.geolocation.longitude
+                ),
+                15f
+            )
     }
     var isMapLoaded by remember { mutableStateOf(false) }
 

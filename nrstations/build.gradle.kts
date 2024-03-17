@@ -23,6 +23,13 @@ android {
         }
     }
 
+    // TODO: Remove workaround for https://issuetracker.google.com/issues/260059413
+    // https://github.com/rickclephas/KMM-ViewModel/blob/bb031e423c44c4fb8844dd57b5d86cdf6ad5f652/sample/shared/build.gradle.kts#L53C4-L57C6
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
     lint {
         warningsAsErrors = true
         abortOnError = true
@@ -31,12 +38,9 @@ android {
 
 kotlin {
 
+    jvmToolchain(17)
+
     androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
         publishLibraryVariants("release", "debug")
     }
     ios()
@@ -49,6 +53,7 @@ kotlin {
                 optIn("kotlin.RequiresOptIn")
                 optIn("kotlin.time.ExperimentalTime")
                 optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+                optIn("kotlinx.cinterop.ExperimentalForeignApi")
             }
         }
     }

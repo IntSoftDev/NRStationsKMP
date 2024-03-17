@@ -2,9 +2,7 @@ package com.intsoftdev.nrstations.common
 
 import com.intsoftdev.nrstations.common.APIConfig.Companion.LICENSE_PROP_KEY
 import com.intsoftdev.nrstations.common.APIConfig.Companion.SERVER_PROP_KEY
-import kotlin.native.ObjCName
 
-@ObjCName(swiftName = "APIConfig")
 data class APIConfig(
     val serverUrl: String = DEFAULT_SERVER_URL,
     val licenseKey: String? = null,
