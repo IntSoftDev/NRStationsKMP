@@ -20,14 +20,9 @@ import MapKit
  }*/
 
 struct NearbyStationsContent: View {
-    @ObservedViewModel var viewModel: NrNearbyViewModel
+    @StateViewModel var nearbyViewModel = NrNearbyViewModel()
     
     var location: CLLocationCoordinate2D
-    
-    init(viewModel: ObservableViewModel<NrNearbyViewModel>.Projection, loc: CLLocationCoordinate2D) {
-        self._viewModel = ObservedViewModel(viewModel)
-        self.location = loc
-    }
     
     var body: some View {
         GeometryReader { proxy in
@@ -36,17 +31,17 @@ struct NearbyStationsContent: View {
                     .frame(height: proxy.size.height/2)
                 
                 VStack {
-                    if let stations = viewModel.uiState.stations?.stationDistances {
+                    if let stations = nearbyViewModel.uiState.stations?.stationDistances {
                         List(stations, id: \.station.crsCode) { station in
                             NearbyStationsRowView(station: station)
                         }
                     }
-                    if let error = viewModel.uiState.error {
+                    if let error = nearbyViewModel.uiState.error {
                         Text(error)
                             .foregroundColor(.red)
                     }
                 }.onAppear {
-                    viewModel.getNearbyStations(latitude: location.latitude, longitude: location.longitude)
+                    nearbyViewModel.getNearbyStations(latitude: location.latitude, longitude_: location.longitude)
                 }.frame(height: proxy.size.height/2)
             }
         }.navigationTitle("Nearby Stations")
@@ -60,7 +55,8 @@ struct NearbyStationsRowView: View {
         HStack {
             Text(station.station.stationName)
             Spacer()
-            Text(String(format: "%f miles", station.distanceInMiles))
+            let formattedDistance = String(format: "%.1f miles", station.distanceInMiles)
+            Text(formattedDistance)
         }
     }
 }

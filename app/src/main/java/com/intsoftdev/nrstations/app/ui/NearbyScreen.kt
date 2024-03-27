@@ -23,7 +23,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,7 +37,9 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
@@ -47,22 +48,22 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.intsoftdev.nrstations.common.NearestStations
 import com.intsoftdev.nrstations.common.StationDistance
 import com.intsoftdev.nrstations.common.StationLocation
+import com.intsoftdev.nrstations.viewmodels.NearbyUiState
 import com.intsoftdev.nrstations.viewmodels.NrNearbyViewModel
-import com.intsoftdev.nrstations.viewmodels.NrNearbyViewState
 import io.github.aakira.napier.Napier
 import java.util.Locale
 
 @Composable
 internal fun NearbyStationsScreen(
-    nrNearbyViewModel: NrNearbyViewModel,
     latitude: Float,
-    longitude: Float
+    longitude: Float,
+    modifier: Modifier = Modifier
 ) {
     Napier.d("NearbyStationsScreen enter")
 
+    val nrNearbyViewModel: NrNearbyViewModel = viewModel()
     val lifecycleOwner = LocalLifecycleOwner.current
 
     val lifecycleAwareStationsFlow = remember(nrNearbyViewModel.uiState, lifecycleOwner) {
@@ -74,69 +75,37 @@ internal fun NearbyStationsScreen(
     }
 
     @SuppressLint("StateFlowValueCalledInComposition") // False positive lint check when used inside collectAsState()
-    val stationsState by lifecycleAwareStationsFlow.collectAsState(nrNearbyViewModel.uiState.value)
+    val nearbyUiState by lifecycleAwareStationsFlow.collectAsState(nrNearbyViewModel.uiState.value)
 
-    NearbyScreenContent(
-        stationsState = stationsState,
-        onRefresh = { Napier.d("onRefresh") },
-        onSuccess = { data -> Napier.d("View updating with ${data.size} stations") },
-        onError = { exception -> Napier.e { "Displaying error: $exception" } },
-        onStationSelect = { Napier.d("onStationSelect") }
-    )
-}
+    when (nearbyUiState) {
+        is NearbyUiState.Loading -> {
+            LoadingScreen(modifier = modifier.fillMaxSize())
+        }
 
-@Composable
-private fun NearbyScreenContent(
-    stationsState: NrNearbyViewState,
-    onRefresh: () -> Unit = {},
-    onSuccess: (List<StationDistance>) -> Unit = {},
-    onError: (String) -> Unit = {},
-    onStationSelect: (StationLocation) -> Unit = {}
-) {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
-    ) {
-        val isLoading = stationsState.isLoading
-        if (isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .background(MaterialTheme.colors.background)
-                    .wrapContentSize()
+        is NearbyUiState.Loaded -> {
+            NearbyStationsSuccess(
+                successData = nearbyUiState as NearbyUiState.Loaded,
+                stationSelect = {}
             )
-        } else {
-            val nearbyStations = stationsState.stations
-            if (nearbyStations != null) {
-                LaunchedEffect(nearbyStations) {
-                    onSuccess(nearbyStations.stationDistances)
-                }
-                NearbyStationsSuccess(
-                    successData = nearbyStations,
-                    stationSelect = onStationSelect
-                )
-            }
-            val error = stationsState.error
-            if (error != null) {
-                LaunchedEffect(error) {
-                    onError(error)
-                }
-                NearbyError(error)
-            }
+        }
+
+        is NearbyUiState.Error -> {
+            ErrorScreen(modifier = modifier.fillMaxSize())
         }
     }
 }
 
 @Composable
 fun NearbyStationsSuccess(
-    successData: NearestStations,
+    successData: NearbyUiState.Loaded,
     stationSelect: (StationLocation) -> Unit
 ) {
     val cameraPositionState = rememberCameraPositionState {
         position =
             CameraPosition.fromLatLngZoom(
                 LatLng(
-                    successData.geolocation.latitude,
-                    successData.geolocation.longitude
+                    successData.stations.geolocation.latitude,
+                    successData.stations.geolocation.longitude
                 ),
                 15f
             )
@@ -184,7 +153,7 @@ fun NearbyStationsSuccess(
                 .padding(8.dp),
             contentAlignment = Alignment.Center
         ) {
-            NearbyStationsList(stations = successData.stationDistances, stationSelect)
+            NearbyStationsList(stations = successData.stations.stationDistances, stationSelect)
         }
     }
 }

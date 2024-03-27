@@ -1,6 +1,7 @@
 package com.intsoftdev.nrstations.viewmodels
 
 import com.intsoftdev.nrstations.common.NearestStations
+import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NrStationsSDK
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
@@ -22,18 +23,18 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
         Napier.d("init")
     }
 
-    private var stationsSDK = this.injectStations<NrStationsSDK>()
+    private val stationsSDK = this.injectStations<NrStationsSDK>()
 
     // Backing property to avoid state updates from other classes
     // consider replacing with MutableSharedFlow if it doesn't re-emit same value
-    private val _uiState = MutableStateFlow(NrNearbyViewState(isLoading = true))
+    private val _uiState = MutableStateFlow<NearbyUiState>(NearbyUiState.Loading)
 
     // The UI collects from this StateFlow to get its state updates
     @NativeCoroutinesState
-    val uiState: StateFlow<NrNearbyViewState> = _uiState.stateIn(
+    val uiState: StateFlow<NearbyUiState> = _uiState.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(),
-        NrNearbyViewState(isLoading = true)
+        NearbyUiState.Loading
     )
 
     override fun onCleared() {
@@ -47,9 +48,9 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
             stationsSDK.getStationLocation(crsCode)
                 .onStart {
                     Napier.d("onStart")
-                    _uiState.emit(NrNearbyViewState(isLoading = true))
+                    _uiState.emit(NearbyUiState.Loading)
                 }.catch { throwable ->
-                    _uiState.emit(NrNearbyViewState(error = throwable.message))
+                    _uiState.emit(NearbyUiState.Error(error = throwable.message))
                 }.collect { results ->
                     when (results) {
                         is StationsResultState.Success -> {
@@ -61,7 +62,7 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
                         }
 
                         is StationsResultState.Failure -> {
-                            _uiState.emit(NrNearbyViewState(error = results.error?.message))
+                            _uiState.emit(NearbyUiState.Error(error = results.error?.message))
                             Napier.e("error")
                         }
                     }
@@ -76,20 +77,20 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
             stationsSDK.getNearbyStations(latitude, longitude)
                 .onStart {
                     Napier.d("onStart")
-                    _uiState.emit(NrNearbyViewState(isLoading = true))
+                    _uiState.emit(NearbyUiState.Loading)
                 }.catch { throwable ->
-                    _uiState.emit(NrNearbyViewState(error = throwable.message))
+                    _uiState.emit(NearbyUiState.Error(error = throwable.message))
                 }.collect { result ->
                     when (result) {
                         is StationsResultState.Success -> {
                             Napier.d("got stations count ${result.data.stationDistances.size}")
                             _uiState.emit(
-                                NrNearbyViewState(stations = result.data)
+                                NearbyUiState.Loaded(stations = result.data)
                             )
                         }
 
                         is StationsResultState.Failure -> {
-                            _uiState.emit(NrNearbyViewState(error = result.error?.message))
+                            _uiState.emit(NearbyUiState.Error(error = result.error?.message))
                             Napier.e("error")
                         }
                     }
@@ -98,8 +99,10 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
     }
 }
 
-data class NrNearbyViewState(
-    val stations: NearestStations? = null,
-    val error: String? = null,
-    val isLoading: Boolean = false
-)
+sealed interface NearbyUiState {
+    data object Loading : NearbyUiState
+    data class Error(val error: String?) : NearbyUiState
+    data class Loaded(
+        val stations: NearestStations,
+    ) : NearbyUiState
+}

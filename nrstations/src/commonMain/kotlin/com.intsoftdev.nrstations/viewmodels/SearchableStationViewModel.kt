@@ -1,0 +1,64 @@
+package com.intsoftdev.nrstations.viewmodels
+
+import com.intsoftdev.nrstations.common.StationLocation
+import com.rickclephas.kmm.viewmodel.stateIn
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+
+class SearchableStationViewModel : NrStationsViewModel() {
+    // Section Search helpers
+    //first state whether the search is happening or not
+    private val _isSearching = MutableStateFlow(false)
+    val isSearching = _isSearching.asStateFlow()
+
+    //second state the text typed by the user
+    private val _searchText = MutableStateFlow("")
+    val searchText = _searchText.asStateFlow()
+
+    private val _selectedStation = MutableStateFlow<StationLocation?>(null)
+    val selectedStation = _selectedStation.asStateFlow()
+
+    private val allStations = mutableListOf<StationLocation>()
+
+    private val _stationsList = MutableStateFlow(allStations)
+
+    // end Section
+
+    fun setSelectedStation(stationLocation: StationLocation) {
+        _selectedStation.value = stationLocation
+    }
+
+    fun setAllStations(stationLocations: List<StationLocation>) {
+        allStations.clear()
+        allStations.addAll(stationLocations)
+    }
+
+    fun onSearchTextChange(text: String) {
+        _searchText.value = text
+    }
+
+    fun onToogleSearch() {
+        _isSearching.value = !_isSearching.value
+        if (!_isSearching.value) {
+            onSearchTextChange("")
+        }
+    }
+
+    val stationsList = searchText
+        .combine(_stationsList) { text, stations -> // combine searchText with _stationsList
+            if (text.isBlank()) { //return the entire list of stations if no search text entered
+                stations
+            } else {
+                stations.filter { station ->
+                    // filter and return a list of stations based on the text the user entered
+                    station.stationName.uppercase().contains(text.trim().uppercase())
+                }
+            }
+        }.stateIn(
+            viewModelScope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),// allows the StateFlow survive 5 seconds before it been canceled
+            initialValue = _stationsList.value
+        )
+}

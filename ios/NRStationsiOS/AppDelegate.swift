@@ -6,34 +6,45 @@ import KMMViewModelCore
 import KMMViewModelSwiftUI
 import nrstations
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+private var _koin: Koin_coreKoin?
+var koin: Koin_coreKoin {
+    initKoin()
+    return _koin!
+}
 
-    @StateViewModel var stationsViewModel = NrStationsViewModel()
-    @StateViewModel var nearbyViewModel = NrNearbyViewModel()
-    
-    var window: UIWindow?
+class AppDelegate: NSObject, UIApplicationDelegate {
+    static private(set) var instance: AppDelegate! = nil
+    func application(
+        _ application: UIApplication,
+        continue userActivity: NSUserActivity,
+        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
+    ) -> Bool {
+        print("application  restorationHandler")
+        return true
+    }
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        print("application enter")
+        AppDelegate.instance = self
+        initKoin()
+        return true
+    }
+}
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions
-        launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
-        let defaults = UserDefaults(suiteName: "NRSTATIONS_SETTINGS")!
+func initKoin() {
+    if (_koin == nil) {
         
-        let config = APIConfig(serverUrl: "https://onrails-test.azurewebsites.net", licenseKey: "")
+        let stationDefaults = UserDefaults(suiteName: "NRSTATIONS_SETTINGS")!
+        NSLog("started stations SDK")
         
-        StationsSDKInitializerKt.doInitStationsSDK(
+        let config = APIConfig(serverUrl: "https://onrails-test.azurewebsites.net", licenseKey: "", serverToken: "")
+        
+        let koinApp = StationsSDKInitializerKt.doInitStationsSDK(
             apiConfig: config,
-            userDefaults: defaults,
+            userDefaults: stationDefaults,
             enableLogging: true)
         
         NSLog("started SDK")
-
-        let viewController = UIHostingController(rootView: StationListScreen(stationsViewModel: $stationsViewModel, nearbyViewModel: $nearbyViewModel))
-
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = viewController
-        self.window?.makeKeyAndVisible()
-
-        return true
+        
+        _koin = koinApp.koin
     }
 }
