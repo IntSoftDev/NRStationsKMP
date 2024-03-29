@@ -5,27 +5,36 @@ import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NrStationsSDK
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
 import com.intsoftdev.nrstations.sdk.injectStations
+import com.rickclephas.kmm.viewmodel.coroutineScope
+import com.rickclephas.kmm.viewmodel.stateIn
+import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-open class NrNearbyViewModel : NrViewModel(), StationsSdkDiComponent {
+open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
 
     init {
         Napier.d("init")
     }
 
-    private var stationsSDK = this.injectStations<NrStationsSDK>()
+    private val stationsSDK = this.injectStations<NrStationsSDK>()
 
     // Backing property to avoid state updates from other classes
     // consider replacing with MutableSharedFlow if it doesn't re-emit same value
-    private val _uiState = MutableStateFlow(NrNearbyViewState(isLoading = true))
+    private val _uiState = MutableStateFlow<NearbyUiState>(NearbyUiState.Loading)
 
     // The UI collects from this StateFlow to get its state updates
-    val uiState: StateFlow<NrNearbyViewState> = _uiState
+    @NativeCoroutinesState
+    val uiState: StateFlow<NearbyUiState> = _uiState.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        NearbyUiState.Loading
+    )
 
     override fun onCleared() {
         Napier.d("onCleared")
@@ -34,13 +43,13 @@ open class NrNearbyViewModel : NrViewModel(), StationsSdkDiComponent {
 
     fun getNearbyStations(crsCode: String) {
         Napier.d("getNearbyStations $crsCode enter")
-        viewModelScope.launch {
+        viewModelScope.coroutineScope.launch {
             stationsSDK.getStationLocation(crsCode)
                 .onStart {
                     Napier.d("onStart")
-                    _uiState.emit(NrNearbyViewState(isLoading = true))
+                    _uiState.emit(NearbyUiState.Loading)
                 }.catch { throwable ->
-                    _uiState.emit(NrNearbyViewState(error = throwable.message))
+                    _uiState.emit(NearbyUiState.Error(error = throwable.message))
                 }.collect { results ->
                     when (results) {
                         is StationsResultState.Success -> {
@@ -50,8 +59,9 @@ open class NrNearbyViewModel : NrViewModel(), StationsSdkDiComponent {
                                 results.data.first().longitude
                             )
                         }
+
                         is StationsResultState.Failure -> {
-                            _uiState.emit(NrNearbyViewState(error = results.error?.message))
+                            _uiState.emit(NearbyUiState.Error(error = results.error?.message))
                             Napier.e("error")
                         }
                     }
@@ -61,23 +71,24 @@ open class NrNearbyViewModel : NrViewModel(), StationsSdkDiComponent {
 
     fun getNearbyStations(latitude: Double, longitude: Double) {
         Napier.d("getNearbyStations $latitude $longitude enter")
-        viewModelScope.launch {
+        viewModelScope.coroutineScope.launch {
             stationsSDK.getNearbyStations(latitude, longitude)
                 .onStart {
                     Napier.d("onStart")
-                    _uiState.emit(NrNearbyViewState(isLoading = true))
+                    _uiState.emit(NearbyUiState.Loading)
                 }.catch { throwable ->
-                    _uiState.emit(NrNearbyViewState(error = throwable.message))
+                    _uiState.emit(NearbyUiState.Error(error = throwable.message))
                 }.collect { result ->
                     when (result) {
                         is StationsResultState.Success -> {
                             Napier.d("got stations count ${result.data.stationDistances.size}")
                             _uiState.emit(
-                                NrNearbyViewState(stations = result.data)
+                                NearbyUiState.Loaded(stations = result.data)
                             )
                         }
+
                         is StationsResultState.Failure -> {
-                            _uiState.emit(NrNearbyViewState(error = result.error?.message))
+                            _uiState.emit(NearbyUiState.Error(error = result.error?.message))
                             Napier.e("error")
                         }
                     }
@@ -86,8 +97,10 @@ open class NrNearbyViewModel : NrViewModel(), StationsSdkDiComponent {
     }
 }
 
-data class NrNearbyViewState(
-    val stations: NearestStations? = null,
-    val error: String? = null,
-    val isLoading: Boolean = false
-)
+sealed interface NearbyUiState {
+    data object Loading : NearbyUiState
+    data class Error(val error: String?) : NearbyUiState
+    data class Loaded(
+        val stations: NearestStations
+    ) : NearbyUiState
+}

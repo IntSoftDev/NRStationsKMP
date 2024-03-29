@@ -2,33 +2,44 @@
 //  AppDelegate.swift
 
 import SwiftUI
+import KMMViewModelCore
+import KMMViewModelSwiftUI
 import nrstations
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+private var _koin: Koin_coreKoin?
+var koin: Koin_coreKoin {
+    initKoin()
+    return _koin!
+}
 
-    var window: UIWindow?
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions
-        launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
-        let defaults = UserDefaults(suiteName: "NRSTATIONS_SETTINGS")!
-        
-        let config = APIConfig(serverUrl: "https://onrails-test.azurewebsites.net", licenseKey: "")
-        
-        StationsSDKInitializerKt.doInitStationsSDK(
-            apiConfig: config,
-            userDefaults: defaults,
-            enableLogging: true)
-        
-        NSLog("started SDK")
-
-        let viewController = UIHostingController(rootView: StationListScreen())
-
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = viewController
-        self.window?.makeKeyAndVisible()
-
+class AppDelegate: NSObject, UIApplicationDelegate {
+    static private(set) var instance: AppDelegate! = nil
+    func application(
+        _ application: UIApplication,
+        continue userActivity: NSUserActivity,
+        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
+    ) -> Bool {
+        print("application  restorationHandler")
         return true
+    }
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        print("application enter")
+        AppDelegate.instance = self
+        initKoin()
+        return true
+    }
+}
+
+func initKoin() {
+    if (_koin == nil) {
+        let stationDefaults = UserDefaults(suiteName: "NRSTATIONS_SETTINGS")!
+        NSLog("started stations SDK")
+        let koinApp = StationsSDKInitializerKt.doInitStationsSDK(
+            apiConfig: DefaultAPIConfig.shared.apiConfig,
+            userDefaults: stationDefaults,
+            enableLogging: true
+        )
+        NSLog("started SDK")
+        _koin = koinApp.koin
     }
 }

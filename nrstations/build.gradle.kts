@@ -1,3 +1,4 @@
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -5,7 +6,13 @@ plugins {
     id("com.android.library")
     id("com.squareup.sqldelight")
     id("convention.publication")
+    id("com.google.devtools.ksp")
+    id("com.rickclephas.kmp.nativecoroutines")
     `maven-publish`
+}
+
+kotlin {
+    jvmToolchain(17)
 }
 
 android {
@@ -13,7 +20,6 @@ android {
     defaultConfig {
         minSdk = isdlibs.versions.minSdk.get().toInt()
         targetSdk = isdlibs.versions.targetSdk.get().toInt()
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     testOptions {
         unitTests {
@@ -28,7 +34,8 @@ android {
 }
 
 kotlin {
-    android {
+
+    androidTarget {
         publishLibraryVariants("release", "debug")
     }
     ios()
@@ -39,7 +46,9 @@ kotlin {
         all {
             languageSettings.apply {
                 optIn("kotlin.RequiresOptIn")
+                optIn("kotlin.time.ExperimentalTime")
                 optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+                optIn("kotlinx.cinterop.ExperimentalForeignApi")
             }
         }
     }
@@ -56,6 +65,7 @@ kotlin {
                 implementation(isdlibs.kolinx.serialization)
                 implementation(isdlibs.bundles.ktor.common)
                 implementation(isdlibs.napier.logger)
+                implementation(isdlibs.kmm.viewmodel)
             }
         }
         val commonTest by getting {
@@ -63,6 +73,7 @@ kotlin {
                 implementation(isdlibs.bundles.commonTest)
             }
         }
+
         val androidMain by getting {
             dependencies {
                 api(isdlibs.koin.android)
@@ -71,11 +82,12 @@ kotlin {
                 implementation(isdlibs.ktor.client.okHttp)
             }
         }
-        val androidTest by getting {
+        val androidUnitTest by getting {
             dependencies {
                 implementation(isdlibs.bundles.androidTest)
             }
         }
+
         val iosMain by getting {
             dependencies {
                 implementation(isdlibs.sqlDelight.native)
@@ -93,7 +105,12 @@ kotlin {
 
     sourceSets.matching { it.name.endsWith("Test") }
         .configureEach {
-            languageSettings.optIn("kotlin.time.ExperimentalTime")
+            languageSettings.apply {
+                optIn("kotlin.RequiresOptIn")
+                optIn("kotlin.time.ExperimentalTime")
+                optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+                optIn("kotlin.experimental.ExperimentalObjCName")
+            }
         }
 
     cocoapods {
@@ -105,6 +122,10 @@ kotlin {
         ios.deploymentTarget = "12.4"
         podfile = project.file("../ios/Podfile")
     }
+}
+
+kotlin.sourceSets.all {
+    languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
 }
 
 sqldelight {

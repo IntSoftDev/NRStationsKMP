@@ -1,14 +1,12 @@
 package com.intsoftdev.nrstations.app.ui
 
-import android.annotation.SuppressLint // ktlint-disable import-ordering
+import android.annotation.SuppressLint
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,12 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,6 +34,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
@@ -47,76 +43,51 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.intsoftdev.nrstations.common.StationLocation
-import com.intsoftdev.nrstations.common.StationDistance
 import com.intsoftdev.nrstations.common.NearestStations
-import com.intsoftdev.nrstations.viewmodels.NrNearbyViewState
-import io.github.aakira.napier.Napier
+import com.intsoftdev.nrstations.common.StationDistance
+import com.intsoftdev.nrstations.common.StationLocation
 import java.util.Locale
 
 @Composable
-internal fun NearbyStationsScreen(
-    nearbyStationsViewModel: NearbyStationsViewModel
+internal fun NearbyScreen(
+    stationLocation: StationLocation,
+    modifier: Modifier = Modifier,
+    nearbyViewModel: NearbyStationsViewModel = viewModel()
 ) {
-    Napier.d("NearbyStationsScreen enter")
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    val lifecycleAwareStationsFlow = remember(nearbyStationsViewModel.uiState, lifecycleOwner) {
-        nearbyStationsViewModel.uiState.flowWithLifecycle(lifecycleOwner.lifecycle)
+    val lifecycleAwareStationsFlow = remember(nearbyViewModel.uiState, lifecycleOwner) {
+        nearbyViewModel.uiState.flowWithLifecycle(lifecycleOwner.lifecycle)
     }
 
     LaunchedEffect(Unit) {
-        nearbyStationsViewModel.getNearbyStations()
+        nearbyViewModel.getNearbyStations(stationLocation.latitude, stationLocation.longitude)
     }
 
     @SuppressLint("StateFlowValueCalledInComposition") // False positive lint check when used inside collectAsState()
-    val stationsState by lifecycleAwareStationsFlow.collectAsState(nearbyStationsViewModel.uiState.value)
+    val nearbyUiState by lifecycleAwareStationsFlow.collectAsState(nearbyViewModel.uiState.value)
 
-    NearbyScreenContent(
-        stationsState = stationsState,
-        onRefresh = { Napier.d("onRefresh") },
-        onSuccess = { data -> Napier.d("View updating with ${data.size} stations") },
-        onError = { exception -> Napier.e { "Displaying error: $exception" } },
-        onStationSelect = { Napier.d("onStationSelect") }
-    )
-}
+    when (nearbyUiState) {
+        is NearbyStationsUiState.Loading -> {
+            LoadingScreen(modifier = modifier.fillMaxSize())
+        }
 
-@Composable
-private fun NearbyScreenContent(
-    stationsState: NrNearbyViewState,
-    onRefresh: () -> Unit = {},
-    onSuccess: (List<StationDistance>) -> Unit = {},
-    onError: (String) -> Unit = {},
-    onStationSelect: (StationLocation) -> Unit = {}
-) {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
-    ) {
-        val isLoading = stationsState.isLoading
-        if (isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .background(MaterialTheme.colors.background)
-                    .wrapContentSize()
+        is NearbyStationsUiState.Loaded -> {
+            NearbyStationsSuccess(
+                nearestStations = (nearbyUiState as NearbyStationsUiState.Loaded).stations,
+                referenceStation = stationLocation,
+                stationSelect = {
+                    // No op
+                }
             )
-        } else {
-            val nearbyStations = stationsState.stations
-            if (nearbyStations != null) {
-                LaunchedEffect(nearbyStations) {
-                    onSuccess(nearbyStations.stationDistances)
-                }
-                NearbyStationsSuccess(
-                    successData = nearbyStations,
-                    stationSelect = onStationSelect
+        }
+
+        is NearbyStationsUiState.Error -> {
+            ErrorScreen(modifier = modifier.fillMaxSize()) {
+                nearbyViewModel.getNearbyStations(
+                    stationLocation.latitude,
+                    stationLocation.longitude
                 )
-            }
-            val error = stationsState.error
-            if (error != null) {
-                LaunchedEffect(error) {
-                    onError(error)
-                }
-                NearbyError(error)
             }
         }
     }
@@ -124,12 +95,19 @@ private fun NearbyScreenContent(
 
 @Composable
 fun NearbyStationsSuccess(
-    successData: NearestStations,
+    nearestStations: NearestStations,
+    referenceStation: StationLocation,
     stationSelect: (StationLocation) -> Unit
 ) {
     val cameraPositionState = rememberCameraPositionState {
         position =
-            CameraPosition.fromLatLngZoom(LatLng(successData.geolocation.latitude, successData.geolocation.longitude), 15f)
+            CameraPosition.fromLatLngZoom(
+                LatLng(
+                    nearestStations.geolocation.latitude,
+                    nearestStations.geolocation.longitude
+                ),
+                15f
+            )
     }
     var isMapLoaded by remember { mutableStateOf(false) }
 
@@ -174,19 +152,16 @@ fun NearbyStationsSuccess(
                 .padding(8.dp),
             contentAlignment = Alignment.Center
         ) {
-            NearbyStationsList(stations = successData.stationDistances, stationSelect)
-        }
-    }
-}
-
-@Composable
-fun NearbyStationsList(stations: List<StationDistance>, onItemClick: (StationLocation) -> Unit) {
-    LazyColumn {
-        items(stations) { station ->
-            NearbyStationRow(station) {
-                onItemClick(it)
+            val filteredStations =
+                nearestStations.stationDistances.filter { it.station.crsCode != referenceStation.crsCode }
+            LazyColumn {
+                items(filteredStations) { station ->
+                    NearbyStationRow(station) {
+                        stationSelect(it)
+                    }
+                    Divider()
+                }
             }
-            Divider()
         }
     }
 }
@@ -201,19 +176,6 @@ fun NearbyStationRow(station: StationDistance, onClick: (StationLocation) -> Uni
     ) {
         Text(station.station.stationName, Modifier.weight(0.8F))
         Text(distance, Modifier.weight(0.2F), fontSize = 12.sp, maxLines = 1)
-    }
-}
-
-@Composable
-fun NearbyError(error: String) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = error)
     }
 }
 
@@ -235,7 +197,6 @@ private fun GoogleMapViewInColumn(
         uiSettings = uiSettings,
         onMapLoaded = onMapLoaded
     ) {
-        // TODO if needed
         // Drawing on the map is accomplished with a child-based API
     }
 }

@@ -4,8 +4,9 @@ plugins {
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
-// TODO add BuildConfig and integrate with GHA
-// val ISD_API_KEY = com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir).getProperty("ISD_API_KEY")
+kotlin {
+    jvmToolchain(17)
+}
 
 android {
     compileSdk = isdlibs.versions.compileSdk.get().toInt()
@@ -16,20 +17,13 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        // TODO add BuildConfig
-        // buildConfigField("String", "ISD_API_KEY", ISD_API_KEY)
     }
-    packagingOptions {
-        resources.excludes.add("META-INF/*.kotlin_module")
-    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
-    }
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
     }
 
     lint {
@@ -39,11 +33,6 @@ android {
 
     buildFeatures {
         compose = true
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }
 
     composeOptions {
@@ -67,17 +56,17 @@ dependencies {
         // use build from Maven Central
         implementation(isdlibs.intsoftdev.stations)
     }
-    // extra compose dependencies, add to central catalog
-    implementation("androidx.navigation:navigation-compose:2.6.0")
-    implementation("com.google.accompanist:accompanist-navigation-animation:0.27.0")
-    implementation("com.google.accompanist:accompanist-permissions:0.27.0")
-    implementation("com.google.maps.android:maps-compose:2.7.2")
+
+    implementation(isdlibs.compose.material3)
+    implementation(isdlibs.androidx.navigation.compose)
+    implementation(isdlibs.compose.maps)
+
+    implementation(isdlibs.kmm.viewmodel)
 
     implementation(isdlibs.bundles.app.ui)
     implementation(isdlibs.multiplatformSettings.common)
     implementation(isdlibs.kotlinx.dateTime)
     implementation(isdlibs.napier.logger)
     implementation(isdlibs.google.gms.maps)
-    coreLibraryDesugaring(isdlibs.android.desugaring)
     testImplementation(isdlibs.junit)
 }
