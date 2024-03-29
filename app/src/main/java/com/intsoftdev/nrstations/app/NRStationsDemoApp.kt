@@ -14,7 +14,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -23,7 +27,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.intsoftdev.nrstations.app.ui.NRStationsScreen
-import com.intsoftdev.nrstations.app.ui.NearbyStationsScreen
+import com.intsoftdev.nrstations.app.ui.NearbyScreen
 import com.intsoftdev.nrstations.viewmodels.SearchableStationViewModel
 
 
@@ -37,7 +41,7 @@ enum class StationsScreen(val title: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NRStationsApp(
+fun NRStationsDemoApp(
     stationsViewModel: SearchableStationViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
@@ -50,12 +54,21 @@ fun NRStationsApp(
         backStackEntry?.destination?.route ?: StationsScreen.Search.name
     )
 
+    val title = remember {
+        mutableStateOf("Home")
+    }
+
+    val selectedStation by stationsViewModel.selectedStation.collectAsState()
+
     Scaffold(
         topBar = {
             StationsTopAppBar(
                 scrollBehavior = scrollBehavior,
                 canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() }
+                navigateUp = {
+                    navController.navigateUp()
+                },
+                title = title
             )
         }
     ) { innerPadding ->
@@ -70,15 +83,18 @@ fun NRStationsApp(
                 NRStationsScreen(
                     stationsViewModel = stationsViewModel,
                     onSelectionChanged = {
+                        title.value = "Stations near ${it.stationName}"
                         navController.navigate(StationsScreen.Nearby.name)
                     }
                 )
             }
             composable(route = StationsScreen.Nearby.name) {
-                NearbyStationsScreen(
-                    latitude = stationsViewModel.selectedStation.value!!.latitude.toFloat(),
-                    longitude = stationsViewModel.selectedStation.value!!.longitude.toFloat()
-                )
+                with(selectedStation) {
+                    requireNotNull(this)
+                    NearbyScreen(
+                        stationLocation = this
+                    )
+                }
             }
         }
     }
@@ -90,14 +106,15 @@ fun StationsTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
+    title: State<String>,
     modifier: Modifier = Modifier
 ) {
     CenterAlignedTopAppBar(
         scrollBehavior = scrollBehavior,
         title = {
             Text(
-                text = "NR Stations",
-                style = MaterialTheme.typography.headlineSmall,
+                text = if (canNavigateBack) title.value else "NR Stations",
+                style = MaterialTheme.typography.headlineSmall
             )
         },
         navigationIcon = {

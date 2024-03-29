@@ -8,9 +8,6 @@ kotlin {
     jvmToolchain(17)
 }
 
-// TODO add BuildConfig and integrate with GHA
-// val ISD_API_KEY = com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir).getProperty("ISD_API_KEY")
-
 android {
     compileSdk = isdlibs.versions.compileSdk.get().toInt()
     defaultConfig {
@@ -20,8 +17,6 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        // TODO add BuildConfig
-        // buildConfigField("String", "ISD_API_KEY", ISD_API_KEY)
     }
 
     buildTypes {

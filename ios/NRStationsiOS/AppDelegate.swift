@@ -32,19 +32,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 func initKoin() {
     if (_koin == nil) {
-        
         let stationDefaults = UserDefaults(suiteName: "NRSTATIONS_SETTINGS")!
         NSLog("started stations SDK")
-        
-        let config = APIConfig(serverUrl: "https://onrails-test.azurewebsites.net", licenseKey: "", serverToken: "")
-        
         let koinApp = StationsSDKInitializerKt.doInitStationsSDK(
-            apiConfig: config,
+            apiConfig: DefaultAPIConfig.shared.apiConfig,
             userDefaults: stationDefaults,
-            enableLogging: true)
-        
+            enableLogging: true
+        )
         NSLog("started SDK")
-        
         _koin = koinApp.koin
     }
 }

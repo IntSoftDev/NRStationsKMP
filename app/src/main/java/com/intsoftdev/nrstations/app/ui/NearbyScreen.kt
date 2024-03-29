@@ -5,10 +5,8 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,8 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
@@ -37,7 +33,6 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.maps.model.CameraPosition
@@ -52,17 +47,13 @@ import com.intsoftdev.nrstations.common.StationDistance
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.viewmodels.NearbyUiState
 import com.intsoftdev.nrstations.viewmodels.NrNearbyViewModel
-import io.github.aakira.napier.Napier
 import java.util.Locale
 
 @Composable
-internal fun NearbyStationsScreen(
-    latitude: Float,
-    longitude: Float,
+internal fun NearbyScreen(
+    stationLocation: StationLocation,
     modifier: Modifier = Modifier
 ) {
-    Napier.d("NearbyStationsScreen enter")
-
     val nrNearbyViewModel: NrNearbyViewModel = viewModel()
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -71,7 +62,7 @@ internal fun NearbyStationsScreen(
     }
 
     LaunchedEffect(Unit) {
-        nrNearbyViewModel.getNearbyStations(latitude.toDouble(), longitude.toDouble())
+        nrNearbyViewModel.getNearbyStations(stationLocation.latitude, stationLocation.longitude)
     }
 
     @SuppressLint("StateFlowValueCalledInComposition") // False positive lint check when used inside collectAsState()
@@ -85,12 +76,20 @@ internal fun NearbyStationsScreen(
         is NearbyUiState.Loaded -> {
             NearbyStationsSuccess(
                 successData = nearbyUiState as NearbyUiState.Loaded,
-                stationSelect = {}
+                referenceStation = stationLocation,
+                stationSelect = {
+                    // No op
+                }
             )
         }
 
         is NearbyUiState.Error -> {
-            ErrorScreen(modifier = modifier.fillMaxSize())
+            ErrorScreen(modifier = modifier.fillMaxSize()) {
+                nrNearbyViewModel.getNearbyStations(
+                    stationLocation.latitude,
+                    stationLocation.longitude
+                )
+            }
         }
     }
 }
@@ -98,6 +97,7 @@ internal fun NearbyStationsScreen(
 @Composable
 fun NearbyStationsSuccess(
     successData: NearbyUiState.Loaded,
+    referenceStation: StationLocation,
     stationSelect: (StationLocation) -> Unit
 ) {
     val cameraPositionState = rememberCameraPositionState {
@@ -153,19 +153,16 @@ fun NearbyStationsSuccess(
                 .padding(8.dp),
             contentAlignment = Alignment.Center
         ) {
-            NearbyStationsList(stations = successData.stations.stationDistances, stationSelect)
-        }
-    }
-}
-
-@Composable
-fun NearbyStationsList(stations: List<StationDistance>, onItemClick: (StationLocation) -> Unit) {
-    LazyColumn {
-        items(stations) { station ->
-            NearbyStationRow(station) {
-                onItemClick(it)
+            val filteredStations =
+                successData.stations.stationDistances.filter { it.station.crsCode != referenceStation.crsCode }
+            LazyColumn {
+                items(filteredStations) { station ->
+                    NearbyStationRow(station) {
+                        stationSelect(it)
+                    }
+                    Divider()
+                }
             }
-            Divider()
         }
     }
 }
@@ -180,19 +177,6 @@ fun NearbyStationRow(station: StationDistance, onClick: (StationLocation) -> Uni
     ) {
         Text(station.station.stationName, Modifier.weight(0.8F))
         Text(distance, Modifier.weight(0.2F), fontSize = 12.sp, maxLines = 1)
-    }
-}
-
-@Composable
-fun NearbyError(error: String) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = error)
     }
 }
 
@@ -214,7 +198,6 @@ private fun GoogleMapViewInColumn(
         uiSettings = uiSettings,
         onMapLoaded = onMapLoaded
     ) {
-        // TODO if needed
         // Drawing on the map is accomplished with a child-based API
     }
 }

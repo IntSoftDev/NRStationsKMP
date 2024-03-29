@@ -52,13 +52,14 @@ class SearchableStationViewModel : NrStationsViewModel() {
                 stations
             } else {
                 stations.filter { station ->
-                    // filter and return a list of stations based on the text the user entered
-                    station.stationName.uppercase().contains(text.trim().uppercase())
+                    // filter and return a list of stations using the Crs code or station name
+                    (text.count() == 3 && station.crsCode == text.uppercase()) ||
+                            station.stationName.startsWith(text, ignoreCase = true)
                 }
             }
         }.stateIn(
             viewModelScope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),// allows the StateFlow survive 5 seconds before it been canceled
+            started = SharingStarted.WhileSubscribed(5000),// allows the StateFlow to survive 5 seconds before it's cancelled
             initialValue = _stationsList.value
         )
 }
