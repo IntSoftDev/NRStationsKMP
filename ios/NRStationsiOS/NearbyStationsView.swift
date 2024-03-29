@@ -43,7 +43,7 @@ struct NearbyStationsContent: View {
                         Text("Loading...")
                     }
                 }.onAppear {
-                    nearbyViewModel.getNearbyStations(latitude: stationLoc.latitude, longitude_: stationLoc.longitude)
+                    nearbyViewModel.getNearbyStations(crsCode: station.crsCode)
                 }.frame(height: proxy.size.height/2)
             }
         }.navigationTitle("Stations near \(station.stationName)")

@@ -56,9 +56,8 @@ dependencies {
         // use build from Maven Central
         implementation(isdlibs.intsoftdev.stations)
     }
-    // extra compose dependencies
-    implementation("androidx.compose.material3:material3:1.2.1")
 
+    implementation(isdlibs.compose.material3)
     implementation(isdlibs.androidx.navigation.compose)
     implementation(isdlibs.compose.maps)
 

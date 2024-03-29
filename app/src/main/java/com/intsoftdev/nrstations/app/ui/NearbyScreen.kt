@@ -43,39 +43,38 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.intsoftdev.nrstations.common.NearestStations
 import com.intsoftdev.nrstations.common.StationDistance
 import com.intsoftdev.nrstations.common.StationLocation
-import com.intsoftdev.nrstations.viewmodels.NearbyUiState
-import com.intsoftdev.nrstations.viewmodels.NrNearbyViewModel
 import java.util.Locale
 
 @Composable
 internal fun NearbyScreen(
     stationLocation: StationLocation,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    nearbyViewModel: NearbyStationsViewModel = viewModel()
 ) {
-    val nrNearbyViewModel: NrNearbyViewModel = viewModel()
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    val lifecycleAwareStationsFlow = remember(nrNearbyViewModel.uiState, lifecycleOwner) {
-        nrNearbyViewModel.uiState.flowWithLifecycle(lifecycleOwner.lifecycle)
+    val lifecycleAwareStationsFlow = remember(nearbyViewModel.uiState, lifecycleOwner) {
+        nearbyViewModel.uiState.flowWithLifecycle(lifecycleOwner.lifecycle)
     }
 
     LaunchedEffect(Unit) {
-        nrNearbyViewModel.getNearbyStations(stationLocation.latitude, stationLocation.longitude)
+        nearbyViewModel.getNearbyStations(stationLocation.latitude, stationLocation.longitude)
     }
 
     @SuppressLint("StateFlowValueCalledInComposition") // False positive lint check when used inside collectAsState()
-    val nearbyUiState by lifecycleAwareStationsFlow.collectAsState(nrNearbyViewModel.uiState.value)
+    val nearbyUiState by lifecycleAwareStationsFlow.collectAsState(nearbyViewModel.uiState.value)
 
     when (nearbyUiState) {
-        is NearbyUiState.Loading -> {
+        is NearbyStationsUiState.Loading -> {
             LoadingScreen(modifier = modifier.fillMaxSize())
         }
 
-        is NearbyUiState.Loaded -> {
+        is NearbyStationsUiState.Loaded -> {
             NearbyStationsSuccess(
-                successData = nearbyUiState as NearbyUiState.Loaded,
+                nearestStations = (nearbyUiState as NearbyStationsUiState.Loaded).stations,
                 referenceStation = stationLocation,
                 stationSelect = {
                     // No op
@@ -83,9 +82,9 @@ internal fun NearbyScreen(
             )
         }
 
-        is NearbyUiState.Error -> {
+        is NearbyStationsUiState.Error -> {
             ErrorScreen(modifier = modifier.fillMaxSize()) {
-                nrNearbyViewModel.getNearbyStations(
+                nearbyViewModel.getNearbyStations(
                     stationLocation.latitude,
                     stationLocation.longitude
                 )
@@ -96,7 +95,7 @@ internal fun NearbyScreen(
 
 @Composable
 fun NearbyStationsSuccess(
-    successData: NearbyUiState.Loaded,
+    nearestStations: NearestStations,
     referenceStation: StationLocation,
     stationSelect: (StationLocation) -> Unit
 ) {
@@ -104,8 +103,8 @@ fun NearbyStationsSuccess(
         position =
             CameraPosition.fromLatLngZoom(
                 LatLng(
-                    successData.stations.geolocation.latitude,
-                    successData.stations.geolocation.longitude
+                    nearestStations.geolocation.latitude,
+                    nearestStations.geolocation.longitude
                 ),
                 15f
             )
@@ -154,7 +153,7 @@ fun NearbyStationsSuccess(
             contentAlignment = Alignment.Center
         ) {
             val filteredStations =
-                successData.stations.stationDistances.filter { it.station.crsCode != referenceStation.crsCode }
+                nearestStations.stationDistances.filter { it.station.crsCode != referenceStation.crsCode }
             LazyColumn {
                 items(filteredStations) { station ->
                     NearbyStationRow(station) {

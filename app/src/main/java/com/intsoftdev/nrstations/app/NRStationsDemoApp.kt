@@ -30,7 +30,6 @@ import com.intsoftdev.nrstations.app.ui.NRStationsScreen
 import com.intsoftdev.nrstations.app.ui.NearbyScreen
 import com.intsoftdev.nrstations.viewmodels.SearchableStationViewModel
 
-
 /**
  * enum values that represent the screens in the app
  */

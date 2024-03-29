@@ -55,9 +55,9 @@ internal fun NRStationsScreen(
     val stationsList by stationsViewModel.stationsList.collectAsState()
 
     Column(modifier = Modifier.padding(horizontal = 10.dp, vertical = 10.dp)) {
-
-        SearchBar(modifier = Modifier.fillMaxWidth(),
-            query = searchText,  // text shown on SearchBar
+        SearchBar(
+            modifier = Modifier.fillMaxWidth(),
+            query = searchText, // text shown on SearchBar
             onQueryChange = stationsViewModel::onSearchTextChange, // update the value of searchText
             onSearch = {
                 stationsViewModel.onToogleSearch()
@@ -117,7 +117,6 @@ internal fun NRStationsScreen(
                         .fillMaxSize()
                         .padding(8.dp)
                 )
-
             }
 
             is StationsUiState.Error -> {
@@ -156,11 +155,12 @@ fun ErrorScreen(modifier: Modifier = Modifier, onRetry: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_connection_error), contentDescription = ""
+            painter = painterResource(id = R.drawable.ic_connection_error),
+            contentDescription = ""
         )
         Text(text = "Load stations failed!", modifier = Modifier.padding(16.dp))
         Button(
-            onClick = onRetry,
+            onClick = onRetry
         ) {
             Text(text = "Retry")
         }
@@ -210,9 +210,7 @@ fun StationRowPreview() {
     NRStationsTheme {
         StationRow(
             station = StationLocation("London Waterloo", "WAT", 0.0, 0.0)
-        ) {
-
-        }
+        ) {}
     }
 }
 

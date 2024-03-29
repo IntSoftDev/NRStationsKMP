@@ -72,7 +72,6 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
 
     fun getNearbyStations(latitude: Double, longitude: Double) {
         Napier.d("getNearbyStations $latitude $longitude enter")
-        stationsSDK.getNearbyStations(latitude, longitude)
         viewModelScope.coroutineScope.launch {
             stationsSDK.getNearbyStations(latitude, longitude)
                 .onStart {

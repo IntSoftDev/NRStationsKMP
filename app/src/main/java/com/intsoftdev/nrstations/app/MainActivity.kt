@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             NRStationsTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     NRStationsDemoApp()
                 }
