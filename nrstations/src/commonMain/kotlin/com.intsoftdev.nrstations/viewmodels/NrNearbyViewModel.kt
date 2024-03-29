@@ -1,7 +1,6 @@
 package com.intsoftdev.nrstations.viewmodels
 
 import com.intsoftdev.nrstations.common.NearestStations
-import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NrStationsSDK
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
@@ -102,6 +101,6 @@ sealed interface NearbyUiState {
     data object Loading : NearbyUiState
     data class Error(val error: String?) : NearbyUiState
     data class Loaded(
-        val stations: NearestStations,
+        val stations: NearestStations
     ) : NearbyUiState
 }

@@ -74,6 +74,6 @@ sealed interface StationsUiState {
     data class Error(val error: String?) : StationsUiState
     data class Loaded(
         val stations: List<StationLocation>,
-        val lastUpdateText: String? = null,
+        val lastUpdateText: String? = null
     ) : StationsUiState
 }

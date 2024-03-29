@@ -8,12 +8,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 
 class SearchableStationViewModel : NrStationsViewModel() {
-    // Section Search helpers
-    //first state whether the search is happening or not
     private val _isSearching = MutableStateFlow(false)
     val isSearching = _isSearching.asStateFlow()
 
-    //second state the text typed by the user
+    // text typed by the user
     private val _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()
 
@@ -23,8 +21,6 @@ class SearchableStationViewModel : NrStationsViewModel() {
     private val allStations = mutableListOf<StationLocation>()
 
     private val _stationsList = MutableStateFlow(allStations)
-
-    // end Section
 
     fun setSelectedStation(stationLocation: StationLocation) {
         _selectedStation.value = stationLocation
@@ -48,18 +44,17 @@ class SearchableStationViewModel : NrStationsViewModel() {
 
     val stationsList = searchText
         .combine(_stationsList) { text, stations -> // combine searchText with _stationsList
-            if (text.isBlank()) { //return the entire list of stations if no search text entered
+            if (text.isBlank()) {
                 stations
             } else {
                 stations.filter { station ->
                     // filter and return a list of stations using the Crs code or station name
-                    (text.count() == 3 && station.crsCode == text.uppercase()) ||
-                            station.stationName.startsWith(text, ignoreCase = true)
+                    (text.count() == 3 && station.crsCode == text.uppercase()) || station.stationName.startsWith(text, ignoreCase = true)
                 }
             }
         }.stateIn(
             viewModelScope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),// allows the StateFlow to survive 5 seconds before it's cancelled
+            started = SharingStarted.WhileSubscribed(5000), // allows the StateFlow to survive 5 seconds before it's cancelled
             initialValue = _stationsList.value
         )
 }
