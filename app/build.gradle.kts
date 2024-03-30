@@ -54,19 +54,15 @@ dependencies {
         implementation(project(":nrstations"))
     } else {
         // use build from Maven Central
-        implementation(isdlibs.intsoftdev.stations)
+        implementation("com.intsoftdev:nrstations:0.0.62")
     }
 
-    implementation(isdlibs.compose.material3)
-    implementation(isdlibs.androidx.navigation.compose)
-    implementation(isdlibs.compose.maps)
-
-    implementation(isdlibs.kmm.viewmodel)
-
-    implementation(isdlibs.bundles.app.ui)
-    implementation(isdlibs.multiplatformSettings.common)
-    implementation(isdlibs.kotlinx.dateTime)
-    implementation(isdlibs.napier.logger)
-    implementation(isdlibs.google.gms.maps)
-    testImplementation(isdlibs.junit)
+    implementation("androidx.compose.material3:material3:1.2.1")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.compose.material:material:1.6.4")
+    implementation("androidx.compose.ui:ui:1.6.4")
+    implementation("androidx.compose.ui:ui-tooling-preview-android:1.6.4")
+    implementation("com.google.maps.android:maps-compose:2.7.2")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("io.github.aakira:napier:2.6.1")
 }
