@@ -10,8 +10,9 @@ plugins {
 }
 
 // Stub secrets to let the project sync and build without the publication values set up
-ext["signing.keyId"] = null
-ext["signing.password"] = null
+ext["signing.key"] = ""
+ext["signing.keyId"] = ""
+ext["signing.password"] = ""
 ext["signing.secretKeyRingFile"] = null
 ext["ossrhUsername"] = null
 ext["ossrhPassword"] = null
