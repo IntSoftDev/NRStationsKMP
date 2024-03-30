@@ -98,14 +98,11 @@ publishing {
 }
 
 // Signing artifacts. Signing.* extra properties values will be used
-// "signing.key" gradle is throwing build errors, comment out for local builds pending investigation
-if (IMPORT_LOCAL_NRSTATIONS_KMP == "false") {
-    signing {
-        useInMemoryPgpKeys(
-            getExtraString("signing.keyId"),
-            getExtraString("signing.key"),
-            getExtraString("signing.password")
-        )
-        sign(publishing.publications)
-    }
+signing {
+    useInMemoryPgpKeys(
+        getExtraString("signing.keyId"),
+        getExtraString("signing.key"),
+        getExtraString("signing.password")
+    )
+    sign(publishing.publications)
 }
