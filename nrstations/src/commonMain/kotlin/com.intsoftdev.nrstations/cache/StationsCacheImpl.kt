@@ -6,12 +6,25 @@ import com.intsoftdev.nrstations.data.model.station.toDataVersion
 import com.intsoftdev.nrstations.data.model.station.toStationLocation
 import com.intsoftdev.nrstations.data.model.station.toVersion
 import com.russhwolf.settings.Settings
-import io.github.aakira.napier.Napier
 import kotlinx.datetime.Clock
 
+/**
+ * Cache policy to be used when retrieving Stations
+ */
 enum class CachePolicy {
+    /**
+     * Always calls the proxy end point
+     */
     FORCE_REFRESH,
+
+    /**
+     * Always uses cache if available
+     */
     ALWAYS_USE_CACHE,
+
+    /**
+     * Uses cache with expiry @see [StationsCacheImpl.EXPIRATION_TIME_MS]
+     */
     USE_CACHE_WITH_EXPIRY
 }
 
@@ -22,19 +35,15 @@ internal class StationsCacheImpl(
 ) : StationsCache {
 
     override fun insertStations(stations: List<StationLocation>) {
-        Napier.d("insertAll enter")
         dbWrapper.insertStations(stations)
         setLastUpdateTime()
-        Napier.d("insertAll exit")
     }
 
     override fun insertVersion(version: DataVersion) {
-        Napier.d("insertVersion $version")
         dbWrapper.insertVersion(version.toVersion())
     }
 
     override fun getAllStations(): List<StationLocation> {
-        Napier.d("getAllStations enter")
         return dbWrapper.getStations().map {
             it.toStationLocation()
         }
@@ -46,8 +55,6 @@ internal class StationsCacheImpl(
     }
 
     override fun getCacheState(serverVersion: Double?, cachePolicy: CachePolicy): CacheState {
-        Napier.d("getCacheState serverVersion $serverVersion cachePolicy $cachePolicy")
-
         // is cache empty
         if (isCacheEmpty()) return CacheState.Empty
 

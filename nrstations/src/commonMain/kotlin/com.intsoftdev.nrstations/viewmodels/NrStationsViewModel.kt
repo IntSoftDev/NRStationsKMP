@@ -19,10 +19,6 @@ import kotlinx.coroutines.launch
 
 open class NrStationsViewModel : KMMViewModel(), StationsSdkDiComponent {
 
-    init {
-        Napier.d("init")
-    }
-
     private var stationsSDK = this.injectStations<NrStationsSDK>()
 
     // Backing property to avoid state updates from other classes
@@ -37,15 +33,8 @@ open class NrStationsViewModel : KMMViewModel(), StationsSdkDiComponent {
         StationsUiState.Loading
     )
 
-    override fun onCleared() {
-        Napier.d("onCleared")
-        super.onCleared()
-    }
-
     fun getAllStations() {
-        Napier.d("getAllStations enter")
         viewModelScope.coroutineScope.launch {
-            Napier.d("getAllStations launch")
             stationsSDK.getAllStations().onStart {
                 _uiState.emit(StationsUiState.Loading)
             }.catch { throwable ->
@@ -53,7 +42,6 @@ open class NrStationsViewModel : KMMViewModel(), StationsSdkDiComponent {
             }.collect { stationsResult ->
                 when (stationsResult) {
                     is StationsResultState.Success -> {
-                        Napier.d("got stations count ${stationsResult.data.stations.size}")
                         _uiState.emit(
                             StationsUiState.Loaded(stations = stationsResult.data.stations)
                         )
@@ -61,7 +49,7 @@ open class NrStationsViewModel : KMMViewModel(), StationsSdkDiComponent {
 
                     is StationsResultState.Failure -> {
                         _uiState.emit(StationsUiState.Error(error = stationsResult.error?.message))
-                        Napier.e("error")
+                        Napier.e("${stationsResult.error}")
                     }
                 }
             }

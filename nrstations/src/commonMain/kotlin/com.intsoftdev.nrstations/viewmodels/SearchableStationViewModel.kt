@@ -54,7 +54,7 @@ class SearchableStationViewModel : NrStationsViewModel() {
             }
         }.stateIn(
             viewModelScope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000), // allows the StateFlow to survive 5 seconds before it's cancelled
+            started = SharingStarted.WhileSubscribed(5000),
             initialValue = _stationsList.value
         )
 }

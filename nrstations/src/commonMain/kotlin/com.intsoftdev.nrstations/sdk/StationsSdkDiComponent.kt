@@ -7,7 +7,7 @@ import org.koin.core.component.get
 
 /**
  * Use this interface to get access to [NrStationsSDK]
- * Call [com.intsoftdev.nrstations.shared.initStationsSDK] to setup the SDK DI
+ * Call platform specific [com.intsoftdev.nrstations.shared.initStationsSDK] to setup the SDK DI
  * then [org.koin.core.component.inject] & [org.koin.core.component.get] will target [StationsSdkKoinHolder]
  */
 interface StationsSdkDiComponent : KoinComponent {

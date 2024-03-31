@@ -16,7 +16,6 @@ import com.intsoftdev.nrstations.data.model.station.toUpdateVersion
 import com.intsoftdev.nrstations.domain.StationsRepository
 import com.intsoftdev.nrstations.location.getSortedStations
 import com.intsoftdev.nrstations.location.getStationDistancesfromRefPoint
-import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -34,16 +33,13 @@ internal class StationsRepositoryImpl(
         flow {
             when (val cacheState = stationsCache.getCacheState(cachePolicy = cachePolicy)) {
                 is CacheState.Empty, CacheState.Stale -> {
-                    Napier.d("cacheState is $cacheState")
                     emit(refreshStations())
                 }
                 is CacheState.Usable -> {
-                    Napier.d("cacheState is $cacheState")
                     val result = StationsResult(
                         version = stationsCache.getVersion().toUpdateVersion(),
                         stations = stationsCache.getAllStations()
                     )
-                    Napier.d("cached stations ${result.stations.size} version ${result.version.version}")
                     emit(StationsResultState.Success(result))
                 }
             }
@@ -70,12 +66,10 @@ internal class StationsRepositoryImpl(
         flow {
             when (val cacheState = stationsCache.getCacheState()) {
                 is CacheState.Empty -> {
-                    Napier.d("cacheState is $cacheState")
                     with(refreshStations()) {
                         when (this) {
                             is StationsResultState.Success -> {
                                 val stations = sortStationsFromCache(latitude, longitude)
-                                Napier.d("getNearbyStations Success")
                                 emit(StationsResultState.Success(stations))
                             }
                             is StationsResultState.Failure -> {
@@ -90,7 +84,6 @@ internal class StationsRepositoryImpl(
                 }
                 else -> {
                     val stations = sortStationsFromCache(latitude, longitude)
-                    Napier.d("getNearbyStations Success")
                     emit(StationsResultState.Success(stations))
                 }
             }
@@ -101,23 +94,18 @@ internal class StationsRepositoryImpl(
     }
 
     private suspend fun refreshStations(): StationsResultState<StationsResult> {
-        Napier.d("refreshStations enter")
         getServerDataVersion().also { serverDataVersion ->
             return when (stationsCache.getCacheState(serverDataVersion.version)) {
                 is CacheState.Empty, CacheState.Stale -> {
-                    Napier.d("getStationsFromServer")
                     val stationLocations = stationsProxyService.getAllStations().map {
                         it.toStationLocation()
                     }
-                    Napier.d("inserting ${stationLocations.size} int DB")
 
                     if (stationLocations.isEmpty()) {
                         StationsResultState.Failure(IllegalStateException("no stations downloaded"))
                     } else {
                         stationsCache.insertStations(stationLocations)
                         stationsCache.insertVersion(serverDataVersion)
-
-                        Napier.d("got stations ${stationLocations.size} version ${serverDataVersion.version}")
 
                         StationsResultState.Success(
                             StationsResult(
@@ -129,12 +117,10 @@ internal class StationsRepositoryImpl(
                 }
 
                 is CacheState.Usable -> {
-                    Napier.d("getStationsFromCache")
                     val result = StationsResult(
                         version = stationsCache.getVersion().toUpdateVersion(),
                         stations = stationsCache.getAllStations()
                     )
-                    Napier.d("read stations ${result.stations.size} version ${result.version.version}")
                     StationsResultState.Success(result)
                 }
             }
