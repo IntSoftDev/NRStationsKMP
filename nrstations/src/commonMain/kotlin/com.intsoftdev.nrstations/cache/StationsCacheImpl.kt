@@ -46,7 +46,7 @@ internal class StationsCacheImpl(
     }
 
     override fun getCacheState(serverVersion: Double?, cachePolicy: CachePolicy): CacheState {
-        Napier.d("getCacheState serverVersion $serverVersion cachePolic $cachePolicy")
+        Napier.d("getCacheState serverVersion $serverVersion cachePolicy $cachePolicy")
 
         // is cache empty
         if (isCacheEmpty()) return CacheState.Empty

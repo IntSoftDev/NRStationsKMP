@@ -70,6 +70,7 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(isdlibs.bundles.commonTest)
+                implementation(isdlibs.turbine)
             }
         }
 

@@ -1,7 +1,6 @@
 package com.intsoftdev.nrstations
 
 import com.intsoftdev.nrstations.cache.DBWrapperImpl
-import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.database.NRStationsDb
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
@@ -13,14 +12,12 @@ class DBWrapperImplTest {
 
     private lateinit var dbWrapper: DBWrapperImpl
 
-    private val testStation = StationLocation("London Waterloo", "WAT", 0.0, 0.0)
-
     @BeforeTest
     fun setup() = runTest {
         dbWrapper = DBWrapperImpl(
             NRStationsDb(testDbConnection())
         )
-        dbWrapper.insertStations(listOf(testStation))
+        dbWrapper.insertStations(listOf(WATERLOO))
     }
 
     @Test
