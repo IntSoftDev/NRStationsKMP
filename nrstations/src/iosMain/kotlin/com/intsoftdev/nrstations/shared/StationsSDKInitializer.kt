@@ -29,7 +29,6 @@ import platform.Foundation.NSUserDefaults
 @Suppress("unused")
 fun initStationsSDK(
     apiConfig: APIConfig = APIConfig(),
-    userDefaults: NSUserDefaults,
     enableLogging: Boolean = false
 ): KoinApplication {
     if (enableLogging) {
@@ -38,7 +37,7 @@ fun initStationsSDK(
     return initSDKiOS(
         apiConfig,
         module {
-            factory<Settings> { NSUserDefaultsSettings(userDefaults) }
+            factory<Settings> { NSUserDefaultsSettings.Factory().create("NRSTATIONS_SETTINGS") }
         }
     )
 }

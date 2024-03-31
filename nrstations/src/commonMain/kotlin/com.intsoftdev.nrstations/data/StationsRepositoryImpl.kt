@@ -16,6 +16,7 @@ import com.intsoftdev.nrstations.data.model.station.toUpdateVersion
 import com.intsoftdev.nrstations.domain.StationsRepository
 import com.intsoftdev.nrstations.location.getSortedStations
 import com.intsoftdev.nrstations.location.getStationDistancesfromRefPoint
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -40,6 +41,7 @@ internal class StationsRepositoryImpl(
                         version = stationsCache.getVersion().toUpdateVersion(),
                         stations = stationsCache.getAllStations()
                     )
+                    Napier.d("cached stations ${result.stations.size} version ${result.version.version}")
                     emit(StationsResultState.Success(result))
                 }
             }
@@ -100,12 +102,15 @@ internal class StationsRepositoryImpl(
                     val stationLocations = stationsProxyService.getAllStations().map {
                         it.toStationLocation()
                     }
+                    Napier.d("inserting ${stationLocations.size} int DB")
 
                     if (stationLocations.isEmpty()) {
                         StationsResultState.Failure(IllegalStateException("no stations downloaded"))
                     } else {
                         stationsCache.insertStations(stationLocations)
                         stationsCache.insertVersion(serverDataVersion)
+
+                        Napier.d("got stations ${stationLocations.size} version ${serverDataVersion.version}")
 
                         StationsResultState.Success(
                             StationsResult(
