@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -108,12 +109,14 @@ fun StationsTopAppBar(
     title: State<String>,
     modifier: Modifier = Modifier
 ) {
+    val style = if (canNavigateBack) MaterialTheme.typography.bodyLarge else MaterialTheme.typography.headlineSmall
+    val topBarTitle = if (canNavigateBack) title.value else "NR Stations"
     CenterAlignedTopAppBar(
         scrollBehavior = scrollBehavior,
         title = {
             Text(
-                text = if (canNavigateBack) title.value else "NR Stations",
-                style = MaterialTheme.typography.headlineSmall
+                text = topBarTitle,
+                style = style
             )
         },
         navigationIcon = {

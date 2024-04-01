@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class NearbyStationsViewModel : ViewModel(), StationsSdkDiComponent {
 
-    private val stationsSDK = this.injectStations<NrStationsSDK>()
+    private val stationsSDK = injectStations<NrStationsSDK>()
 
     private val _uiState = MutableStateFlow<NearbyStationsUiState>(NearbyStationsUiState.Loading)
 
