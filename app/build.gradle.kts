@@ -54,7 +54,7 @@ dependencies {
         implementation(project(":nrstations"))
     } else {
         // use build from Maven Central
-        implementation("com.intsoftdev:nrstations:0.0.62")
+        implementation("com.intsoftdev:nrstations:1.0.0-ALPHA-2")
     }
 
     implementation("androidx.compose.material3:material3:1.2.1")
