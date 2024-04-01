@@ -108,12 +108,14 @@ fun StationsTopAppBar(
     title: State<String>,
     modifier: Modifier = Modifier
 ) {
+    val style = if (canNavigateBack) MaterialTheme.typography.bodyLarge else MaterialTheme.typography.headlineSmall
+    val topBarTitle = if (canNavigateBack) title.value else "NR Stations"
     CenterAlignedTopAppBar(
         scrollBehavior = scrollBehavior,
         title = {
             Text(
-                text = if (canNavigateBack) title.value else "NR Stations",
-                style = MaterialTheme.typography.headlineSmall
+                text = topBarTitle,
+                style = style
             )
         },
         navigationIcon = {

@@ -7,6 +7,10 @@ import com.intsoftdev.nrstations.cache.StationsCacheImpl
 import com.intsoftdev.nrstations.database.NRStationsDb
 import com.intsoftdev.nrstations.mock.ClockMock
 import com.intsoftdev.nrstations.StationsProxyTest.Companion.MOCK_SERVER_STATIONS_URL
+import com.intsoftdev.nrstations.common.DefaultRetryPolicy
+import com.intsoftdev.nrstations.data.StationsProxy
+import com.intsoftdev.nrstations.data.StationsRepositoryImpl
+import com.intsoftdev.nrstations.domain.StationsRepository
 import com.russhwolf.settings.MapSettings
 import com.russhwolf.settings.Settings
 import io.ktor.client.HttpClient
@@ -19,6 +23,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
 import kotlin.test.assertEquals
+import kotlinx.coroutines.Dispatchers
 import kotlinx.datetime.Clock
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -80,4 +85,16 @@ internal val testModule = module {
     single<DBWrapper> { DBWrapperImpl(get()) }
 
     single { NRStationsDb(testDbConnection()) }
+
+    factory<StationsRepository> {
+        val httpClientSuccess = get<HttpClient>(named("HttpTestClientSuccess"))
+        val stationsApi = StationsProxy(httpClientSuccess, StationsProxyTest.MOCK_SERVER_BASE_URL)
+
+        StationsRepositoryImpl(
+            stationsProxyService = stationsApi,
+            stationsCache = get(),
+            requestDispatcher = Dispatchers.Default,
+            requestRetryPolicy = DefaultRetryPolicy()
+        )
+    }
 }

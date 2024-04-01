@@ -19,7 +19,6 @@ android {
     compileSdk = isdlibs.versions.compileSdk.get().toInt()
     defaultConfig {
         minSdk = isdlibs.versions.minSdk.get().toInt()
-        targetSdk = isdlibs.versions.targetSdk.get().toInt()
     }
     testOptions {
         unitTests {
@@ -65,12 +64,13 @@ kotlin {
                 implementation(isdlibs.kolinx.serialization)
                 implementation(isdlibs.bundles.ktor.common)
                 implementation(isdlibs.napier.logger)
-                implementation(isdlibs.kmm.viewmodel)
+                api(isdlibs.kmm.viewmodel)
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(isdlibs.bundles.commonTest)
+                implementation(isdlibs.turbine)
             }
         }
 

@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) Integrated Software Development Ltd.
+ *
+ * Licensed under EUPL-1.2 (see the LICENSE file for the full license governing this code).
+ */
 package com.intsoftdev.nrstations.sdk
 
 import com.intsoftdev.nrstations.cache.CachePolicy
@@ -11,9 +16,9 @@ interface StationsAPI {
     /**
      * Retrieves all the NRE stations from a compatible server
      * The server is typically an instance of [Huxley2](https://github.com/azaka01/Huxley2)
-     * this method is an asynchronous [kotlinx.coroutines.flow.Flow]
+     * This method is an asynchronous [kotlinx.coroutines.flow.Flow]
      *
-     * @param cachePolicy specify the [CachePolicy]
+     * @param cachePolicy specify the [CachePolicy]. Default value is [CachePolicy.USE_CACHE_WITH_EXPIRY]
      * @return [StationsResult] encapsulated in [StationsResultState]
      */
     fun getAllStations(cachePolicy: CachePolicy = CachePolicy.USE_CACHE_WITH_EXPIRY): CFlow<StationsResultState<StationsResult>>
@@ -34,6 +39,7 @@ interface StationsAPI {
      * @param [longitude] longitude of geo-location for which nearby stations are required
      *
      * @return an instance of [NearestStations] encapsulated in [StationsResultState]
+     * @see [com.intsoftdev.nrstations.data.StationsRepositoryImpl.MAX_NEARBY_STATIONS]
      */
     fun getNearbyStations(
         latitude: Double,

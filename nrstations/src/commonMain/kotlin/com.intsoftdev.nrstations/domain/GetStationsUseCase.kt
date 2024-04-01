@@ -4,7 +4,6 @@ import com.intsoftdev.nrstations.cache.CachePolicy
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResult
 import com.intsoftdev.nrstations.common.StationsResultState
-import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -17,7 +16,6 @@ internal class GetStationsUseCase(
 ) {
 
     fun getAllStations(cachePolicy: CachePolicy): Flow<StationsResultState<StationsResult>> {
-        Napier.d("getAllStations cachePolicy $cachePolicy")
         return stationsRepository.getAllStations(cachePolicy = cachePolicy)
     }
 

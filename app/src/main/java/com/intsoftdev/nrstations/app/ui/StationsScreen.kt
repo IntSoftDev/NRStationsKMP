@@ -29,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -223,17 +224,21 @@ fun StationRow(station: StationLocation, onClick: (StationLocation) -> Unit) {
                 onClick(station)
             }
             .padding(10.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
             text = station.stationName,
             fontSize = 16.sp,
-            modifier = Modifier.weight(0.9F)
+            modifier = Modifier.weight(1f),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
 
         Text(
             text = station.crsCode,
             fontSize = 16.sp,
-            modifier = Modifier.weight(0.1F)
+            maxLines = 1
         )
     }
 }

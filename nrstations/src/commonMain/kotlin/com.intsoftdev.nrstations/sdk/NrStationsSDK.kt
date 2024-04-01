@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) Integrated Software Development Ltd.
+ *
+ * Licensed under EUPL-1.2 (see the LICENSE file for the full license governing this code).
+ */
+
 package com.intsoftdev.nrstations.sdk
 
 import com.intsoftdev.nrstations.cache.CachePolicy

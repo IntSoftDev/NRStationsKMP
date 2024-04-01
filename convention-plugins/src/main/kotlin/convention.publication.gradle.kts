@@ -10,8 +10,9 @@ plugins {
 }
 
 // Stub secrets to let the project sync and build without the publication values set up
-ext["signing.keyId"] = null
-ext["signing.password"] = null
+ext["signing.key"] = ""
+ext["signing.keyId"] = ""
+ext["signing.password"] = ""
 ext["signing.secretKeyRingFile"] = null
 ext["ossrhUsername"] = null
 ext["ossrhPassword"] = null
@@ -46,7 +47,7 @@ fun getExtraString(name: String) = ext[name]?.toString()
 group = "com.intsoftdev"
 // the version generated can be either release or snapshot
 // current version is 0.0.1-SNAPSHOT (update this)
-version = "0.0.61"
+version = "1.0.0-ALPHA-2"
 
 publishing {
     // Configure maven central repository
@@ -98,14 +99,11 @@ publishing {
 }
 
 // Signing artifacts. Signing.* extra properties values will be used
-// "signing.key" gradle is throwing build errors, comment out for local builds pending investigation
-if (IMPORT_LOCAL_NRSTATIONS_KMP == "false") {
-    signing {
-        useInMemoryPgpKeys(
-            getExtraString("signing.keyId"),
-            getExtraString("signing.key"),
-            getExtraString("signing.password")
-        )
-        sign(publishing.publications)
-    }
+signing {
+    useInMemoryPgpKeys(
+        getExtraString("signing.keyId"),
+        getExtraString("signing.key"),
+        getExtraString("signing.password")
+    )
+    sign(publishing.publications)
 }

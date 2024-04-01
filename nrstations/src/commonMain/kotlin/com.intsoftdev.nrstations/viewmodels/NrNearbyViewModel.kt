@@ -18,10 +18,6 @@ import kotlinx.coroutines.launch
 
 open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
 
-    init {
-        Napier.d("init")
-    }
-
     private val stationsSDK = this.injectStations<NrStationsSDK>()
 
     // Backing property to avoid state updates from other classes
@@ -36,24 +32,17 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
         NearbyUiState.Loading
     )
 
-    override fun onCleared() {
-        Napier.d("onCleared")
-        super.onCleared()
-    }
-
+    @Suppress("unused")
     fun getNearbyStations(crsCode: String) {
-        Napier.d("getNearbyStations $crsCode enter")
         viewModelScope.coroutineScope.launch {
             stationsSDK.getStationLocation(crsCode)
                 .onStart {
-                    Napier.d("onStart")
                     _uiState.emit(NearbyUiState.Loading)
                 }.catch { throwable ->
                     _uiState.emit(NearbyUiState.Error(error = throwable.message))
                 }.collect { results ->
                     when (results) {
                         is StationsResultState.Success -> {
-                            Napier.d("got stationLocation")
                             getNearbyStations(
                                 results.data.first().latitude,
                                 results.data.first().longitude
@@ -62,7 +51,7 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
 
                         is StationsResultState.Failure -> {
                             _uiState.emit(NearbyUiState.Error(error = results.error?.message))
-                            Napier.e("error")
+                            Napier.e("${results.error}")
                         }
                     }
                 }
@@ -70,11 +59,9 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
     }
 
     fun getNearbyStations(latitude: Double, longitude: Double) {
-        Napier.d("getNearbyStations $latitude $longitude enter")
         viewModelScope.coroutineScope.launch {
             stationsSDK.getNearbyStations(latitude, longitude)
                 .onStart {
-                    Napier.d("onStart")
                     _uiState.emit(NearbyUiState.Loading)
                 }.catch { throwable ->
                     _uiState.emit(NearbyUiState.Error(error = throwable.message))
