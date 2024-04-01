@@ -16,14 +16,12 @@ import io.github.aakira.napier.Napier
 import org.koin.core.KoinApplication
 import org.koin.core.module.Module
 import org.koin.dsl.module
-import platform.Foundation.NSUserDefaults
 
 /**
  * Top level iOS entry point into the SDK
  *
  * @param apiConfig optional instance of [APIConfig]
  * Swift can use [com.intsoftdev.nrstations.common.DefaultAPIConfig]
- * @param userDefaults instance of iOS NSUserDefaults
  * @param enableLogging default is false
  */
 @Suppress("unused")
