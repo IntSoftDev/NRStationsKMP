@@ -3,11 +3,9 @@
 
 # NRStations KMP
 
-A library to access UK train stations locations.
+A Kotlin library to access UK train stations locations from Android and iOS devices.
 
-## Get Started
-
-## Download
+## Adding to your project
 ```
 repositories {
   mavenCentral()
@@ -19,9 +17,9 @@ dependencies {
 
 The demo project also uses this structure.
 
-### Android
+## Android
 
-#### 1) Initialise
+#### 1) Setup and initialise
 
 The library is compiled with JVM 17.
 
@@ -33,7 +31,11 @@ kotlin {
 }
 ```
 
-Initialise in the `Application` class
+In the `manifest.xml`, ensure the following permission is available:
+
+`android.permission.INTERNET`
+
+Initialise the SDK in the `Application` class
 
 ```
  initStationsSDK(
@@ -53,7 +55,29 @@ Then inject the SDK.
 private val stationsSDK = this.injectStations<NrStationsSDK>()
 ```
 
-### iOS
+#### 3) Use the API
+
+The API uses Flow which encapsulates a `StationsResultState` to indicate success or failure.
+
+#### All Stations
+
+```
+stationsSDK.getAllStations().collect { stationsResult ->
+    when (stationsResult) {
+        is StationsResultState.Success -> {}
+        is StationsResultState.Failure -> {}
+    }
+}
+```
+
+#### Nearby Stations
+
+```
+stationsSDK.getNearbyStations(latitude: Double, longitude: Double)
+
+```
+
+## iOS
 
 #### 1) Pod setup
 
@@ -71,6 +95,12 @@ and run `pod install`.
 #### 2) Add package dependency
 
 Add [KMMViewModel](https://github.com/rickclephas/KMM-ViewModel) `1.0.0-ALPHA-19` to the iOS package dependencies.
+
+Add the following KMM ViewModel extension in the project - see the sample app for more details:
+
+```
+extension Kmm_viewmodel_coreKMMViewModel: KMMViewModel { }
+```
 
 #### 3) Initialise
 
@@ -93,7 +123,33 @@ In the SwiftUI View
 
 ```
 @StateViewModel var stationsViewModel = NrStationsViewModel()
+
+stationsViewModel.getAllStations()
+
+switch stationsViewModel.uiState {
+    case let uiState as StationsUiStateLoaded:
+        // update view with Stations
+    case let uiState as StationsUiStateError:
+       // handle error
+}
+
 ```
+
+## Configuration
+
+The library utilises an actual testing service that includes all train stations across the UK mainland, along with a few connected via EuroStar. Updates are made whenever a new station is opened.
+
+Sample applications can utilise this, but for production applications, it is advisable to create a dedicated instance from this [link](https://github.com/azaka01/Huxley2).
+
+An `APIConfig` object can be passed into to `initStationsSDK` to configure the server URL.
+
+## Useful Links
+
+https://github.com/touchlab/KaMPKit
+
+https://github.com/joreilly
+
+https://github.com/rickclephas/KMM-ViewModel
 
 ## License
 
