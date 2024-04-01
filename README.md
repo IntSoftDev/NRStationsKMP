@@ -3,7 +3,7 @@
 
 # NRStations KMP
 
-A Kotlin library to access UK train stations locations from Android and iOS devices.
+A Kotlin library to retrieve all UK train stations and their locations from Android and iOS devices.
 
 ## Adding to your project
 ```
@@ -15,15 +15,15 @@ dependencies {
 }
 ```
 
-The demo project also uses this structure.
+The sample project also uses this structure.
 
 ## Android
 
-#### 1) Setup and initialise
+#### 1) Setup
 
-The library is compiled with JVM 17.
+The library is compiled with JVM 17 so the relevant `-jvm-target` needs to be set.
 
-Add this to app level build gradle
+This can be added to app level `build.gradle.kts`
 
 ```
 kotlin {
@@ -35,6 +35,8 @@ In the `manifest.xml`, ensure the following permission is available:
 
 `android.permission.INTERNET`
 
+#### 2) Initialise
+
 Initialise the SDK in the `Application` class
 
 ```
@@ -43,7 +45,7 @@ Initialise the SDK in the `Application` class
   )
 ```
 
-#### 2) Inject the SDK
+#### 3) Inject the SDK
 
 Create your own ViewModel or use one of the existing KMP ViewModels.
 
@@ -52,10 +54,10 @@ If using your own VM, derive it from `StationsSdkDiComponent`.
 Then inject the SDK.
 
 ```
-private val stationsSDK = this.injectStations<NrStationsSDK>()
+private val stationsSDK = injectStations<NrStationsSDK>()
 ```
 
-#### 3) Use the API
+#### 4) Use the API
 
 The API uses Flow which encapsulates a `StationsResultState` to indicate success or failure.
 
@@ -132,7 +134,6 @@ switch stationsViewModel.uiState {
     case let uiState as StationsUiStateError:
        // handle error
 }
-
 ```
 
 ## Configuration
@@ -143,13 +144,33 @@ Sample applications can utilise this, but for production applications, it is adv
 
 An `APIConfig` object can be passed into to `initStationsSDK` to configure the server URL.
 
-## Useful Links
+## Sample Apps
 
-https://github.com/touchlab/KaMPKit
+### Android (Jetpack Compose)
 
-https://github.com/joreilly
+You can choose to add `MAPS_API_KEY=<your key>` in `local.properties` to enable Google Maps.
 
-https://github.com/rickclephas/KMM-ViewModel
+https://github.com/IntSoftDev/NRStationsKMP/assets/1098487/d91b7182-f8a3-4846-96fd-683a4ae6911c
+
+### iOS (Swift UI)
+
+https://github.com/IntSoftDev/NRStationsKMP/assets/1098487/9d17998b-3d48-4bd5-95e2-4327b2acefa6
+
+## Languages and Tools used
+
+[Kotlin](https://kotlinlang.org/)  
+[Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html)  
+[Kotlinx Serialization](https://github.com/Kotlin/kotlinx.serialization)  
+[Ktor client library](https://github.com/ktorio/ktor)  
+[Android Architecture Components](https://developer.android.com/topic/libraries/architecture)  
+[Koin](https://github.com/InsertKoinIO/koin)  
+[Jetpack Compose](https://developer.android.com/jetpack/compose)  
+[SwiftUI](https://developer.apple.com/documentation/swiftui)  
+[KMM-ViewModel](https://kotlinlang.org/lp/mobile/static/kmm-viewmodel/)  
+[SQLDelight](https://github.com/cashapp/sqldelight)  
+[Turbine](https://github.com/cashapp/turbine)  
+[Napier Logger](https://github.com/AAkira/Napier)  
+[Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings)  
 
 ## License
 
