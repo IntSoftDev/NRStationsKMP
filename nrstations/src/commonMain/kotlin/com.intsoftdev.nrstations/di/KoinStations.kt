@@ -40,3 +40,5 @@ internal object SDKDiInitialiser {
         return StationsSdkKoinHolder.koinApplication
     }
 }
+
+internal const val KOIN_HTTP_CLIENT = "PlatformHttpClient"

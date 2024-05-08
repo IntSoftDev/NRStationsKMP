@@ -32,6 +32,15 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
         NearbyUiState.Loading
     )
 
+    init {
+        Napier.d(tag = TAG) { "init" }
+    }
+
+    override fun onCleared() {
+        Napier.d(tag = TAG) { "onCleared" }
+        super.onCleared()
+    }
+
     @Suppress("unused")
     fun getNearbyStations(crsCode: String) {
         viewModelScope.coroutineScope.launch {
@@ -51,7 +60,7 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
 
                         is StationsResultState.Failure -> {
                             _uiState.emit(NearbyUiState.Error(error = results.error?.message))
-                            Napier.e("${results.error}")
+                            Napier.e(tag = TAG) { "${results.error}" }
                         }
                     }
                 }
@@ -68,7 +77,7 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
                 }.collect { result ->
                     when (result) {
                         is StationsResultState.Success -> {
-                            Napier.d("got stations count ${result.data.stationDistances.size}")
+                            Napier.d(tag = TAG) { "got stations count ${result.data.stationDistances.size}" }
                             _uiState.emit(
                                 NearbyUiState.Loaded(stations = result.data)
                             )
@@ -76,11 +85,15 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
 
                         is StationsResultState.Failure -> {
                             _uiState.emit(NearbyUiState.Error(error = result.error?.message))
-                            Napier.e("error")
+                            Napier.e( tag = TAG ) { " error: ${result.error?.message} " }
                         }
                     }
                 }
         }
+    }
+
+    companion object {
+        const val TAG = "NrNearbyViewModel"
     }
 }
 
