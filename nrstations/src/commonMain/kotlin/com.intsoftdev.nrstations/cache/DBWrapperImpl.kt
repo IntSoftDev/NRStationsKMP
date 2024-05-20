@@ -47,7 +47,7 @@ internal class DBWrapperImpl(
     }
 
     override fun getVersion(): Version? =
-        stationsDb.versionTableQueries.select().executeAsOneOrNull()
+        stationsDb.versionTableQueries.select().executeAsList().firstOrNull()
 
     override fun isEmpty(): Boolean {
         return stationsDb.stationsTableQueries.selectAll().executeAsList().isEmpty()

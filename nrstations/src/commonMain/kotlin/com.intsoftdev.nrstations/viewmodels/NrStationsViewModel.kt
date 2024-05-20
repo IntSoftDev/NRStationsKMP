@@ -33,6 +33,15 @@ open class NrStationsViewModel : KMMViewModel(), StationsSdkDiComponent {
         StationsUiState.Loading
     )
 
+    init {
+        Napier.d(tag = TAG) { "init" }
+    }
+
+    override fun onCleared() {
+        Napier.d(tag = TAG) { "onCleared" }
+        super.onCleared()
+    }
+
     fun getAllStations() {
         viewModelScope.coroutineScope.launch {
             stationsSDK.getAllStations().onStart {
@@ -54,6 +63,10 @@ open class NrStationsViewModel : KMMViewModel(), StationsSdkDiComponent {
                 }
             }
         }
+    }
+
+    companion object {
+        const val TAG = "NrStationsViewModel"
     }
 }
 

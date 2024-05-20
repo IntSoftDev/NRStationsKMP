@@ -24,7 +24,7 @@ interface RequestRetryPolicy {
 }
 
 data class DefaultRetryPolicy(
-    override val numRetries: Long = 4,
+    override val numRetries: Long = 2,
     override val delayMillis: Long = 400,
     override val delayFactor: Long = 2
 ) : RequestRetryPolicy
