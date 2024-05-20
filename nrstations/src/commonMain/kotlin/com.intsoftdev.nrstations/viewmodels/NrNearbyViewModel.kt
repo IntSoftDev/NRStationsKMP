@@ -85,7 +85,7 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
 
                         is StationsResultState.Failure -> {
                             _uiState.emit(NearbyUiState.Error(error = result.error?.message))
-                            Napier.e( tag = TAG ) { " error: ${result.error?.message} " }
+                            Napier.e(tag = TAG) { " error: ${result.error?.message} " }
                         }
                     }
                 }
