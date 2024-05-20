@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations.shared
 
-import android.app.Application
+import android.app.Application // ktlint-disable import-ordering
 import android.content.Context
 import com.intsoftdev.nrstations.database.NRStationsDb
 import com.intsoftdev.nrstations.di.KOIN_HTTP_CLIENT
@@ -28,7 +28,12 @@ internal actual val stationsPlatformModule = module {
     factory(named("NRStationsCoroutineDispatcher")) { Dispatchers.Default }
 
     factory<Settings> {
-        SharedPreferencesSettings(appContext.getSharedPreferences("NRSTATIONS_SETTINGS", Application.MODE_PRIVATE))
+        SharedPreferencesSettings(
+            appContext.getSharedPreferences(
+                "NRSTATIONS_SETTINGS",
+                Application.MODE_PRIVATE
+            )
+        )
     }
 
     single<SqlDriver>(named("StationsSqlDriver")) {
