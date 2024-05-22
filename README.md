@@ -11,7 +11,7 @@ repositories {
   mavenCentral()
 }
 dependencies {
-    implementation("com.intsoftdev:nrstations:1.0.0-ALPHA-2")
+    implementation("com.intsoftdev:nrstations:1.0.0-ALPHA-4")
 }
 ```
 
