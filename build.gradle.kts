@@ -10,7 +10,7 @@ plugins {
     alias(isdlibs.plugins.androidApplication) apply false
     alias(isdlibs.plugins.cocoapods) apply false
     alias(isdlibs.plugins.androidLibrary) apply false
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1" apply false
+    alias(isdlibs.plugins.secrets.gradle) apply false
 }
 
 subprojects {

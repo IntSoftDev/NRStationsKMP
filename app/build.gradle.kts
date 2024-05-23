@@ -1,7 +1,7 @@
 plugins {
     alias(isdlibs.plugins.androidApplication)
     alias(isdlibs.plugins.kotlin.android)
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(isdlibs.plugins.secrets.gradle)
 }
 
 kotlin {
@@ -19,8 +19,6 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    @Suppress("UnstableApiUsage")
-
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -28,13 +26,11 @@ android {
         }
     }
 
-    @Suppress("UnstableApiUsage")
     lint {
         warningsAsErrors = false
         abortOnError = true
     }
 
-    @Suppress("UnstableApiUsage")
     buildFeatures {
         compose = true
     }
@@ -44,7 +40,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    @Suppress("UnstableApiUsage")
     composeOptions {
         kotlinCompilerExtensionVersion = isdlibs.versions.composeCompiler.get()
     }

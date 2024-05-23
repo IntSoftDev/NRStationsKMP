@@ -18,6 +18,7 @@ kotlin {
 }
 
 android {
+    namespace = "com.intsoftdev.nrstations"
     compileSdk = isdlibs.versions.compileSdk.get().toInt()
     defaultConfig {
         minSdk = isdlibs.versions.minSdk.get().toInt()
@@ -30,7 +31,6 @@ android {
         }
     }
 
-    @Suppress("UnstableApiUsage")
     lint {
         warningsAsErrors = true
         abortOnError = true
