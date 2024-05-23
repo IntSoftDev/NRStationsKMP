@@ -1,13 +1,15 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
-    kotlin("multiplatform")
-    kotlin("native.cocoapods")
-    id("kotlinx-serialization")
-    id("com.android.library")
-    id("com.squareup.sqldelight")
+    alias(isdlibs.plugins.kotlinMultiplatform)
+    alias(isdlibs.plugins.cocoapods)
+    alias(isdlibs.plugins.kotlinxSerialization)
+    alias(isdlibs.plugins.androidLibrary)
+    alias(isdlibs.plugins.sqlDelight)
     id("convention.publication")
-    id("com.google.devtools.ksp")
-    id("com.rickclephas.kmp.nativecoroutines")
+    alias(isdlibs.plugins.ksp)
+    alias(isdlibs.plugins.kmpNativeCoroutines)
     `maven-publish`
 }
 
@@ -20,15 +22,23 @@ android {
     defaultConfig {
         minSdk = isdlibs.versions.minSdk.get().toInt()
     }
+
+    @Suppress("UnstableApiUsage")
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
         }
     }
 
+    @Suppress("UnstableApiUsage")
     lint {
         warningsAsErrors = true
         abortOnError = true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -37,9 +47,34 @@ kotlin {
     androidTarget {
         publishLibraryVariants("release", "debug")
     }
-    ios()
-    // Note: iosSimulatorArm64 target requires that all dependencies have M1 support
-    iosSimulatorArm64()
+
+    // https://kotlinlang.org/docs/multiplatform-expect-actual.html#expected-and-actual-classes
+    // To suppress this warning about usage of expected and actual classes
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "17"
+            }
+        }
+        @Suppress("OPT_IN_USAGE")
+        unitTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
+    }
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "nrstations"
+            isStatic = true
+        }
+    }
 
     sourceSets {
         all {
@@ -50,68 +85,46 @@ kotlin {
                 optIn("kotlinx.cinterop.ExperimentalForeignApi")
             }
         }
-    }
 
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(isdlibs.koin.core)
-                implementation(isdlibs.coroutines.core)
-                implementation(isdlibs.sqlDelight.coroutinesExt)
-                implementation(isdlibs.bundles.ktor.common)
-                implementation(isdlibs.multiplatformSettings.common)
-                implementation(isdlibs.kotlinx.dateTime)
-                implementation(isdlibs.kolinx.serialization)
-                implementation(isdlibs.bundles.ktor.common)
-                implementation(isdlibs.napier.logger)
-                api(isdlibs.kmm.viewmodel)
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation(isdlibs.bundles.commonTest)
-                implementation(isdlibs.turbine)
-            }
+        androidMain.dependencies {
+            api(isdlibs.koin.android)
+            implementation(isdlibs.androidx.lifecycle.viewmodel)
+            implementation(isdlibs.sqlDelight.android)
+            implementation(isdlibs.ktor.client.okHttp)
         }
 
-        val androidMain by getting {
-            dependencies {
-                api(isdlibs.koin.android)
-                implementation(isdlibs.androidx.lifecycle.viewmodel)
-                implementation(isdlibs.sqlDelight.android)
-                implementation(isdlibs.ktor.client.okHttp)
-            }
-        }
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(isdlibs.bundles.androidTest)
-            }
+        iosMain.dependencies {
+            implementation(isdlibs.sqlDelight.native)
+            implementation(isdlibs.ktor.client.ios)
         }
 
-        val iosMain by getting {
-            dependencies {
-                implementation(isdlibs.sqlDelight.native)
-                implementation(isdlibs.ktor.client.ios)
-            }
+        commonMain.dependencies {
+            implementation(isdlibs.koin.core)
+            implementation(isdlibs.coroutines.core)
+            implementation(isdlibs.sqlDelight.coroutinesExt)
+            implementation(isdlibs.bundles.ktor.common)
+            implementation(isdlibs.multiplatformSettings.common)
+            implementation(isdlibs.kotlinx.dateTime)
+            implementation(isdlibs.kolinx.serialization)
+            implementation(isdlibs.bundles.ktor.common)
+            implementation(isdlibs.napier.logger)
+            api(isdlibs.kmm.viewmodel)
         }
-        val iosTest by getting
-        val iosSimulatorArm64Main by getting {
-            dependsOn(iosMain)
+
+        commonTest.dependencies {
+            implementation(isdlibs.bundles.commonTest)
+            implementation(isdlibs.turbine)
         }
-        val iosSimulatorArm64Test by getting {
-            dependsOn(iosTest)
+
+        getByName("androidUnitTest").dependencies {
+            implementation(isdlibs.bundles.androidTest)
+        }
+
+        iosMain.dependencies {
+            implementation(isdlibs.sqlDelight.native)
+            implementation(isdlibs.ktor.client.ios)
         }
     }
-
-    sourceSets.matching { it.name.endsWith("Test") }
-        .configureEach {
-            languageSettings.apply {
-                optIn("kotlin.RequiresOptIn")
-                optIn("kotlin.time.ExperimentalTime")
-                optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
-                optIn("kotlin.experimental.ExperimentalObjCName")
-            }
-        }
 
     cocoapods {
         summary = "KMP Stations"

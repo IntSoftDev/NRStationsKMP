@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.application")
-    kotlin("android")
+    alias(isdlibs.plugins.androidApplication)
+    alias(isdlibs.plugins.kotlin.android)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
@@ -9,15 +9,17 @@ kotlin {
 }
 
 android {
+    namespace = "com.intsoftdev.nrstations.app"
     compileSdk = isdlibs.versions.compileSdk.get().toInt()
     defaultConfig {
-        applicationId = "com.intsoftdev.nrstations.androidApp"
+        applicationId = "com.intsoftdev.nrstations.app"
         minSdk = isdlibs.versions.minSdk.get().toInt()
         targetSdk = isdlibs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    @Suppress("UnstableApiUsage")
 
     buildTypes {
         getByName("release") {
@@ -26,15 +28,23 @@ android {
         }
     }
 
+    @Suppress("UnstableApiUsage")
     lint {
         warningsAsErrors = false
         abortOnError = true
     }
 
+    @Suppress("UnstableApiUsage")
     buildFeatures {
         compose = true
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    @Suppress("UnstableApiUsage")
     composeOptions {
         kotlinCompilerExtensionVersion = isdlibs.versions.composeCompiler.get()
     }
@@ -54,15 +64,15 @@ dependencies {
         implementation(project(":nrstations"))
     } else {
         // use build from Maven Central
-        implementation("com.intsoftdev:nrstations:1.0.0-ALPHA-2")
+        implementation(isdlibs.intsoftdev.stations)
     }
 
-    implementation("androidx.compose.material3:material3:1.2.1")
-    implementation("androidx.navigation:navigation-compose:2.7.7")
-    implementation("androidx.compose.material:material:1.6.4")
-    implementation("androidx.compose.ui:ui:1.6.4")
+    implementation(isdlibs.compose.material3)
+    implementation(isdlibs.androidx.navigation.compose)
+    implementation(isdlibs.compose.material)
+    implementation(isdlibs.compose.ui)
     implementation("androidx.compose.ui:ui-tooling-preview-android:1.6.4")
-    implementation("com.google.maps.android:maps-compose:2.7.2")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
-    implementation("io.github.aakira:napier:2.6.1")
+    implementation(isdlibs.compose.maps)
+    implementation(isdlibs.google.gms.maps)
+    implementation(isdlibs.napier.logger)
 }

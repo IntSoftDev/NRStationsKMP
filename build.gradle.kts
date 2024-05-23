@@ -1,31 +1,20 @@
-
-// https://youtrack.jetbrains.com/issue/KTIJ-19369
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(isdlibs.plugins.gradleVersions)
+    alias(isdlibs.plugins.kotlin.android) apply false
     alias(isdlibs.plugins.ktlint) apply false
     alias(isdlibs.plugins.ksp) apply false
-    alias(isdlibs.plugins.kmp.nativecoroutines) apply false
-
-    //trick: for the same plugin versions in all sub-modules
-    kotlin("multiplatform") version isdlibs.versions.kotlin.get() apply false
-    kotlin("plugin.serialization") version isdlibs.versions.kotlin.get() apply false
-    id("com.squareup.sqldelight") version isdlibs.versions.sqlDelight.get() apply false
-    id("com.android.application") version isdlibs.versions.androidGradle.get() apply false
+    alias(isdlibs.plugins.kmpNativeCoroutines) apply false
+    alias(isdlibs.plugins.kotlinMultiplatform) apply false
+    alias(isdlibs.plugins.kotlinxSerialization) apply false
+    alias(isdlibs.plugins.sqlDelight) apply false
+    alias(isdlibs.plugins.androidApplication) apply false
+    alias(isdlibs.plugins.cocoapods) apply false
+    alias(isdlibs.plugins.androidLibrary) apply false
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1" apply false
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenLocal()
-        mavenCentral()
-    }
-}
-
 subprojects {
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
-
+    apply(plugin = rootProject.isdlibs.plugins.ktlint.get().pluginId)
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
         enableExperimentalRules.set(true)
         verbose.set(true)
@@ -42,5 +31,5 @@ subprojects {
 }
 
 tasks.register<Delete>("clean") {
-    delete(rootProject.buildDir)
+    delete(rootProject.layout.buildDirectory)
 }

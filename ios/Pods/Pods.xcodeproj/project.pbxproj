@@ -20,8 +20,7 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 46EB2E000001A0 /* Build configuration list for PBXAggregateTarget "nrstations" */;
 			buildPhases = (
-				46EB2E000003A0 /* [CP-User] Build nrstations */,
-				46EB2E00000390 /* [CP] Copy dSYMs */,
+				46EB2E00000380 /* [CP-User] Build nrstations */,
 			);
 			dependencies = (
 			);
@@ -30,20 +29,20 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		46EB2E000002C0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46EB2E000002B0 /* Foundation.framework */; };
-		46EB2E00000330 /* Pods-NRStationsiOS-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 46EB2E00000320 /* Pods-NRStationsiOS-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		46EB2E00000380 /* Pods-NRStationsiOS-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EB2E00000370 /* Pods-NRStationsiOS-dummy.m */; };
+		46EB2E000002B0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46EB2E000002A0 /* Foundation.framework */; };
+		46EB2E00000320 /* Pods-NRStationsiOS-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 46EB2E00000310 /* Pods-NRStationsiOS-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		46EB2E00000370 /* Pods-NRStationsiOS-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EB2E00000360 /* Pods-NRStationsiOS-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		46EB2E000003B0 /* PBXContainerItemProxy */ = {
+		46EB2E00000390 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 46EB2E00000000 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 52B60EC2A583F24ACBB69C113F5488B9;
 			remoteInfo = SwiftLint;
 		};
-		46EB2E000003D0 /* PBXContainerItemProxy */ = {
+		46EB2E000003B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 46EB2E00000000 /* Project object */;
 			proxyType = 1;
@@ -61,25 +60,24 @@
 		46EB2E00000180 /* SwiftLint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.release.xcconfig; sourceTree = "<group>"; };
 		46EB2E000001E0 /* nrstations.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = nrstations.debug.xcconfig; sourceTree = "<group>"; };
 		46EB2E000001F0 /* nrstations.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = nrstations.release.xcconfig; sourceTree = "<group>"; };
-		46EB2E00000200 /* nrstations-copy-dsyms.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "nrstations-copy-dsyms.sh"; sourceTree = "<group>"; };
-		46EB2E000002B0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		46EB2E000002E0 /* Pods-NRStationsiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NRStationsiOS.release.xcconfig"; sourceTree = "<group>"; };
-		46EB2E000002F0 /* Pods-NRStationsiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NRStationsiOS.debug.xcconfig"; sourceTree = "<group>"; };
-		46EB2E00000300 /* Pods-NRStationsiOS-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NRStationsiOS-Info.plist"; sourceTree = "<group>"; };
-		46EB2E00000310 /* Pods-NRStationsiOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-NRStationsiOS.modulemap"; sourceTree = "<group>"; };
-		46EB2E00000320 /* Pods-NRStationsiOS-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NRStationsiOS-umbrella.h"; sourceTree = "<group>"; };
-		46EB2E00000340 /* Pods-NRStationsiOS-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NRStationsiOS-frameworks.sh"; sourceTree = "<group>"; };
-		46EB2E00000350 /* Pods-NRStationsiOS-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NRStationsiOS-acknowledgements.plist"; sourceTree = "<group>"; };
-		46EB2E00000360 /* Pods-NRStationsiOS-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NRStationsiOS-acknowledgements.markdown"; sourceTree = "<group>"; };
-		46EB2E00000370 /* Pods-NRStationsiOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NRStationsiOS-dummy.m"; sourceTree = "<group>"; };
+		46EB2E000002A0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		46EB2E000002D0 /* Pods-NRStationsiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NRStationsiOS.release.xcconfig"; sourceTree = "<group>"; };
+		46EB2E000002E0 /* Pods-NRStationsiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NRStationsiOS.debug.xcconfig"; sourceTree = "<group>"; };
+		46EB2E000002F0 /* Pods-NRStationsiOS-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NRStationsiOS-Info.plist"; sourceTree = "<group>"; };
+		46EB2E00000300 /* Pods-NRStationsiOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-NRStationsiOS.modulemap"; sourceTree = "<group>"; };
+		46EB2E00000310 /* Pods-NRStationsiOS-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NRStationsiOS-umbrella.h"; sourceTree = "<group>"; };
+		46EB2E00000330 /* Pods-NRStationsiOS-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NRStationsiOS-frameworks.sh"; sourceTree = "<group>"; };
+		46EB2E00000340 /* Pods-NRStationsiOS-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NRStationsiOS-acknowledgements.plist"; sourceTree = "<group>"; };
+		46EB2E00000350 /* Pods-NRStationsiOS-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NRStationsiOS-acknowledgements.markdown"; sourceTree = "<group>"; };
+		46EB2E00000360 /* Pods-NRStationsiOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NRStationsiOS-dummy.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		46EB2E00000280 /* Frameworks */ = {
+		46EB2E00000270 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46EB2E000002C0 /* Foundation.framework in Frameworks */,
+				46EB2E000002B0 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,7 +107,7 @@
 		46EB2E00000060 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				46EB2E000002A0 /* iOS */,
+				46EB2E00000290 /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -117,7 +115,7 @@
 		46EB2E00000070 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				46EB2E000002D0 /* Pods-NRStationsiOS */,
+				46EB2E000002C0 /* Pods-NRStationsiOS */,
 			);
 			name = "Targets Support Files";
 			sourceTree = "<group>";
@@ -187,7 +185,6 @@
 		46EB2E000001D0 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				46EB2E00000200 /* nrstations-copy-dsyms.sh */,
 				46EB2E000001E0 /* nrstations.debug.xcconfig */,
 				46EB2E000001F0 /* nrstations.release.xcconfig */,
 			);
@@ -195,26 +192,26 @@
 			path = "../ios/Pods/Target Support Files/nrstations";
 			sourceTree = "<group>";
 		};
-		46EB2E000002A0 /* iOS */ = {
+		46EB2E00000290 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				46EB2E000002B0 /* Foundation.framework */,
+				46EB2E000002A0 /* Foundation.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		46EB2E000002D0 /* Pods-NRStationsiOS */ = {
+		46EB2E000002C0 /* Pods-NRStationsiOS */ = {
 			isa = PBXGroup;
 			children = (
-				46EB2E00000310 /* Pods-NRStationsiOS.modulemap */,
-				46EB2E00000360 /* Pods-NRStationsiOS-acknowledgements.markdown */,
-				46EB2E00000350 /* Pods-NRStationsiOS-acknowledgements.plist */,
-				46EB2E00000370 /* Pods-NRStationsiOS-dummy.m */,
-				46EB2E00000340 /* Pods-NRStationsiOS-frameworks.sh */,
-				46EB2E00000300 /* Pods-NRStationsiOS-Info.plist */,
-				46EB2E00000320 /* Pods-NRStationsiOS-umbrella.h */,
-				46EB2E000002F0 /* Pods-NRStationsiOS.debug.xcconfig */,
-				46EB2E000002E0 /* Pods-NRStationsiOS.release.xcconfig */,
+				46EB2E00000300 /* Pods-NRStationsiOS.modulemap */,
+				46EB2E00000350 /* Pods-NRStationsiOS-acknowledgements.markdown */,
+				46EB2E00000340 /* Pods-NRStationsiOS-acknowledgements.plist */,
+				46EB2E00000360 /* Pods-NRStationsiOS-dummy.m */,
+				46EB2E00000330 /* Pods-NRStationsiOS-frameworks.sh */,
+				46EB2E000002F0 /* Pods-NRStationsiOS-Info.plist */,
+				46EB2E00000310 /* Pods-NRStationsiOS-umbrella.h */,
+				46EB2E000002E0 /* Pods-NRStationsiOS.debug.xcconfig */,
+				46EB2E000002D0 /* Pods-NRStationsiOS.release.xcconfig */,
 			);
 			name = "Pods-NRStationsiOS";
 			path = "Target Support Files/Pods-NRStationsiOS";
@@ -223,11 +220,11 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		46EB2E00000260 /* Headers */ = {
+		46EB2E00000250 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46EB2E00000330 /* Pods-NRStationsiOS-umbrella.h in Headers */,
+				46EB2E00000320 /* Pods-NRStationsiOS-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,18 +233,18 @@
 /* Begin PBXNativeTarget section */
 		39B9CC4E193C1F48B1DC8726C94DAA73 /* Pods-NRStationsiOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 46EB2E00000220 /* Build configuration list for PBXNativeTarget "Pods-NRStationsiOS" */;
+			buildConfigurationList = 46EB2E00000210 /* Build configuration list for PBXNativeTarget "Pods-NRStationsiOS" */;
 			buildPhases = (
-				46EB2E00000260 /* Headers */,
-				46EB2E00000270 /* Sources */,
-				46EB2E00000280 /* Frameworks */,
-				46EB2E00000290 /* Resources */,
+				46EB2E00000250 /* Headers */,
+				46EB2E00000260 /* Sources */,
+				46EB2E00000270 /* Frameworks */,
+				46EB2E00000280 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				46EB2E000003A0 /* PBXTargetDependency */,
 				46EB2E000003C0 /* PBXTargetDependency */,
-				46EB2E000003E0 /* PBXTargetDependency */,
 			);
 			name = "Pods-NRStationsiOS";
 			productName = Pods_NRStationsiOS;
@@ -284,7 +281,7 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		46EB2E00000290 /* Resources */ = {
+		46EB2E00000280 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -294,24 +291,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		46EB2E00000390 /* [CP] Copy dSYMs */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/nrstations/nrstations-copy-dsyms-input-files.xcfilelist",
-			);
-			name = "[CP] Copy dSYMs";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/nrstations/nrstations-copy-dsyms-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/nrstations/nrstations-copy-dsyms.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		46EB2E000003A0 /* [CP-User] Build nrstations */ = {
+		46EB2E00000380 /* [CP-User] Build nrstations */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -324,28 +304,28 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		46EB2E00000270 /* Sources */ = {
+		46EB2E00000260 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46EB2E00000380 /* Pods-NRStationsiOS-dummy.m in Sources */,
+				46EB2E00000370 /* Pods-NRStationsiOS-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		46EB2E000003C0 /* PBXTargetDependency */ = {
+		46EB2E000003A0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftLint;
 			target = 52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */;
-			targetProxy = 46EB2E000003B0 /* PBXContainerItemProxy */;
+			targetProxy = 46EB2E00000390 /* PBXContainerItemProxy */;
 		};
-		46EB2E000003E0 /* PBXTargetDependency */ = {
+		46EB2E000003C0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = nrstations;
 			target = 63C503D182D0E445694AECB1570CA4FD /* nrstations */;
-			targetProxy = 46EB2E000003D0 /* PBXContainerItemProxy */;
+			targetProxy = 46EB2E000003B0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -546,9 +526,9 @@
 			};
 			name = Debug;
 		};
-		46EB2E00000230 /* Release */ = {
+		46EB2E00000220 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 46EB2E000002E0 /* Pods-NRStationsiOS.release.xcconfig */;
+			baseConfigurationReference = 46EB2E000002D0 /* Pods-NRStationsiOS.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -584,9 +564,9 @@
 			};
 			name = Release;
 		};
-		46EB2E00000240 /* Debug */ = {
+		46EB2E00000230 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 46EB2E000002F0 /* Pods-NRStationsiOS.debug.xcconfig */;
+			baseConfigurationReference = 46EB2E000002E0 /* Pods-NRStationsiOS.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -651,11 +631,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		46EB2E00000220 /* Build configuration list for PBXNativeTarget "Pods-NRStationsiOS" */ = {
+		46EB2E00000210 /* Build configuration list for PBXNativeTarget "Pods-NRStationsiOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				46EB2E00000240 /* Debug */,
-				46EB2E00000230 /* Release */,
+				46EB2E00000230 /* Debug */,
+				46EB2E00000220 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
