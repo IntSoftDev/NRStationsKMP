@@ -119,11 +119,6 @@ kotlin {
         getByName("androidUnitTest").dependencies {
             implementation(isdlibs.bundles.androidTest)
         }
-
-        iosMain.dependencies {
-            implementation(isdlibs.sqlDelight.native)
-            implementation(isdlibs.ktor.client.ios)
-        }
     }
 
     cocoapods {
