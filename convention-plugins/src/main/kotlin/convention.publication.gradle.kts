@@ -47,7 +47,7 @@ fun getExtraString(name: String) = ext[name]?.toString()
 group = "com.intsoftdev"
 // the version generated can be either release or snapshot
 // current version is 0.0.1-SNAPSHOT (update this)
-version = "1.0.0-ALPHA-4"
+version = "1.0.0-ALPHA-5-SNAPSHOT"
 
 publishing {
     // Configure maven central repository
@@ -96,6 +96,11 @@ publishing {
             }
         }
     }
+}
+
+tasks.withType<AbstractPublishToMaven>().configureEach {
+    val signingTasks = tasks.withType<Sign>()
+    mustRunAfter(signingTasks)
 }
 
 // Signing artifacts. Signing.* extra properties values will be used
