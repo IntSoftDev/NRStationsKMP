@@ -1,28 +1,27 @@
-package com.intsoftdev.nrservices.app.ui.theme
+package com.intsoftdev.nrstations.app.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.intsoftdev.nrstations.app.ui.theme.Blue600
-import com.intsoftdev.nrstations.app.ui.theme.Blue900
-import com.intsoftdev.nrstations.app.ui.theme.Red800
 
-private val LightThemeColors = lightColors(
-    primary = Blue900,
-    primaryVariant = Blue600,
-    onPrimary = Color.White,
-    error = Red800
-)
+private val LightThemeColors =
+    lightColorScheme(
+        primary = Blue900,
+        secondary = Blue600,
+        onPrimary = Color.White,
+        error = Red800
+    )
 
-private val DarkThemeColors = darkColors(
-    primary = Blue900,
-    primaryVariant = Blue600,
-    onPrimary = Color.White,
-    error = Red800
-)
+private val DarkThemeColors =
+    darkColorScheme(
+        primary = Blue900,
+        secondary = Blue600,
+        onPrimary = Color.White,
+        error = Red800
+    )
 
 @Composable
 fun NRStationsTheme(
@@ -30,7 +29,7 @@ fun NRStationsTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colors = if (darkTheme) DarkThemeColors else LightThemeColors,
+        colorScheme = if (darkTheme) DarkThemeColors else LightThemeColors,
         // typography = ,
         //  shapes = ,
         content = content

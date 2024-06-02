@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
@@ -33,14 +32,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.intsoftdev.nrservices.app.ui.theme.NRStationsTheme
 import com.intsoftdev.nrstations.app.R
+import com.intsoftdev.nrstations.app.ui.theme.NRStationsTheme
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.viewmodels.SearchableStationViewModel
 import com.intsoftdev.nrstations.viewmodels.StationsUiState
 import io.github.aakira.napier.Napier
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+private const val TAG = "NRStationsScreen"
+
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 internal fun NRStationsScreen(
@@ -58,13 +59,13 @@ internal fun NRStationsScreen(
     Column(modifier = Modifier.padding(horizontal = 10.dp, vertical = 10.dp)) {
         SearchBar(
             modifier = Modifier.fillMaxWidth(),
-            query = searchText, // text shown on SearchBar
-            onQueryChange = stationsViewModel::onSearchTextChange, // update the value of searchText
+            query = searchText,
+            onQueryChange = stationsViewModel::onSearchTextChange,
             onSearch = {
                 stationsViewModel.onToogleSearch()
-            }, // the callback to be invoked when the input service triggers the ImeAction.Search action
-            active = isSearching, // whether the user is searching or not
-            onActiveChange = { stationsViewModel.onToogleSearch() }, // the callback to be invoked when this search bar's active state is changed
+            },
+            active = isSearching,
+            onActiveChange = { stationsViewModel.onToogleSearch() },
             placeholder = {
                 Text(text = "Enter station name or CRS code")
             },
@@ -74,13 +75,14 @@ internal fun NRStationsScreen(
             trailingIcon = {
                 if (isSearching) {
                     Icon(
-                        modifier = Modifier.clickable {
-                            if (searchText.isNotEmpty()) {
-                                stationsViewModel.onSearchTextChange("")
-                            } else {
-                                stationsViewModel.onToogleSearch()
-                            }
-                        },
+                        modifier =
+                            Modifier.clickable {
+                                if (searchText.isNotEmpty()) {
+                                    stationsViewModel.onSearchTextChange("")
+                                } else {
+                                    stationsViewModel.onToogleSearch()
+                                }
+                            },
                         imageVector = Icons.Default.Close,
                         contentDescription = "Close icon"
                     )
@@ -100,10 +102,12 @@ internal fun NRStationsScreen(
 
         when (stationsUiState) {
             is StationsUiState.Loading -> {
+                Napier.d(tag = TAG) { "Loading" }
                 LoadingScreen(modifier = modifier.fillMaxSize())
             }
 
             is StationsUiState.Loaded -> {
+                Napier.d(tag = TAG) { "Loaded" }
                 val allStations = (stationsUiState as StationsUiState.Loaded).stations
                 stationsViewModel.setAllStations(allStations)
 
@@ -114,9 +118,10 @@ internal fun NRStationsScreen(
                         stationsViewModel.setSelectedStation(stationLocation)
                         onSelectionChanged(stationLocation)
                     },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(8.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .padding(8.dp)
                 )
             }
 
@@ -149,7 +154,10 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
  * The stations screen displaying error message with retry button.
  */
 @Composable
-fun ErrorScreen(modifier: Modifier = Modifier, onRetry: () -> Unit) {
+fun ErrorScreen(
+    modifier: Modifier = Modifier,
+    onRetry: () -> Unit
+) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
@@ -216,7 +224,10 @@ fun StationRowPreview() {
 }
 
 @Composable
-fun StationRow(station: StationLocation, onClick: (StationLocation) -> Unit) {
+fun StationRow(
+    station: StationLocation,
+    onClick: (StationLocation) -> Unit
+) {
     Row(
         Modifier
             .clickable {

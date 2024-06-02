@@ -33,16 +33,16 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("isdlibs") {
-            from("com.intsoftdev:isdversioncatalog:1.0.0-ALPHA-6-SNAPSHOT")
+            from("com.intsoftdev:isdversioncatalog:1.0.0-ALPHA-9-SNAPSHOT")
         }
     }
 }
 
 include(":app")
 
-val IMPORT_LOCAL_NRSTATIONS_KMP: String by settings
+val importLocalStationsKmp: String by settings
 
-if (IMPORT_LOCAL_NRSTATIONS_KMP == "true") {
+if (importLocalStationsKmp == "true") {
     include(":nrstations")
     includeBuild("convention-plugins")
 }

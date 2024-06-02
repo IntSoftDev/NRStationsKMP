@@ -17,18 +17,21 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class NearbyStationsViewModel : ViewModel(), StationsSdkDiComponent {
-
     private val stationsSDK = injectStations<NrStationsSDK>()
 
     private val _uiState = MutableStateFlow<NearbyStationsUiState>(NearbyStationsUiState.Loading)
 
-    val uiState: StateFlow<NearbyStationsUiState> = _uiState.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(),
-        NearbyStationsUiState.Loading
-    )
+    val uiState: StateFlow<NearbyStationsUiState> =
+        _uiState.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            NearbyStationsUiState.Loading
+        )
 
-    fun getNearbyStations(latitude: Double, longitude: Double) {
+    fun getNearbyStations(
+        latitude: Double,
+        longitude: Double
+    ) {
         Napier.d("getNearbyStations $latitude $longitude enter")
         viewModelScope.launch {
             stationsSDK.getNearbyStations(latitude, longitude)
@@ -58,7 +61,9 @@ class NearbyStationsViewModel : ViewModel(), StationsSdkDiComponent {
 
 sealed interface NearbyStationsUiState {
     data object Loading : NearbyStationsUiState
+
     data class Error(val error: String?) : NearbyStationsUiState
+
     data class Loaded(
         val stations: NearestStations
     ) : NearbyStationsUiState

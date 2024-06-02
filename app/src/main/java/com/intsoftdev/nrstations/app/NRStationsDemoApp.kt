@@ -49,43 +49,41 @@ fun NRStationsDemoApp(
     // Get current back stack entry
     val backStackEntry by navController.currentBackStackEntryAsState()
     // Get the name of the current screen
-    val currentScreen = StationsScreen.valueOf(
-        backStackEntry?.destination?.route ?: StationsScreen.Search.name
-    )
+    val currentScreen =
+        StationsScreen.valueOf(
+            backStackEntry?.destination?.route ?: StationsScreen.Search.name
+        )
 
-    val title = remember {
-        mutableStateOf("Home")
-    }
+    val title =
+        remember {
+            mutableStateOf("Home")
+        }
 
     val selectedStation by stationsViewModel.selectedStation.collectAsState()
 
-    Scaffold(
-        topBar = {
-            StationsTopAppBar(
-                scrollBehavior = scrollBehavior,
-                canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = {
-                    navController.navigateUp()
-                },
-                title = title
-            )
-        }
-    ) { innerPadding ->
+    Scaffold(topBar = {
+        StationsTopAppBar(
+            scrollBehavior = scrollBehavior,
+            canNavigateBack = navController.previousBackStackEntry != null,
+            navigateUp = {
+                navController.navigateUp()
+            },
+            title = title
+        )
+    }) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = StationsScreen.Search.name,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
         ) {
             composable(route = StationsScreen.Search.name) {
-                NRStationsScreen(
-                    stationsViewModel = stationsViewModel,
-                    onSelectionChanged = {
-                        title.value = "Stations near ${it.stationName}"
-                        navController.navigate(StationsScreen.Nearby.name)
-                    }
-                )
+                NRStationsScreen(stationsViewModel = stationsViewModel, onSelectionChanged = {
+                    title.value = "Stations near ${it.stationName}"
+                    navController.navigate(StationsScreen.Nearby.name)
+                })
             }
             composable(route = StationsScreen.Nearby.name) {
                 with(selectedStation) {
@@ -108,8 +106,20 @@ fun StationsTopAppBar(
     title: State<String>,
     modifier: Modifier = Modifier
 ) {
-    val style = if (canNavigateBack) MaterialTheme.typography.bodyLarge else MaterialTheme.typography.headlineSmall
-    val topBarTitle = if (canNavigateBack) title.value else "NR Stations"
+    val style =
+        if (canNavigateBack) {
+            MaterialTheme.typography.bodyLarge
+        } else {
+            MaterialTheme.typography.headlineSmall
+        }
+
+    val topBarTitle =
+        if (canNavigateBack) {
+            title.value
+        } else {
+            "NR Stations"
+        }
+
     CenterAlignedTopAppBar(
         scrollBehavior = scrollBehavior,
         title = {
@@ -118,16 +128,17 @@ fun StationsTopAppBar(
                 style = style
             )
         },
-        navigationIcon = {
-            if (canNavigateBack) {
-                IconButton(onClick = navigateUp) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "back button"
-                    )
+        navigationIcon =
+            {
+                if (canNavigateBack) {
+                    IconButton(onClick = navigateUp) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "back button"
+                        )
+                    }
                 }
-            }
-        },
+            },
         modifier = modifier
     )
 }

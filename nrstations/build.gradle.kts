@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
@@ -56,11 +58,6 @@ kotlin {
     }
 
     androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
-        }
         @Suppress("OPT_IN_USAGE")
         unitTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
     }
@@ -105,10 +102,9 @@ kotlin {
             implementation(isdlibs.bundles.ktor.common)
             implementation(isdlibs.multiplatformSettings.common)
             implementation(isdlibs.kotlinx.dateTime)
-            implementation(isdlibs.kolinx.serialization)
             implementation(isdlibs.bundles.ktor.common)
             implementation(isdlibs.napier.logger)
-            api(isdlibs.kmm.viewmodel)
+            api(isdlibs.kmp.viewmodel)
         }
 
         commonTest.dependencies {

@@ -13,4 +13,6 @@
 *.xcbkptlist
 !/.idea/codeStyles/*
 !/.idea/inspectionProfiles/*
+# Kotlin 2.0
+.kotlin/
 

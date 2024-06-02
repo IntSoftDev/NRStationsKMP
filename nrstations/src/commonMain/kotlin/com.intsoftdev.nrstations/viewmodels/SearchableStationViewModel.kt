@@ -1,7 +1,7 @@
 package com.intsoftdev.nrstations.viewmodels
 
 import com.intsoftdev.nrstations.common.StationLocation
-import com.rickclephas.kmm.viewmodel.stateIn
+import com.rickclephas.kmp.observableviewmodel.stateIn
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
