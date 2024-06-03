@@ -15,15 +15,16 @@ internal fun getSortedStations(
     longitude: Double,
     allStations: List<StationLocation>
 ): List<StationLocation> {
-    val stationComparator = Comparator<StationLocation> { station1, station2 ->
-        val distanceFromStation1 =
-            distanceInMetres(station1.latitude, station1.longitude, latitude, longitude)
-        val distanceFromStation2 =
-            distanceInMetres(station2.latitude, station2.longitude, latitude, longitude)
+    val stationComparator =
+        Comparator<StationLocation> { station1, station2 ->
+            val distanceFromStation1 =
+                distanceInMetres(station1.latitude, station1.longitude, latitude, longitude)
+            val distanceFromStation2 =
+                distanceInMetres(station2.latitude, station2.longitude, latitude, longitude)
 
-        val diff = distanceFromStation1 - distanceFromStation2
-        diff.toInt()
-    }
+            val diff = distanceFromStation1 - distanceFromStation2
+            diff.toInt()
+        }
     return allStations.sortedWith(stationComparator)
 }
 
@@ -32,9 +33,10 @@ internal fun getStationDistancesfromRefPoint(
     stationsList: StationsList
 ) = NearestStations(
     geolocation = geolocation,
-    stationDistances = stationsList.map {
-        it.toStationDistance(geolocation)
-    }
+    stationDistances =
+        stationsList.map {
+            it.toStationDistance(geolocation)
+        }
 )
 
 private fun StationLocation.toStationDistance(geolocation: Geolocation): StationDistance {
@@ -43,19 +45,27 @@ private fun StationLocation.toStationDistance(geolocation: Geolocation): Station
     return StationDistance(this, distance)
 }
 
-private fun distanceInMiles(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+private fun distanceInMiles(
+    lat1: Double,
+    lon1: Double,
+    lat2: Double,
+    lon2: Double
+): Double {
     val theta = lon1 - lon2
     var dist =
-        sin(deg2rad(lat1)) * sin(deg2rad(lat2)) + cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(
-            deg2rad(theta)
-        )
+        sin(deg2rad(lat1)) * sin(deg2rad(lat2)) + cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta))
     dist = acos(dist)
     dist = rad2deg(dist)
     dist *= 60 * 1.1515
     return dist
 }
 
-private fun distanceInMetres(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+private fun distanceInMetres(
+    lat1: Double,
+    lon1: Double,
+    lat2: Double,
+    lon2: Double
+): Double {
     return distanceInMiles(lat1, lon1, lat2, lon2) * 1609.344
 }
 

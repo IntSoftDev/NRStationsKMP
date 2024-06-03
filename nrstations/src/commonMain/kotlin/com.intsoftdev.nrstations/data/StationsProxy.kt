@@ -16,29 +16,31 @@ internal class StationsProxy(
     private val baseUrl: String,
     private val azureSubscriptionKey: String? = null
 ) : StationsAPI {
-
     private val stationsUrl = "$baseUrl/stations"
     private val versionUrl = "$baseUrl/config/stationsversion.json"
 
     @OptIn(InternalAPI::class)
     override suspend fun getAllStations(): List<StationModel> {
-        val response = httpClient.get(stationsUrl) {
-            this.appendHeaders()
-        }
+        val response =
+            httpClient.get(stationsUrl) {
+                this.appendHeaders()
+            }
         Napier.d("getAllStations totalBytesRead: ${response.content.totalBytesRead}")
         return response.body()
     }
 
     override suspend fun getDataVersion(): List<DataVersion> {
-        val response = httpClient.get(versionUrl) {
-            this.appendHeaders()
-        }
+        val response =
+            httpClient.get(versionUrl) {
+                this.appendHeaders()
+            }
         return response.body()
     }
 
-    private fun HttpRequestBuilder.appendHeaders() = azureSubscriptionKey?.let {
-        this.headers {
-            append(APIConfig.SUBSCRIPTION_PROP_KEY, it)
+    private fun HttpRequestBuilder.appendHeaders() =
+        azureSubscriptionKey?.let {
+            this.headers {
+                append(APIConfig.SUBSCRIPTION_PROP_KEY, it)
+            }
         }
-    }
 }

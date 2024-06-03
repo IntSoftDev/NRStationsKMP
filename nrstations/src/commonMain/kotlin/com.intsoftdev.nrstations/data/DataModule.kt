@@ -9,22 +9,23 @@ import com.intsoftdev.nrstations.domain.StationsRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-internal val stationsDataModule = module {
+internal val stationsDataModule =
+    module {
 
-    factory<StationsAPI> {
-        StationsProxy(
-            httpClient = get(named(KOIN_HTTP_CLIENT)),
-            baseUrl = getProperty(SERVER_PROP_KEY),
-            azureSubscriptionKey = getPropertyOrNull(LICENSE_PROP_KEY)
-        )
-    }
+        factory<StationsAPI> {
+            StationsProxy(
+                httpClient = get(named(KOIN_HTTP_CLIENT)),
+                baseUrl = getProperty(SERVER_PROP_KEY),
+                azureSubscriptionKey = getPropertyOrNull(LICENSE_PROP_KEY)
+            )
+        }
 
-    factory<StationsRepository> {
-        StationsRepositoryImpl(
-            stationsProxyService = get(),
-            stationsCache = get(),
-            requestDispatcher = get(named("NRStationsCoroutineDispatcher")),
-            requestRetryPolicy = DefaultRetryPolicy()
-        )
+        factory<StationsRepository> {
+            StationsRepositoryImpl(
+                stationsProxyService = get(),
+                stationsCache = get(),
+                requestDispatcher = get(named("NRStationsCoroutineDispatcher")),
+                requestRetryPolicy = DefaultRetryPolicy()
+            )
+        }
     }
-}

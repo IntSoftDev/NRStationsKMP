@@ -16,28 +16,34 @@ internal data class StationModel(
     val longitude: Double
 )
 
-internal fun StationModel.toStationLocation() = StationLocation(
-    crsCode = this.crsCode,
-    stationName = this.stationName,
-    latitude = this.latitude,
-    longitude = this.longitude
-)
+internal fun StationModel.toStationLocation() =
+    StationLocation(
+        crsCode = this.crsCode,
+        stationName = this.stationName,
+        latitude = this.latitude,
+        longitude = this.longitude
+    )
 
-internal fun StationLocation.toNRStation() = StationDb(
-    id = getHashFromStation(this.crsCode, this.stationName),
-    crs = this.crsCode,
-    name = this.stationName,
-    latitude = this.latitude,
-    longitude = this.longitude
-)
+internal fun StationLocation.toNRStation() =
+    StationDb(
+        id = getHashFromStation(this.crsCode, this.stationName),
+        crs = this.crsCode,
+        name = this.stationName,
+        latitude = this.latitude,
+        longitude = this.longitude
+    )
 
-internal fun getHashFromStation(crs: String, name: String): Long {
+internal fun getHashFromStation(
+    crs: String,
+    name: String
+): Long {
     return (crs + name).hashCode().toLong()
 }
 
-internal fun StationDb.toStationLocation() = StationLocation(
-    crsCode = this.crs,
-    stationName = this.name,
-    latitude = this.latitude,
-    longitude = this.longitude
-)
+internal fun StationDb.toStationLocation() =
+    StationLocation(
+        crsCode = this.crs,
+        stationName = this.name,
+        latitude = this.latitude,
+        longitude = this.longitude
+    )

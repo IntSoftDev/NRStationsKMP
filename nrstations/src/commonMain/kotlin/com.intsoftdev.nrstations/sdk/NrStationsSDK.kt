@@ -28,6 +28,5 @@ class NrStationsSDK : StationsAPI, StationsSdkDiComponent {
     override fun getNearbyStations(
         latitude: Double,
         longitude: Double
-    ): CFlow<StationsResultState<NearestStations>> =
-        getStationsUseCase.getNearbyStations(latitude, longitude).wrap()
+    ): CFlow<StationsResultState<NearestStations>> = getStationsUseCase.getNearbyStations(latitude, longitude).wrap()
 }
