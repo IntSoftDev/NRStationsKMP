@@ -17,35 +17,42 @@ import kotlinx.coroutines.Dispatchers
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-internal actual val stationsPlatformModule = module {
-    factory<CoroutineDispatcher>(named("NRStationsCoroutineDispatcher")) { Dispatchers.Main }
+internal actual val stationsPlatformModule =
+    module {
+        factory<CoroutineDispatcher>(named("NRStationsCoroutineDispatcher")) { Dispatchers.Main }
 
-    single<SqlDriver>(named("StationsSqlDriver")) { NativeSqliteDriver(NRStationsDb.Schema, "NRStationsDb") }
+        single<SqlDriver>(named("StationsSqlDriver")) {
+            NativeSqliteDriver(
+                NRStationsDb.Schema,
+                "NRStationsDb"
+            )
+        }
 
-    factory(named(KOIN_HTTP_CLIENT)) {
-        HttpClient(Darwin) {
+        factory(named(KOIN_HTTP_CLIENT)) {
+            HttpClient(Darwin) {
 
-            engine {
-                configureRequest {
-                    this.setTimeoutInterval(HTTP_TIMEOUT_SECONDS)
-                }
-                configureSession {
-                    this.timeoutIntervalForRequest = HTTP_TIMEOUT_SECONDS
-                    this.timeoutIntervalForResource = HTTP_TIMEOUT_SECONDS
-                }
-            }
-
-            install(ContentNegotiation) {
-                json(nonStrictJson)
-            }
-            install(Logging) {
-                logger = object : Logger {
-                    override fun log(message: String) {
-                        Napier.d(message)
+                engine {
+                    configureRequest {
+                        this.setTimeoutInterval(HTTP_TIMEOUT_SECONDS)
+                    }
+                    configureSession {
+                        this.timeoutIntervalForRequest = HTTP_TIMEOUT_SECONDS
+                        this.timeoutIntervalForResource = HTTP_TIMEOUT_SECONDS
                     }
                 }
-                level = LogLevel.INFO
+
+                install(ContentNegotiation) {
+                    json(nonStrictJson)
+                }
+                install(Logging) {
+                    logger =
+                        object : Logger {
+                            override fun log(message: String) {
+                                Napier.d(message)
+                            }
+                        }
+                    level = LogLevel.INFO
+                }
             }
         }
     }
-}
