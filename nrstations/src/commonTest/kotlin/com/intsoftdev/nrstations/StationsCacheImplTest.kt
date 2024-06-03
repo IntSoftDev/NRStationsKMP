@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations
 
-import com.intsoftdev.nrstations.cache.CachePolicy // ktlint-disable import-ordering
+import com.intsoftdev.nrstations.cache.CachePolicy
 import com.intsoftdev.nrstations.cache.CacheState
 import com.intsoftdev.nrstations.cache.DBWrapper
 import com.intsoftdev.nrstations.cache.StationsCacheImpl
@@ -19,7 +19,6 @@ import org.koin.test.KoinTest
 import org.koin.test.get
 
 class StationsCacheImplTest : KoinTest {
-
     private lateinit var dbWrapper: DBWrapper
     private lateinit var settings: Settings
     private lateinit var clockMock: Clock
@@ -35,11 +34,12 @@ class StationsCacheImplTest : KoinTest {
         settings = get()
         clockMock = get()
 
-        sut = StationsCacheImpl(
-            dbWrapper = dbWrapper,
-            settings = settings,
-            clock = clockMock
-        )
+        sut =
+            StationsCacheImpl(
+                dbWrapper = dbWrapper,
+                settings = settings,
+                clock = clockMock
+            )
     }
 
     @AfterTest

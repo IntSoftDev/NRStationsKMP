@@ -13,7 +13,9 @@ import kotlinx.coroutines.flow.Flow
  */
 internal interface StationsRepository {
     fun getAllStations(cachePolicy: CachePolicy): Flow<StationsResultState<StationsResult>>
+
     suspend fun getStationLocation(vararg crsCodes: String): List<StationLocation>
+
     fun getNearbyStations(
         latitude: Double,
         longitude: Double

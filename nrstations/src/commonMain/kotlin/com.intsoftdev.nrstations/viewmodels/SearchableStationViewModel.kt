@@ -1,7 +1,7 @@
 package com.intsoftdev.nrstations.viewmodels
 
 import com.intsoftdev.nrstations.common.StationLocation
-import com.rickclephas.kmm.viewmodel.stateIn
+import com.rickclephas.kmp.observableviewmodel.stateIn
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -42,19 +42,22 @@ class SearchableStationViewModel : NrStationsViewModel() {
         }
     }
 
-    val stationsList = searchText
-        .combine(_stationsList) { text, stations -> // combine searchText with _stationsList
-            if (text.isBlank()) {
-                stations
-            } else {
-                stations.filter { station ->
-                    // filter and return a list of stations using the Crs code or station name
-                    (text.count() == 3 && station.crsCode == text.uppercase()) || station.stationName.startsWith(text, ignoreCase = true)
+    val stationsList =
+        searchText
+            .combine(_stationsList) { text, stations -> // combine searchText with _stationsList
+                if (text.isBlank()) {
+                    stations
+                } else {
+                    stations.filter { station ->
+                        // filter and return a list of stations using the Crs code or station name
+                        (text.isCrsCode(station.crsCode) || station.stationName.startsWith(text, ignoreCase = true))
+                    }
                 }
-            }
-        }.stateIn(
-            viewModelScope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = _stationsList.value
-        )
+            }.stateIn(
+                viewModelScope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = _stationsList.value
+            )
+
+    private fun String.isCrsCode(crsCode: String) = count() == 3 && crsCode == uppercase()
 }

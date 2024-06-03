@@ -5,9 +5,9 @@ import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NrStationsSDK
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
 import com.intsoftdev.nrstations.sdk.injectStations
-import com.rickclephas.kmm.viewmodel.coroutineScope
-import com.rickclephas.kmm.viewmodel.stateIn
 import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
+import com.rickclephas.kmp.observableviewmodel.coroutineScope
+import com.rickclephas.kmp.observableviewmodel.stateIn
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
-
     private val stationsSDK = this.injectStations<NrStationsSDK>()
 
     // Backing property to avoid state updates from other classes
@@ -26,11 +25,12 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
 
     // The UI collects from this StateFlow to get its state updates
     @NativeCoroutinesState
-    val uiState: StateFlow<NearbyUiState> = _uiState.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(),
-        NearbyUiState.Loading
-    )
+    val uiState: StateFlow<NearbyUiState> =
+        _uiState.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            NearbyUiState.Loading
+        )
 
     init {
         Napier.d(tag = TAG) { "init" }
@@ -67,7 +67,10 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
         }
     }
 
-    fun getNearbyStations(latitude: Double, longitude: Double) {
+    fun getNearbyStations(
+        latitude: Double,
+        longitude: Double
+    ) {
         viewModelScope.coroutineScope.launch {
             stationsSDK.getNearbyStations(latitude, longitude)
                 .onStart {
@@ -99,7 +102,9 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
 
 sealed interface NearbyUiState {
     data object Loading : NearbyUiState
+
     data class Error(val error: String?) : NearbyUiState
+
     data class Loaded(
         val stations: NearestStations
     ) : NearbyUiState

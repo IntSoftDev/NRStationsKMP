@@ -33,7 +33,6 @@ internal class StationsCacheImpl(
     private val settings: Settings,
     private val clock: Clock
 ) : StationsCache {
-
     override fun insertStations(stations: List<StationLocation>) {
         dbWrapper.insertStations(stations)
         setLastUpdateTime()
@@ -54,7 +53,10 @@ internal class StationsCacheImpl(
             ?: throw IllegalStateException("station code $crsCode not found")
     }
 
-    override fun getCacheState(serverVersion: Double?, cachePolicy: CachePolicy): CacheState {
+    override fun getCacheState(
+        serverVersion: Double?,
+        cachePolicy: CachePolicy
+    ): CacheState {
         // is cache empty
         if (isCacheEmpty()) return CacheState.Empty
 
@@ -78,10 +80,7 @@ internal class StationsCacheImpl(
         // has cache time expiry reached
         return if (doUpdate()) {
             CacheState.Stale
-        }
-
-        // else cache is ok
-        else {
+        } else {
             CacheState.Usable
         }
     }

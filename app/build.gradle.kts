@@ -2,6 +2,7 @@ plugins {
     alias(isdlibs.plugins.androidApplication)
     alias(isdlibs.plugins.kotlin.android)
     alias(isdlibs.plugins.secrets.gradle)
+    alias(isdlibs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -29,6 +30,7 @@ android {
     lint {
         warningsAsErrors = false
         abortOnError = true
+        disable.add("ObsoleteLintCustomCheck")
     }
 
     buildFeatures {
@@ -39,10 +41,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = isdlibs.versions.composeCompiler.get()
-    }
 }
 
 secrets {
@@ -51,11 +49,11 @@ secrets {
     defaultPropertiesFileName = "local.defaults.properties"
 }
 
-val IMPORT_LOCAL_NRSTATIONS_KMP: String by project
+val importLocalStationsKmp: String by project
 
 dependencies {
     // Import NRStations KMP as local dependency
-    if (IMPORT_LOCAL_NRSTATIONS_KMP == "true") {
+    if (importLocalStationsKmp == "true") {
         implementation(project(":nrstations"))
     } else {
         // use build from Maven Central
@@ -64,9 +62,8 @@ dependencies {
 
     implementation(isdlibs.compose.material3)
     implementation(isdlibs.androidx.navigation.compose)
-    implementation(isdlibs.compose.material)
     implementation(isdlibs.compose.ui)
-    implementation("androidx.compose.ui:ui-tooling-preview-android:1.6.4")
+    implementation(isdlibs.compose.tooling)
     implementation(isdlibs.compose.maps)
     implementation(isdlibs.google.gms.maps)
     implementation(isdlibs.napier.logger)

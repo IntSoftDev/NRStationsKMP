@@ -34,6 +34,11 @@ android {
     lint {
         warningsAsErrors = true
         abortOnError = true
+        /**
+         * Lint found an issue registry (androidx.lifecycle.lint.LiveDataCoreIssueRegistry)
+         * which contains some references to invalid API
+         */
+        disable.add("ObsoleteLintCustomCheck")
     }
 
     compileOptions {
@@ -56,11 +61,6 @@ kotlin {
     }
 
     androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
-        }
         @Suppress("OPT_IN_USAGE")
         unitTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
     }
@@ -105,10 +105,9 @@ kotlin {
             implementation(isdlibs.bundles.ktor.common)
             implementation(isdlibs.multiplatformSettings.common)
             implementation(isdlibs.kotlinx.dateTime)
-            implementation(isdlibs.kolinx.serialization)
             implementation(isdlibs.bundles.ktor.common)
             implementation(isdlibs.napier.logger)
-            api(isdlibs.kmm.viewmodel)
+            api(isdlibs.kmp.viewmodel)
         }
 
         commonTest.dependencies {

@@ -1,6 +1,6 @@
 package com.intsoftdev.nrstations
 
-import app.cash.turbine.test // ktlint-disable import-ordering
+import app.cash.turbine.test
 import com.intsoftdev.nrstations.cache.CachePolicy
 import com.intsoftdev.nrstations.cache.StationsCache
 import com.intsoftdev.nrstations.cache.StationsCacheImpl
@@ -27,7 +27,6 @@ import org.koin.test.KoinTest
 import org.koin.test.get
 
 class StationsRepositoryImplTest : KoinTest {
-
     private val mockApi = StationsApiMock()
 
     private val testRetryPolicy = DefaultRetryPolicy(numRetries = 0)
@@ -46,12 +45,13 @@ class StationsRepositoryImplTest : KoinTest {
         stationsCache = get()
         settings = get()
 
-        sut = StationsRepositoryImpl(
-            stationsProxyService = mockApi,
-            stationsCache = stationsCache,
-            requestDispatcher = Dispatchers.Default,
-            requestRetryPolicy = testRetryPolicy
-        )
+        sut =
+            StationsRepositoryImpl(
+                stationsProxyService = mockApi,
+                stationsCache = stationsCache,
+                requestDispatcher = Dispatchers.Default,
+                requestRetryPolicy = testRetryPolicy
+            )
     }
 
     @AfterTest
@@ -60,86 +60,90 @@ class StationsRepositoryImplTest : KoinTest {
     }
 
     @Test
-    fun `Given success API response when get all stations then result expected`() = runTest {
-        // Given
-        mockApi.prepareStationsResponse(mockApi.stationsSuccessResponse())
-        mockApi.prepareDataVersionResponse(mockApi.dataVersionSuccessResponse())
+    fun `Given success API response when get all stations then result expected`() =
+        runTest {
+            // Given
+            mockApi.prepareStationsResponse(mockApi.stationsSuccessResponse())
+            mockApi.prepareDataVersionResponse(mockApi.dataVersionSuccessResponse())
 
-        // When
-        sut.getAllStations(cachePolicy = CachePolicy.FORCE_REFRESH).test {
-            val stationsResult = awaitItem()
-            assertIs<StationsResultState.Success<StationsResult>>(stationsResult)
-            stationsResult.data.stations.forEach { station ->
+            // When
+            sut.getAllStations(cachePolicy = CachePolicy.FORCE_REFRESH).test {
+                val stationsResult = awaitItem()
+                assertIs<StationsResultState.Success<StationsResult>>(stationsResult)
+                stationsResult.data.stations.forEach { station ->
+                    assertEquals(1, TEST_STATIONS.filter { it.crsCode == station.crsCode }.size)
+                }
+                awaitComplete()
+            }
+
+            // Then
+            stationsCache.getAllStations().forEach { station ->
                 assertEquals(1, TEST_STATIONS.filter { it.crsCode == station.crsCode }.size)
             }
-            awaitComplete()
+            assertEquals(DATA_VERSION_UPDATE.version, stationsCache.getVersion().version)
         }
-
-        // Then
-        stationsCache.getAllStations().forEach { station ->
-            assertEquals(1, TEST_STATIONS.filter { it.crsCode == station.crsCode }.size)
-        }
-        assertEquals(DATA_VERSION_UPDATE.version, stationsCache.getVersion().version)
-    }
 
     @Test
-    fun `Given stations cache exists when API request then no API calls are made`() = runTest {
-        // Given
-        mockApi.prepareStationsResponse(mockApi.stationsSuccessResponse())
-        mockApi.prepareDataVersionResponse(mockApi.dataVersionSuccessResponse())
-        stationsCache.insertStations(TEST_STATIONS)
-        stationsCache.insertVersion(DATA_VERSION_DEFAULT)
+    fun `Given stations cache exists when API request then no API calls are made`() =
+        runTest {
+            // Given
+            mockApi.prepareStationsResponse(mockApi.stationsSuccessResponse())
+            mockApi.prepareDataVersionResponse(mockApi.dataVersionSuccessResponse())
+            stationsCache.insertStations(TEST_STATIONS)
+            stationsCache.insertVersion(DATA_VERSION_DEFAULT)
 
-        // When
-        sut.getAllStations(cachePolicy = CachePolicy.USE_CACHE_WITH_EXPIRY).test {
-            assertTrue { awaitItem() is StationsResultState.Success }
-            awaitComplete()
-        }
+            // When
+            sut.getAllStations(cachePolicy = CachePolicy.USE_CACHE_WITH_EXPIRY).test {
+                assertTrue { awaitItem() is StationsResultState.Success }
+                awaitComplete()
+            }
 
-        // Then
-        assertEquals(0, mockApi.calledCount)
-    }
-
-    @Test
-    fun `Given cache expires when get all stations then API called and cache updated`() = runTest {
-        // Given
-        mockApi.prepareStationsResponse(mockApi.stationsSuccessResponse())
-        mockApi.prepareDataVersionResponse(mockApi.dataVersionSuccessResponse())
-
-        stationsCache.insertStations(TEST_STATIONS)
-        stationsCache.insertVersion(DATA_VERSION_DEFAULT)
-
-        val clock = ClockMock(Clock.System.now())
-        settings.putLong(
-            StationsCacheImpl.DB_TIMESTAMP_KEY,
-            (clock.currentInstant - 22.hours).toEpochMilliseconds()
-        )
-
-        // When
-        sut.getAllStations(cachePolicy = CachePolicy.USE_CACHE_WITH_EXPIRY).test {
-            assertTrue { awaitItem() is StationsResultState.Success }
-            awaitComplete()
-        }
-
-        // Then
-        assertEquals(2, mockApi.calledCount)
-        assertEquals(DATA_VERSION_UPDATE.version, stationsCache.getVersion().version)
-    }
-
-    @Test
-    fun `When API response returns error then result expected`() = runTest {
-        // Given
-        val exception = RuntimeException("unknown error")
-        mockApi.throwOnCall(exception)
-        mockApi.prepareDataVersionResponse(mockApi.dataVersionSuccessResponse())
-
-        // When
-        sut.getAllStations(cachePolicy = CachePolicy.FORCE_REFRESH).test {
-            val response = awaitItem()
             // Then
-            assertIs<StationsResultState.Failure>(response)
-            assertEquals(exception, response.error)
-            awaitComplete()
+            assertEquals(0, mockApi.calledCount)
         }
-    }
+
+    @Test
+    fun `Given cache expires when get all stations then API called and cache updated`() =
+        runTest {
+            // Given
+            mockApi.prepareStationsResponse(mockApi.stationsSuccessResponse())
+            mockApi.prepareDataVersionResponse(mockApi.dataVersionSuccessResponse())
+
+            stationsCache.insertStations(TEST_STATIONS)
+            stationsCache.insertVersion(DATA_VERSION_DEFAULT)
+
+            val clock = ClockMock(Clock.System.now())
+            settings.putLong(
+                StationsCacheImpl.DB_TIMESTAMP_KEY,
+                (clock.currentInstant - 22.hours).toEpochMilliseconds()
+            )
+
+            // When
+            sut.getAllStations(cachePolicy = CachePolicy.USE_CACHE_WITH_EXPIRY).test {
+                assertTrue { awaitItem() is StationsResultState.Success }
+                awaitComplete()
+            }
+
+            // Then
+            assertEquals(2, mockApi.calledCount)
+            assertEquals(DATA_VERSION_UPDATE.version, stationsCache.getVersion().version)
+        }
+
+    @Test
+    fun `When API response returns error then result expected`() =
+        runTest {
+            // Given
+            val exception = RuntimeException("unknown error")
+            mockApi.throwOnCall(exception)
+            mockApi.prepareDataVersionResponse(mockApi.dataVersionSuccessResponse())
+
+            // When
+            sut.getAllStations(cachePolicy = CachePolicy.FORCE_REFRESH).test {
+                val response = awaitItem()
+                // Then
+                assertIs<StationsResultState.Failure>(response)
+                assertEquals(exception, response.error)
+                awaitComplete()
+            }
+        }
 }

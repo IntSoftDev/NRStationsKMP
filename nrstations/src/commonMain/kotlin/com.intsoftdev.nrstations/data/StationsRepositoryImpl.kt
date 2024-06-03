@@ -29,18 +29,19 @@ internal class StationsRepositoryImpl(
     private val requestDispatcher: CoroutineDispatcher,
     private val requestRetryPolicy: RequestRetryPolicy
 ) : StationsRepository {
-
     override fun getAllStations(cachePolicy: CachePolicy): Flow<StationsResultState<StationsResult>> =
         flow {
             when (val cacheState = stationsCache.getCacheState(cachePolicy = cachePolicy)) {
                 is CacheState.Empty, CacheState.Stale -> {
                     emit(refreshStations())
                 }
+
                 is CacheState.Usable -> {
-                    val result = StationsResult(
-                        version = stationsCache.getVersion().toUpdateVersion(),
-                        stations = stationsCache.getAllStations()
-                    )
+                    val result =
+                        StationsResult(
+                            version = stationsCache.getVersion().toUpdateVersion(),
+                            stations = stationsCache.getAllStations()
+                        )
                     Napier.d("cached stations ${result.stations.size} version ${result.version.version}")
                     emit(StationsResultState.Success(result))
                 }
@@ -54,6 +55,7 @@ internal class StationsRepositoryImpl(
             is CacheState.Empty -> {
                 throw IllegalStateException("cache empty")
             }
+
             else -> {
                 crsCodes.map {
                     stationsCache.getStationLocation(it)
@@ -74,6 +76,7 @@ internal class StationsRepositoryImpl(
                                 val stations = sortStationsFromCache(latitude, longitude)
                                 emit(StationsResultState.Success(stations))
                             }
+
                             is StationsResultState.Failure -> {
                                 emit(
                                     StationsResultState.Failure(
@@ -84,6 +87,7 @@ internal class StationsRepositoryImpl(
                         }
                     }
                 }
+
                 else -> {
                     val stations = sortStationsFromCache(latitude, longitude)
                     emit(StationsResultState.Success(stations))
@@ -99,9 +103,10 @@ internal class StationsRepositoryImpl(
         getServerDataVersion().also { serverDataVersion ->
             return when (stationsCache.getCacheState(serverDataVersion.version)) {
                 is CacheState.Empty, CacheState.Stale -> {
-                    val stationLocations = stationsProxyService.getAllStations().map {
-                        it.toStationLocation()
-                    }
+                    val stationLocations =
+                        stationsProxyService.getAllStations().map {
+                            it.toStationLocation()
+                        }
                     Napier.d("inserting ${stationLocations.size} int DB")
 
                     if (stationLocations.isEmpty()) {
@@ -122,10 +127,11 @@ internal class StationsRepositoryImpl(
                 }
 
                 is CacheState.Usable -> {
-                    val result = StationsResult(
-                        version = stationsCache.getVersion().toUpdateVersion(),
-                        stations = stationsCache.getAllStations()
-                    )
+                    val result =
+                        StationsResult(
+                            version = stationsCache.getVersion().toUpdateVersion(),
+                            stations = stationsCache.getAllStations()
+                        )
                     StationsResultState.Success(result)
                 }
             }
@@ -136,14 +142,15 @@ internal class StationsRepositoryImpl(
         latitude: Double,
         longitude: Double
     ): NearestStations {
-        val sortedStations = getSortedStations(
-            latitude,
-            longitude,
-            stationsCache.getAllStations()
-        ).subList(
-            0,
-            MAX_NEARBY_STATIONS - 1
-        )
+        val sortedStations =
+            getSortedStations(
+                latitude,
+                longitude,
+                stationsCache.getAllStations()
+            ).subList(
+                0,
+                MAX_NEARBY_STATIONS - 1
+            )
         return getStationDistancesfromRefPoint(
             Geolocation(latitude, longitude),
             sortedStations

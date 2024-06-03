@@ -5,10 +5,10 @@ import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NrStationsSDK
 import com.intsoftdev.nrstations.sdk.StationsSdkDiComponent
 import com.intsoftdev.nrstations.sdk.injectStations
-import com.rickclephas.kmm.viewmodel.KMMViewModel
-import com.rickclephas.kmm.viewmodel.coroutineScope
-import com.rickclephas.kmm.viewmodel.stateIn
 import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
+import com.rickclephas.kmp.observableviewmodel.ViewModel
+import com.rickclephas.kmp.observableviewmodel.coroutineScope
+import com.rickclephas.kmp.observableviewmodel.stateIn
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,8 +17,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-open class NrStationsViewModel : KMMViewModel(), StationsSdkDiComponent {
-
+open class NrStationsViewModel : ViewModel(), StationsSdkDiComponent {
     private var stationsSDK = this.injectStations<NrStationsSDK>()
 
     // Backing property to avoid state updates from other classes
@@ -27,11 +26,12 @@ open class NrStationsViewModel : KMMViewModel(), StationsSdkDiComponent {
 
     // The UI collects from this StateFlow to get its state updates
     @NativeCoroutinesState
-    val uiState: StateFlow<StationsUiState> = _uiState.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(),
-        StationsUiState.Loading
-    )
+    val uiState: StateFlow<StationsUiState> =
+        _uiState.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            StationsUiState.Loading
+        )
 
     init {
         Napier.d(tag = TAG) { "init" }
@@ -72,7 +72,9 @@ open class NrStationsViewModel : KMMViewModel(), StationsSdkDiComponent {
 
 sealed interface StationsUiState {
     data object Loading : StationsUiState
+
     data class Error(val error: String?) : StationsUiState
+
     data class Loaded(
         val stations: List<StationLocation>,
         val lastUpdateText: String? = null

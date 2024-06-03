@@ -14,7 +14,6 @@ internal class GetStationsUseCase(
     private val stationsRepository: StationsRepository,
     private val coroutineDispatcher: CoroutineDispatcher
 ) {
-
     fun getAllStations(cachePolicy: CachePolicy): Flow<StationsResultState<StationsResult>> {
         return stationsRepository.getAllStations(cachePolicy = cachePolicy)
     }
@@ -30,6 +29,8 @@ internal class GetStationsUseCase(
         }.flowOn(coroutineDispatcher)
     }
 
-    fun getNearbyStations(latitude: Double, longitude: Double) =
-        stationsRepository.getNearbyStations(latitude, longitude)
+    fun getNearbyStations(
+        latitude: Double,
+        longitude: Double
+    ) = stationsRepository.getNearbyStations(latitude, longitude)
 }

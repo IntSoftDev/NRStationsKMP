@@ -11,7 +11,6 @@ import io.github.aakira.napier.Napier
 internal class DBWrapperImpl(
     private val stationsDb: NRStationsDb
 ) : DBWrapper {
-
     override fun insertStations(stations: List<StationLocation>) {
         stationsDb.stationsTableQueries.transaction {
             stations.map {
@@ -28,8 +27,7 @@ internal class DBWrapperImpl(
         }
     }
 
-    override fun getStations(): List<StationDb> =
-        stationsDb.stationsTableQueries.selectAll().executeAsList()
+    override fun getStations(): List<StationDb> = stationsDb.stationsTableQueries.selectAll().executeAsList()
 
     override fun getStationLocation(stationId: String): StationDb? {
         require(stationId.length == STATION_CODE_LEN) { "station Crs code $stationId invalid. It must have 3 letters" }
@@ -46,8 +44,7 @@ internal class DBWrapperImpl(
         stationsDb.versionTableQueries.insert(version.version, version.lastUpdate)
     }
 
-    override fun getVersion(): Version? =
-        stationsDb.versionTableQueries.select().executeAsList().firstOrNull()
+    override fun getVersion(): Version? = stationsDb.versionTableQueries.select().executeAsList().firstOrNull()
 
     override fun isEmpty(): Boolean {
         return stationsDb.stationsTableQueries.selectAll().executeAsList().isEmpty()

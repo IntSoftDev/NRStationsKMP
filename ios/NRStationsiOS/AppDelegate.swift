@@ -2,8 +2,6 @@
 //  AppDelegate.swift
 
 import SwiftUI
-import KMMViewModelCore
-import KMMViewModelSwiftUI
 import nrstations
 
 private var _koin: Koin_coreKoin?

@@ -1,5 +1,5 @@
 package com.intsoftdev.nrstations.viewmodels
 
-import com.rickclephas.kmm.viewmodel.KMMViewModel
+import com.rickclephas.kmp.observableviewmodel.ViewModel
 
-abstract class KMMBaseViewModel : KMMViewModel()
+abstract class KMMBaseViewModel : ViewModel()

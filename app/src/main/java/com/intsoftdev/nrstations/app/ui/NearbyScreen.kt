@@ -16,10 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -29,7 +29,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,11 +53,12 @@ internal fun NearbyScreen(
     modifier: Modifier = Modifier,
     nearbyViewModel: NearbyStationsViewModel = viewModel()
 ) {
-    val lifecycleOwner = LocalLifecycleOwner.current
+    val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
 
-    val lifecycleAwareStationsFlow = remember(nearbyViewModel.uiState, lifecycleOwner) {
-        nearbyViewModel.uiState.flowWithLifecycle(lifecycleOwner.lifecycle)
-    }
+    val lifecycleAwareStationsFlow =
+        remember(nearbyViewModel.uiState, lifecycleOwner) {
+            nearbyViewModel.uiState.flowWithLifecycle(lifecycleOwner.lifecycle)
+        }
 
     LaunchedEffect(Unit) {
         nearbyViewModel.getNearbyStations(stationLocation.latitude, stationLocation.longitude)
@@ -99,16 +99,17 @@ fun NearbyStationsSuccess(
     referenceStation: StationLocation,
     stationSelect: (StationLocation) -> Unit
 ) {
-    val cameraPositionState = rememberCameraPositionState {
-        position =
-            CameraPosition.fromLatLngZoom(
-                LatLng(
-                    nearestStations.geolocation.latitude,
-                    nearestStations.geolocation.longitude
-                ),
-                15f
-            )
-    }
+    val cameraPositionState =
+        rememberCameraPositionState {
+            position =
+                CameraPosition.fromLatLngZoom(
+                    LatLng(
+                        nearestStations.geolocation.latitude,
+                        nearestStations.geolocation.longitude
+                    ),
+                    15f
+                )
+        }
     var isMapLoaded by remember { mutableStateOf(false) }
 
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
@@ -119,9 +120,10 @@ fun NearbyStationsSuccess(
                 .height(maxHeight / 2)
         ) {
             GoogleMapViewInColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .testTag("Map"),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .testTag("Map"),
                 cameraPositionState = cameraPositionState,
                 onMapLoaded = {
                     isMapLoaded = true
@@ -129,27 +131,30 @@ fun NearbyStationsSuccess(
             )
             if (!isMapLoaded) {
                 androidx.compose.animation.AnimatedVisibility(
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier =
+                        Modifier
+                            .fillMaxSize(),
                     visible = !isMapLoaded,
                     enter = EnterTransition.None,
                     exit = fadeOut()
                 ) {
                     CircularProgressIndicator(
-                        modifier = Modifier
-                            .background(MaterialTheme.colors.background)
-                            .wrapContentSize()
+                        modifier =
+                            Modifier
+                                .background(MaterialTheme.colorScheme.background)
+                                .wrapContentSize()
                     )
                 }
             }
         }
         Spacer(modifier = Modifier.padding(10.dp))
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomStart)
-                .height(maxHeight / 2)
-                .padding(8.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomStart)
+                    .height(maxHeight / 2)
+                    .padding(8.dp),
             contentAlignment = Alignment.Center
         ) {
             val filteredStations =
@@ -159,7 +164,7 @@ fun NearbyStationsSuccess(
                     NearbyStationRow(station) {
                         stationSelect(it)
                     }
-                    Divider()
+                    HorizontalDivider()
                 }
             }
         }
@@ -167,7 +172,10 @@ fun NearbyStationsSuccess(
 }
 
 @Composable
-fun NearbyStationRow(station: StationDistance, onClick: (StationLocation) -> Unit) {
+fun NearbyStationRow(
+    station: StationDistance,
+    onClick: (StationLocation) -> Unit
+) {
     val distance = String.format(Locale.UK, "%.1f miles", station.distanceInMiles)
     Row(
         Modifier

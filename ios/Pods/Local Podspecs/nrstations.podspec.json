@@ -1,6 +1,6 @@
 {
   "name": "nrstations",
-  "version": "1.0.0-ALPHA-5-SNAPSHOT",
+  "version": "1.0.0-ALPHA-6-SNAPSHOT",
   "homepage": "https://github.com/intsoftdev/NRStationsKMP",
   "source": {
     "http": ""
@@ -12,6 +12,9 @@
   "libraries": "c++",
   "platforms": {
     "ios": "12.4"
+  },
+  "xcconfig": {
+    "ENABLE_USER_SCRIPT_SANDBOXING": "NO"
   },
   "pod_target_xcconfig": {
     "KOTLIN_PROJECT_PATH": ":nrstations",
