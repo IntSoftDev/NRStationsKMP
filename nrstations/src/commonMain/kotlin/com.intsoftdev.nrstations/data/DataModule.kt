@@ -25,7 +25,7 @@ internal val stationsDataModule =
             StationsRepositoryImpl(
                 stationsProxyService = get(),
                 stationsCache = get(),
-                requestDispatcher =  Dispatchers.Default,
+                requestDispatcher = Dispatchers.Default,
                 requestRetryPolicy = DefaultRetryPolicy()
             )
         }
