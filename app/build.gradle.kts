@@ -30,6 +30,7 @@ android {
     lint {
         warningsAsErrors = false
         abortOnError = true
+        disable.add("ObsoleteLintCustomCheck")
     }
 
     buildFeatures {

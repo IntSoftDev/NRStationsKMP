@@ -34,6 +34,11 @@ android {
     lint {
         warningsAsErrors = true
         abortOnError = true
+        /**
+         * Lint found an issue registry (androidx.lifecycle.lint.LiveDataCoreIssueRegistry)
+         * which contains some references to invalid API
+         */
+        disable.add("ObsoleteLintCustomCheck")
     }
 
     compileOptions {
