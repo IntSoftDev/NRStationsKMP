@@ -5,7 +5,7 @@ import Combine
 import SwiftUI
 import nrstations
 import MapKit
-import KMMViewModelSwiftUI
+import KMPObservableViewModelSwiftUI
 
 struct StationsListView: View {
     @State var allStations: [StationLocation] = []

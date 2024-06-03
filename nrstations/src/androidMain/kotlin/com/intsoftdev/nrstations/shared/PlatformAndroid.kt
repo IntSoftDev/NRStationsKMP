@@ -17,7 +17,6 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.serialization.kotlinx.json.json
 import java.util.concurrent.TimeUnit
-import kotlinx.coroutines.Dispatchers
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -25,8 +24,6 @@ internal lateinit var appContext: Context
 
 internal actual val stationsPlatformModule =
     module {
-
-        factory(named("NRStationsCoroutineDispatcher")) { Dispatchers.Default }
 
         factory<Settings> {
             SharedPreferencesSettings(

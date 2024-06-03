@@ -6,8 +6,8 @@
 //  Copyright © 2023 Intsoftdev. All rights reserved.
 //
 
-import KMMViewModelCore
+import KMPObservableViewModelCore
 import Foundation
 import nrstations
 
-extension Kmm_viewmodel_coreKMMViewModel: KMMViewModel { }
+extension Kmp_observableviewmodel_coreViewModel: ViewModel { }

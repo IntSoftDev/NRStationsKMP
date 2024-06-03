@@ -12,15 +12,11 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 internal actual val stationsPlatformModule =
     module {
-        factory<CoroutineDispatcher>(named("NRStationsCoroutineDispatcher")) { Dispatchers.Main }
-
         single<SqlDriver>(named("StationsSqlDriver")) {
             NativeSqliteDriver(
                 NRStationsDb.Schema,

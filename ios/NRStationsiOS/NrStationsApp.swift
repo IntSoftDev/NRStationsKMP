@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import KMMViewModelCore
-import KMMViewModelSwiftUI
 
 @main
 struct NrStationsApp: App {

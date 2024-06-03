@@ -8,8 +8,8 @@
 
 import SwiftUI
 import nrstations
-import KMMViewModelCore
-import KMMViewModelSwiftUI
+import KMPObservableViewModelCore
+import KMPObservableViewModelSwiftUI
 import MapKit
 
 struct NearbyStationsContent: View {

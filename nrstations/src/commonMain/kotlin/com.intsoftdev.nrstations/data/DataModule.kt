@@ -6,6 +6,7 @@ import com.intsoftdev.nrstations.data.StationsProxy
 import com.intsoftdev.nrstations.data.StationsRepositoryImpl
 import com.intsoftdev.nrstations.di.KOIN_HTTP_CLIENT
 import com.intsoftdev.nrstations.domain.StationsRepository
+import kotlinx.coroutines.Dispatchers
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -24,7 +25,7 @@ internal val stationsDataModule =
             StationsRepositoryImpl(
                 stationsProxyService = get(),
                 stationsCache = get(),
-                requestDispatcher = get(named("NRStationsCoroutineDispatcher")),
+                requestDispatcher =  Dispatchers.Default,
                 requestRetryPolicy = DefaultRetryPolicy()
             )
         }

@@ -1,5 +1,5 @@
 import com.intsoftdev.nrstations.domain.GetStationsUseCase
-import org.koin.core.qualifier.named
+import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
 internal val stationsDomainModule =
@@ -7,7 +7,7 @@ internal val stationsDomainModule =
         factory {
             GetStationsUseCase(
                 stationsRepository = get(),
-                coroutineDispatcher = get(named("NRStationsCoroutineDispatcher"))
+                coroutineDispatcher = Dispatchers.Default
             )
         }
     }
