@@ -9,8 +9,9 @@ import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
-import io.ktor.util.InternalAPI
+import io.ktor.utils.io.InternalAPI
 
+@OptIn(InternalAPI::class)
 internal class StationsProxy(
     private val httpClient: HttpClient,
     private val baseUrl: String,
@@ -19,7 +20,7 @@ internal class StationsProxy(
     private val stationsUrl = "$baseUrl/stations"
     private val versionUrl = "$baseUrl/config/stationsversion.json"
 
-    @OptIn(InternalAPI::class)
+
     override suspend fun getAllStations(): List<StationModel> {
         val response =
             httpClient.get(stationsUrl) {

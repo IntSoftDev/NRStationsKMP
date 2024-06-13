@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
     alias(isdlibs.plugins.kotlinMultiplatform)
@@ -70,6 +71,22 @@ kotlin {
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
+        iosTarget.compilations.configureEach {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    // freeCompilerArgs.add("-Xruntime-logs=gc=info")
+                   // freeCompilerArgs.add("-Xallocator=mimalloc")
+                   // freeCompilerArgs.add("-Xallocator=std")
+                }
+            }
+            /**
+             * get weird error when enabling Xallocator
+             * > Task :nrstations:linkPodDebugFrameworkIosArm64 FAILED
+             * error: /Users/awaiszaka/.gradle/caches/modules-2/files-2.1/app.cash.sqldelight/coroutines-extensions-iosarm64/2.0.2/51f8ddc76a4aa3d45402f46017e7b8405a5f6761/coroutines-extensions is cached (in /Users/awaiszaka/.konan/kotlin-native-prebuilt-macos-x86_64-2.0.0/klib/cache/ios_arm64-gSTATIC-pl/app.cash.sqldelight:sqldelight-coroutines-extensions/unspecified/1cfzx7d5swetd.2iwue9wm1oxlb/app.cash.sqldelight:sqldelight-coroutines-extensions-cache/bin/libapp.cash.sqldelight:sqldelight-coroutines-extensions-cache.a), but its dependency isn't: /Users/awaiszaka/.konan/kotlin-native-prebuilt-macos-x86_64-2.0.0/klib/common/stdlib
+             *
+             */
+        }
+
         iosTarget.binaries.framework {
             baseName = "nrstations"
             isStatic = true
@@ -135,8 +152,11 @@ kotlin.sourceSets.all {
     languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
 }
 
+
 sqldelight {
-    database("NRStationsDb") {
-        packageName = "com.intsoftdev.nrstations.database"
+    databases {
+        create("NRStationsDb") {
+            packageName.set("com.intsoftdev.nrstations.database")
+        }
     }
 }
