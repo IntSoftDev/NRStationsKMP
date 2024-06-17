@@ -5,7 +5,7 @@ plugins {
     alias(isdlibs.plugins.ksp) apply false
     alias(isdlibs.plugins.kmpNativeCoroutines) apply false
     alias(isdlibs.plugins.kotlinMultiplatform) apply false
-    alias(isdlibs.plugins.kotlinxSerialization) apply false
+    alias(isdlibs.plugins.kotlin.serialization) apply false
     alias(isdlibs.plugins.sqlDelight) apply false
     alias(isdlibs.plugins.androidApplication) apply false
     alias(isdlibs.plugins.cocoapods) apply false

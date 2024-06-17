@@ -1,9 +1,9 @@
 package com.intsoftdev.nrstations.shared
 
-import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.intsoftdev.nrstations.database.NRStationsDb
 import com.intsoftdev.nrstations.di.KOIN_HTTP_CLIENT
+import com.squareup.sqldelight.db.SqlDriver
+import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.darwin.Darwin

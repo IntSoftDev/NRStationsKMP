@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 plugins {
     alias(isdlibs.plugins.kotlinMultiplatform)
     alias(isdlibs.plugins.cocoapods)
-    alias(isdlibs.plugins.kotlinxSerialization)
+    alias(isdlibs.plugins.kotlin.serialization)
     alias(isdlibs.plugins.androidLibrary)
     alias(isdlibs.plugins.sqlDelight)
     id("convention.publication")
@@ -148,11 +148,8 @@ kotlin.sourceSets.all {
     languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
 }
 
-
 sqldelight {
-    databases {
-        create("NRStationsDb") {
-            packageName.set("com.intsoftdev.nrstations.database")
-        }
+    database("NRStationsDb") {
+        packageName = "com.intsoftdev.nrstations.database"
     }
 }
