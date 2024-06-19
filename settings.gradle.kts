@@ -16,8 +16,9 @@ pluginManagement {
     }
 }
 
+@Suppress("UnstableApiUsage")
 dependencyResolutionManagement {
-    @Suppress("UnstableApiUsage")
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         mavenLocal()
         google {
@@ -33,7 +34,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("isdlibs") {
-            from("com.intsoftdev:isdversioncatalog:1.0.0-ALPHA-10-SNAPSHOT")
+            from("com.intsoftdev:isdversioncatalog:1.0.0-ALPHA-12")
         }
     }
 }

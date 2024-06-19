@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 plugins {
     alias(isdlibs.plugins.kotlinMultiplatform)
     alias(isdlibs.plugins.cocoapods)
-    alias(isdlibs.plugins.kotlinxSerialization)
+    alias(isdlibs.plugins.kotlin.serialization)
     alias(isdlibs.plugins.androidLibrary)
     alias(isdlibs.plugins.sqlDelight)
     id("convention.publication")
@@ -70,6 +70,18 @@ kotlin {
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
+        /**
+         * error when enabling Xallocator
+         * Task :nrstations:linkPodDebugFrameworkIosArm64 FAILED
+         * dependency not cached /Users//.konan/kotlin-native-prebuilt-macos-x86_64-2.0.0/klib/common/stdlib
+         * iosTarget.compilations.configureEach {
+         *             compileTaskProvider.configure {
+         *                 compilerOptions {
+         *                      freeCompilerArgs.add("-Xallocator=mimalloc")
+         *                 }
+         *             }
+         *         }
+         */
         iosTarget.binaries.framework {
             baseName = "nrstations"
             isStatic = true
