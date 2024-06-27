@@ -8,10 +8,10 @@ A Kotlin library to retrieve all UK train stations and their locations from Andr
 ## Adding to your project
 ```
 repositories {
-  mavenCentral()
+    mavenCentral()
 }
 dependencies {
-    implementation("com.intsoftdev:nrstations:1.0.0-ALPHA-4")
+    implementation("com.intsoftdev:nrstations:1.0.0-ALPHA-7")
 }
 ```
 
@@ -96,12 +96,12 @@ and run `pod install`.
 
 #### 2) Add package dependency
 
-Add [KMMViewModel](https://github.com/rickclephas/KMM-ViewModel) `1.0.0-ALPHA-19` to the iOS package dependencies.
+Add [KMMObservableViewModel](https://github.com/rickclephas/KMP-ObservableViewModel) to the iOS package dependencies.
 
 Add the following KMM ViewModel extension in the project - see the sample app for more details:
 
 ```
-extension Kmm_viewmodel_coreKMMViewModel: KMMViewModel { }
+extension Kmp_observableviewmodel_coreViewModel: ViewModel { }
 ```
 
 #### 3) Initialise
@@ -118,7 +118,8 @@ StationsSDKInitializerKt.doInitStationsSDK(
 
 ```
 import nrstations
-import KMMViewModelSwiftUI
+import KMPObservableViewModelCore
+import KMPObservableViewModelSwiftUI
 ```
 
 In the SwiftUI View
