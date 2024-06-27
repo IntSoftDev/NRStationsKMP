@@ -2,10 +2,10 @@ package com.intsoftdev.nrstations
 
 import android.app.Application
 import androidx.test.core.app.ApplicationProvider
-import com.intsoftdev.nrstations.database.NRStationsDb
-import app.cash.sqldelight.android.AndroidSqliteDriver
 import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.sqlite.driver.JdbcSqliteDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
+import com.intsoftdev.nrstations.database.NRStationsDb
 
 internal actual fun testDbConnection(): SqlDriver {
     // Try to use the android driver (which only works if we're on robolectric).
