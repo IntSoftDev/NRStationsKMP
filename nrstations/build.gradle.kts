@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
     alias(isdlibs.plugins.kotlinMultiplatform)
@@ -147,8 +148,11 @@ kotlin.sourceSets.all {
     languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
 }
 
+
 sqldelight {
-    database("NRStationsDb") {
-        packageName = "com.intsoftdev.nrstations.database"
+    databases {
+        create("NRStationsDb") {
+            packageName.set("com.intsoftdev.nrstations.database")
+        }
     }
 }
