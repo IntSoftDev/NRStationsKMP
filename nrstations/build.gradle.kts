@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 plugins {
     alias(isdlibs.plugins.kotlinMultiplatform)
     alias(isdlibs.plugins.cocoapods)
-    alias(isdlibs.plugins.kotlinxSerialization)
+    alias(isdlibs.plugins.kotlin.serialization)
     alias(isdlibs.plugins.androidLibrary)
     alias(isdlibs.plugins.sqlDelight)
     id("convention.publication")
