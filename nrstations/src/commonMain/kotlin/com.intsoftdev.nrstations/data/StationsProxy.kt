@@ -20,7 +20,6 @@ internal class StationsProxy(
     private val stationsUrl = "$baseUrl/stations"
     private val versionUrl = "$baseUrl/config/stationsversion.json"
 
-
     override suspend fun getAllStations(): List<StationModel> {
         val response =
             httpClient.get(stationsUrl) {
