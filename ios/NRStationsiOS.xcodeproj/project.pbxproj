@@ -16,6 +16,7 @@
 		857A503129BE6E4200976A8B /* NearbyStationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857A503029BE6E4200976A8B /* NearbyStationsView.swift */; };
 		85A3F3C52911C0C0003A5456 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A3F3C42911C0C0003A5456 /* MapView.swift */; };
 		85FEDFD22BA946A40077D374 /* NrStationsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FEDFD12BA946A40077D374 /* NrStationsApp.swift */; };
+		E2557315DF3913B6593BFCE8 /* Pods_NRStationsiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A720521F203D90BEAB5A1775 /* Pods_NRStationsiOS.framework */; };
 		F1465F0123AA94BF0055F7C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1465F0023AA94BF0055F7C3 /* AppDelegate.swift */; };
 		F1465F0A23AA94BF0055F7C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1465F0923AA94BF0055F7C3 /* Assets.xcassets */; };
 		F1465F0D23AA94BF0055F7C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1465F0B23AA94BF0055F7C3 /* LaunchScreen.storyboard */; };
@@ -49,7 +50,9 @@
 		857A503029BE6E4200976A8B /* NearbyStationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyStationsView.swift; sourceTree = "<group>"; };
 		85A3F3C42911C0C0003A5456 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		85FEDFD12BA946A40077D374 /* NrStationsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NrStationsApp.swift; sourceTree = "<group>"; };
-		8D3AA94AE13138E136BFF622 /* Pods_NRStationsiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NRStationsiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F7459A0E72F7922CC6CD789 /* Pods-NRStationsiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NRStationsiOS.debug.xcconfig"; path = "Target Support Files/Pods-NRStationsiOS/Pods-NRStationsiOS.debug.xcconfig"; sourceTree = "<group>"; };
+		A720521F203D90BEAB5A1775 /* Pods_NRStationsiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NRStationsiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA5898A7860C8B9E962CB5ED /* Pods-NRStationsiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NRStationsiOS.release.xcconfig"; path = "Target Support Files/Pods-NRStationsiOS/Pods-NRStationsiOS.release.xcconfig"; sourceTree = "<group>"; };
 		F1465EFD23AA94BF0055F7C3 /* NRStationsiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NRStationsiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1465F0023AA94BF0055F7C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1465F0923AA94BF0055F7C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -70,7 +73,7 @@
 			files = (
 				855977D82C0DF5760048B0D2 /* KMPObservableViewModelSwiftUI in Frameworks */,
 				855977D62C0DF56E0048B0D2 /* KMPObservableViewModelCore in Frameworks */,
-				51B2FDE3F78BD8E146CDC1F6 /* Pods_NRStationsiOS.framework in Frameworks */,
+				E2557315DF3913B6593BFCE8 /* Pods_NRStationsiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,10 +94,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1806064103E62C9520EA49C5 /* Frameworks */ = {
+		16B2AA251FFC155252202DF5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8D3AA94AE13138E136BFF622 /* Pods_NRStationsiOS.framework */,
+				A720521F203D90BEAB5A1775 /* Pods_NRStationsiOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -102,8 +105,8 @@
 		84F45DCBE0966FAF8371AE19 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				02F44FD0E9CF472F322255F2 /* Pods-NRStationsiOS.debug.xcconfig */,
-				03CFC34557217A72392C973F /* Pods-NRStationsiOS.release.xcconfig */,
+				8F7459A0E72F7922CC6CD789 /* Pods-NRStationsiOS.debug.xcconfig */,
+				AA5898A7860C8B9E962CB5ED /* Pods-NRStationsiOS.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -116,7 +119,7 @@
 				F1465F2123AA94C00055F7C3 /* NRStationsiOSUITests */,
 				F1465EFE23AA94BF0055F7C3 /* Products */,
 				84F45DCBE0966FAF8371AE19 /* Pods */,
-				1806064103E62C9520EA49C5 /* Frameworks */,
+				16B2AA251FFC155252202DF5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -172,12 +175,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F1465F2723AA94C00055F7C3 /* Build configuration list for PBXNativeTarget "NRStationsiOS" */;
 			buildPhases = (
-				7678A29EF09B192D5A8AF4CC /* [CP] Check Pods Manifest.lock */,
+				75A969B0645E94B5E3EAB11E /* [CP] Check Pods Manifest.lock */,
 				F1465EF923AA94BF0055F7C3 /* Sources */,
 				451A87F626D69EA40013D7F8 /* SwiftLint */,
 				F1465EFA23AA94BF0055F7C3 /* Frameworks */,
 				F1465EFB23AA94BF0055F7C3 /* Resources */,
-				F84538ECCAE4FEFFA87DD7ED /* [CP] Embed Pods Frameworks */,
+				EAD4C9F37137D00A3B8EE89D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -320,7 +323,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# For reference: https://github.com/realm/SwiftLint\n\n${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
-		7678A29EF09B192D5A8AF4CC /* [CP] Check Pods Manifest.lock */ = {
+		75A969B0645E94B5E3EAB11E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -342,7 +345,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F84538ECCAE4FEFFA87DD7ED /* [CP] Embed Pods Frameworks */ = {
+		EAD4C9F37137D00A3B8EE89D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -550,7 +553,7 @@
 		};
 		F1465F2823AA94C00055F7C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 02F44FD0E9CF472F322255F2 /* Pods-NRStationsiOS.debug.xcconfig */;
+			baseConfigurationReference = 8F7459A0E72F7922CC6CD789 /* Pods-NRStationsiOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -584,7 +587,7 @@
 		};
 		F1465F2923AA94C00055F7C3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 03CFC34557217A72392C973F /* Pods-NRStationsiOS.release.xcconfig */;
+			baseConfigurationReference = AA5898A7860C8B9E962CB5ED /* Pods-NRStationsiOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";

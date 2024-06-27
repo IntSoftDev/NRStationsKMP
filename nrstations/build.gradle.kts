@@ -148,7 +148,9 @@ kotlin.sourceSets.all {
 }
 
 sqldelight {
-    database("NRStationsDb") {
-        packageName = "com.intsoftdev.nrstations.database"
+    databases {
+        create("NRStationsDb") {
+            packageName.set("com.intsoftdev.nrstations.database")
+        }
     }
 }

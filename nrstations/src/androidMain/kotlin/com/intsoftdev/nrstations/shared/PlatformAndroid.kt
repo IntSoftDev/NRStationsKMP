@@ -2,12 +2,12 @@ package com.intsoftdev.nrstations.shared
 
 import android.app.Application
 import android.content.Context
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.intsoftdev.nrstations.database.NRStationsDb
 import com.intsoftdev.nrstations.di.KOIN_HTTP_CLIENT
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.SharedPreferencesSettings
-import com.squareup.sqldelight.android.AndroidSqliteDriver
-import com.squareup.sqldelight.db.SqlDriver
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
