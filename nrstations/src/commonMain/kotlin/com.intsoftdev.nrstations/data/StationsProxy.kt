@@ -9,7 +9,10 @@ import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
+import io.ktor.http.contentLength
 import io.ktor.utils.io.InternalAPI
+import io.ktor.utils.io.counted
+import io.ktor.utils.io.totalBytesRead
 
 @OptIn(InternalAPI::class)
 internal class StationsProxy(
@@ -25,7 +28,8 @@ internal class StationsProxy(
             httpClient.get(stationsUrl) {
                 this.appendHeaders()
             }
-        Napier.d("getAllStations totalBytesRead: ${response.content.totalBytesRead}")
+
+        Napier.d("getAllStations contentLength: ${response.contentLength()}")
         return response.body()
     }
 
