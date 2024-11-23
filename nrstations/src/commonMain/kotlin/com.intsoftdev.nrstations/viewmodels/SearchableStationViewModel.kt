@@ -22,7 +22,7 @@ class SearchableStationViewModel : NrStationsViewModel() {
 
     private val _stationsList = MutableStateFlow(allStations)
 
-    fun setSelectedStation(stationLocation: StationLocation) {
+    fun setSelectedStation(stationLocation: StationLocation?) {
         _selectedStation.value = stationLocation
     }
 
