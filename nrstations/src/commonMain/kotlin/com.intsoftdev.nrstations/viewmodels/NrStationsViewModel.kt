@@ -1,5 +1,6 @@
 package com.intsoftdev.nrstations.viewmodels
 
+import com.intsoftdev.nrstations.cache.CachePolicy
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsResultState
 import com.intsoftdev.nrstations.sdk.NrStationsSDK
@@ -42,9 +43,9 @@ open class NrStationsViewModel : ViewModel(), StationsSdkDiComponent {
         super.onCleared()
     }
 
-    fun getAllStations() {
+    fun getAllStations(cachePolicy: CachePolicy = CachePolicy.USE_CACHE_WITH_EXPIRY) {
         viewModelScope.coroutineScope.launch {
-            stationsSDK.getAllStations().onStart {
+            stationsSDK.getAllStations(cachePolicy = cachePolicy).onStart {
                 _uiState.emit(StationsUiState.Loading)
             }.catch { throwable ->
                 _uiState.emit(StationsUiState.Error(error = throwable.message))
