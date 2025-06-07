@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'nrstations'
-    spec.version                  = '1.0.0-ALPHA-12'
+    spec.version                  = '1.0.0-ALPHA-13-SNAPSHOT'
     spec.homepage                 = 'https://github.com/intsoftdev/NRStationsKMP'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
@@ -8,7 +8,7 @@ Pod::Spec.new do |spec|
     spec.summary                  = 'KMP Stations'
     spec.vendored_frameworks      = 'build/cocoapods/framework/nrstations.framework'
     spec.libraries                = 'c++'
-    spec.ios.deployment_target    = '12.4'
+    spec.ios.deployment_target    = '16.0'
                 
                 
     if !Dir.exist?('build/cocoapods/framework/nrstations.framework') || Dir.empty?('build/cocoapods/framework/nrstations.framework')

@@ -29,12 +29,15 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
-        maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-        maven("https://s01.oss.sonatype.org/content/repositories/releases/")
+        maven("https://central.sonatype.com/repository/maven-snapshots/") {
+            content {
+                includeGroupAndSubgroups("com.intsoftdev")
+            }
+        }
     }
     versionCatalogs {
         create("isdlibs") {
-            from("com.intsoftdev:isdversioncatalog:1.0.0-ALPHA-17")
+            from("com.intsoftdev:isddependencies:1.0.0-ALPHA-18-SNAPSHOT")
         }
     }
 }
@@ -45,5 +48,4 @@ val importLocalStationsKmp: String by settings
 
 if (importLocalStationsKmp == "true") {
     include(":nrstations")
-    includeBuild("convention-plugins")
 }

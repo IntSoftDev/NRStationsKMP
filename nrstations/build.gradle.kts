@@ -1,16 +1,58 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
+    alias(isdlibs.plugins.maven.publish)
     alias(isdlibs.plugins.kotlinMultiplatform)
     alias(isdlibs.plugins.cocoapods)
     alias(isdlibs.plugins.kotlin.serialization)
     alias(isdlibs.plugins.androidLibrary)
     alias(isdlibs.plugins.sqlDelight)
-    id("convention.publication")
     alias(isdlibs.plugins.ksp)
     alias(isdlibs.plugins.kmpNativeCoroutines)
-    `maven-publish`
+}
+
+group = "com.intsoftdev"
+version = "1.0.0-ALPHA-13-SNAPSHOT"
+
+mavenPublishing {
+    // Define coordinates for the published artifact
+    coordinates(
+        groupId = group.toString(),
+        artifactId = "nrstations",
+        version = version.toString()
+    )
+
+    // Configure POM metadata for the published artifact
+    pom {
+        name.set("NRStations KMP library")
+        description.set("Multiplatform SDK to retrieve all the national rail stations in the UK")
+        url.set("https://github.com/IntSoftDev/NRStationsKMP")
+
+        licenses {
+            license {
+                name.set("MIT")
+                url.set("https://opensource.org/licenses/MIT")
+            }
+        }
+        developers {
+            developer {
+                id.set("azaka01")
+                name.set("A Zaka")
+                email.set("az@intsoftdev.com")
+            }
+        }
+        scm {
+            url.set("https://github.com/IntSoftDev/NRStationsKMP")
+        }
+    }
+
+    // Configure publishing to Maven Central
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    // Enable GPG signing for all publications
+    signAllPublications()
 }
 
 kotlin {
@@ -51,18 +93,14 @@ kotlin {
 
     androidTarget {
         publishLibraryVariants("release", "debug")
+        @Suppress("OPT_IN_USAGE")
+        unitTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
     }
 
     // https://kotlinlang.org/docs/multiplatform-expect-actual.html#expected-and-actual-classes
     // To suppress this warning about usage of expected and actual classes
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
-    }
-
-    androidTarget {
-        @Suppress("OPT_IN_USAGE")
-        unitTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
     }
 
     listOf(
@@ -138,8 +176,13 @@ kotlin {
         framework {
             isStatic = false // SwiftUI preview requires dynamic framework
         }
-        ios.deploymentTarget = "12.4"
+        ios.deploymentTarget = "16.0"
         podfile = project.file("../ios/Podfile")
+
+        // Maps custom Xcode configuration to NativeBuildType
+        // https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-cocoapods-overview.html#configure-the-project
+        xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
     }
 }
 
