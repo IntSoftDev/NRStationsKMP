@@ -1,6 +1,6 @@
 {
   "name": "nrstations",
-  "version": "1.0.0-ALPHA-10",
+  "version": "1.0.0-ALPHA-13-SNAPSHOT",
   "homepage": "https://github.com/intsoftdev/NRStationsKMP",
   "source": {
     "http": ""
@@ -11,7 +11,7 @@
   "vendored_frameworks": "build/cocoapods/framework/nrstations.framework",
   "libraries": "c++",
   "platforms": {
-    "ios": "12.4"
+    "ios": "16.0"
   },
   "xcconfig": {
     "ENABLE_USER_SCRIPT_SANDBOXING": "NO"

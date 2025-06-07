@@ -63,10 +63,10 @@ struct StationsLandingScreen: View {
             }
         }.onAppear(perform: {
             NSLog("onAppear")
-            stationsViewModel.getAllStations()
+			stationsViewModel.getAllStations(cachePolicy_: CachePolicy.useCacheWithExpiry)
         })
         .refreshable {
-            stationsViewModel.getAllStations()
+            stationsViewModel.getAllStations(cachePolicy_: CachePolicy.useCacheWithExpiry)
         }
     }
 }

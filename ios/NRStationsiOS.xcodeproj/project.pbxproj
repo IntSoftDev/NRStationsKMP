@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B37DB34ABD18718C5F933C1 /* Pods_NRStationsiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C6BC1222BE3F5EF8FE2E7F9 /* Pods_NRStationsiOS.framework */; };
 		46A5B60826B04921002EFEAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A5B60626B04920002EFEAA /* Main.storyboard */; };
 		854D6FB028D1D77300BBEA47 /* StationsLandingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854D6FAF28D1D77300BBEA47 /* StationsLandingScreen.swift */; };
 		855977D62C0DF56E0048B0D2 /* KMPObservableViewModelCore in Frameworks */ = {isa = PBXBuildFile; productRef = 855977D52C0DF56E0048B0D2 /* KMPObservableViewModelCore */; };
@@ -21,6 +20,7 @@
 		F1465F0D23AA94BF0055F7C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1465F0B23AA94BF0055F7C3 /* LaunchScreen.storyboard */; };
 		F1465F1823AA94C00055F7C3 /* NRStationsiOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1465F1723AA94C00055F7C3 /* NRStationsiOSTests.swift */; };
 		F1465F2323AA94C00055F7C3 /* NRStationsiOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1465F2223AA94C00055F7C3 /* NRStationsiOSUITests.swift */; };
+		F4E09B799C6B0287FF6A9AB7 /* Pods_NRStationsiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB5EA9F985AEFAAD18AE4D2 /* Pods_NRStationsiOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,15 +41,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0C6BC1222BE3F5EF8FE2E7F9 /* Pods_NRStationsiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NRStationsiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		33A8DFCA53A8AEF333703FF1 /* Pods-NRStationsiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NRStationsiOS.debug.xcconfig"; path = "Target Support Files/Pods-NRStationsiOS/Pods-NRStationsiOS.debug.xcconfig"; sourceTree = "<group>"; };
+		276BDAF9F6F50D4AEAAA56CD /* Pods-NRStationsiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NRStationsiOS.release.xcconfig"; path = "Target Support Files/Pods-NRStationsiOS/Pods-NRStationsiOS.release.xcconfig"; sourceTree = "<group>"; };
+		301E1B9F8AE1640978F7ED66 /* Pods-NRStationsiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NRStationsiOS.debug.xcconfig"; path = "Target Support Files/Pods-NRStationsiOS/Pods-NRStationsiOS.debug.xcconfig"; sourceTree = "<group>"; };
 		46A5B60726B04920002EFEAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		854D6FAF28D1D77300BBEA47 /* StationsLandingScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationsLandingScreen.swift; sourceTree = "<group>"; };
 		857A502E29BE5C5A00976A8B /* KMMViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KMMViewModel.swift; sourceTree = "<group>"; };
 		857A503029BE6E4200976A8B /* NearbyStationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyStationsView.swift; sourceTree = "<group>"; };
 		85A3F3C42911C0C0003A5456 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		85D5A78CE4235A25E9F0E630 /* Pods-NRStationsiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NRStationsiOS.release.xcconfig"; path = "Target Support Files/Pods-NRStationsiOS/Pods-NRStationsiOS.release.xcconfig"; sourceTree = "<group>"; };
 		85FEDFD12BA946A40077D374 /* NrStationsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NrStationsApp.swift; sourceTree = "<group>"; };
+		EEB5EA9F985AEFAAD18AE4D2 /* Pods_NRStationsiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NRStationsiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1465EFD23AA94BF0055F7C3 /* NRStationsiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NRStationsiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1465F0023AA94BF0055F7C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1465F0923AA94BF0055F7C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -70,7 +70,7 @@
 			files = (
 				855977D82C0DF5760048B0D2 /* KMPObservableViewModelSwiftUI in Frameworks */,
 				855977D62C0DF56E0048B0D2 /* KMPObservableViewModelCore in Frameworks */,
-				3B37DB34ABD18718C5F933C1 /* Pods_NRStationsiOS.framework in Frameworks */,
+				F4E09B799C6B0287FF6A9AB7 /* Pods_NRStationsiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,10 +91,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2F4E10AC02E55DB7F07B305B /* Frameworks */ = {
+		326CA1530B4B68D56906B2B2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0C6BC1222BE3F5EF8FE2E7F9 /* Pods_NRStationsiOS.framework */,
+				EEB5EA9F985AEFAAD18AE4D2 /* Pods_NRStationsiOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -102,8 +102,8 @@
 		84F45DCBE0966FAF8371AE19 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				33A8DFCA53A8AEF333703FF1 /* Pods-NRStationsiOS.debug.xcconfig */,
-				85D5A78CE4235A25E9F0E630 /* Pods-NRStationsiOS.release.xcconfig */,
+				301E1B9F8AE1640978F7ED66 /* Pods-NRStationsiOS.debug.xcconfig */,
+				276BDAF9F6F50D4AEAAA56CD /* Pods-NRStationsiOS.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -116,7 +116,7 @@
 				F1465F2123AA94C00055F7C3 /* NRStationsiOSUITests */,
 				F1465EFE23AA94BF0055F7C3 /* Products */,
 				84F45DCBE0966FAF8371AE19 /* Pods */,
-				2F4E10AC02E55DB7F07B305B /* Frameworks */,
+				326CA1530B4B68D56906B2B2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -172,12 +172,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F1465F2723AA94C00055F7C3 /* Build configuration list for PBXNativeTarget "NRStationsiOS" */;
 			buildPhases = (
-				A77F3848D97F79B6317A3A46 /* [CP] Check Pods Manifest.lock */,
+				D0808B9320494931A1EC4E77 /* [CP] Check Pods Manifest.lock */,
 				F1465EF923AA94BF0055F7C3 /* Sources */,
 				451A87F626D69EA40013D7F8 /* SwiftLint */,
 				F1465EFA23AA94BF0055F7C3 /* Frameworks */,
 				F1465EFB23AA94BF0055F7C3 /* Resources */,
-				4CD59B49FD7E6E4998546802 /* [CP] Embed Pods Frameworks */,
+				C0D5D1E3E9A11E56B2085D51 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -320,7 +320,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# For reference: https://github.com/realm/SwiftLint\n\n${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
-		4CD59B49FD7E6E4998546802 /* [CP] Embed Pods Frameworks */ = {
+		C0D5D1E3E9A11E56B2085D51 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -337,7 +337,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NRStationsiOS/Pods-NRStationsiOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A77F3848D97F79B6317A3A46 /* [CP] Check Pods Manifest.lock */ = {
+		D0808B9320494931A1EC4E77 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -550,7 +550,7 @@
 		};
 		F1465F2823AA94C00055F7C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 33A8DFCA53A8AEF333703FF1 /* Pods-NRStationsiOS.debug.xcconfig */;
+			baseConfigurationReference = 301E1B9F8AE1640978F7ED66 /* Pods-NRStationsiOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -584,7 +584,7 @@
 		};
 		F1465F2923AA94C00055F7C3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85D5A78CE4235A25E9F0E630 /* Pods-NRStationsiOS.release.xcconfig */;
+			baseConfigurationReference = 276BDAF9F6F50D4AEAAA56CD /* Pods-NRStationsiOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
