@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../nrstations/"
 
 SPEC CHECKSUMS:
-  nrstations: c9c8cf98813e28f8b6eb617cd87a3e358692fdaa
+  nrstations: 4f807927f96e610db0bef4e2ab8f06b48d36a5f1
   SwiftLint: 3fe909719babe5537c552ee8181c0031392be933
 
 PODFILE CHECKSUM: 9eb91268b578b1e783a34b17fbba4745fa06b292
