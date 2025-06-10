@@ -66,7 +66,6 @@ android {
         minSdk = isdlibs.versions.minSdk.get().toInt()
     }
 
-    @Suppress("UnstableApiUsage")
     testOptions {
         unitTests {
             isIncludeAndroidResources = true

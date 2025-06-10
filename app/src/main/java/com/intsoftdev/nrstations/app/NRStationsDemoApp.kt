@@ -53,9 +53,9 @@ fun NRStationsDemoApp(
         StationsScreen.valueOf(
             backStackEntry?.destination?.route ?: StationsScreen.Search.name
         )
-
     val title =
-        remember {
+        remember
+{
             mutableStateOf("Home")
         }
 
