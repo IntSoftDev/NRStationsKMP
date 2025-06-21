@@ -58,10 +58,7 @@ internal fun getStationDistancesfromRefPoint(
     stationsList: StationsList
 ) = NearestStations(
     geolocation = geolocation,
-    stationDistances =
-        stationsList.map {
-            it.toStationDistance(geolocation)
-        }
+    stationDistances = stationsList.map { it.toStationDistance(geolocation) }
 )
 
 private fun StationLocation.toStationDistance(geolocation: Geolocation): StationDistance {
@@ -86,10 +83,7 @@ private fun distanceInMetresHaversine(
     val dLat = deg2rad(lat2 - lat1)
     val dLon = deg2rad(lon2 - lon1)
 
-    val a = sin(dLat / 2).pow(2) +
-            (cos(deg2rad(lat1)) *
-                    cos(deg2rad(lat2)) *
-                    sin(dLon / 2).pow(2))
+    val a = sin(dLat / 2).pow(2) + (cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * sin(dLon / 2).pow(2))
 
     val c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
