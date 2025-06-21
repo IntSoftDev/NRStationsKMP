@@ -6,9 +6,24 @@ import com.intsoftdev.nrstations.common.StationDistance
 import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.common.StationsList
 import kotlin.math.PI
-import kotlin.math.acos
+import kotlin.math.atan2
 import kotlin.math.cos
+import kotlin.math.pow
 import kotlin.math.sin
+import kotlin.math.sqrt
+
+/**
+ * Utility method for calculating the distance between [StationLocation] and a triggering [Geolocation]
+ */
+@Suppress("unused")
+fun StationLocation.distanceInMetres(geolocation: Geolocation): Double {
+    return distanceInMetresHaversine(
+        geolocation.latitude,
+        geolocation.longitude,
+        this.latitude,
+        this.longitude
+    )
+}
 
 internal fun getSortedStations(
     latitude: Double,
@@ -18,9 +33,19 @@ internal fun getSortedStations(
     val stationComparator =
         Comparator<StationLocation> { station1, station2 ->
             val distanceFromStation1 =
-                distanceInMetres(station1.latitude, station1.longitude, latitude, longitude)
+                distanceInMetresHaversine(
+                    station1.latitude,
+                    station1.longitude,
+                    latitude,
+                    longitude
+                )
             val distanceFromStation2 =
-                distanceInMetres(station2.latitude, station2.longitude, latitude, longitude)
+                distanceInMetresHaversine(
+                    station2.latitude,
+                    station2.longitude,
+                    latitude,
+                    longitude
+                )
 
             val diff = distanceFromStation1 - distanceFromStation2
             diff.toInt()
@@ -40,33 +65,35 @@ internal fun getStationDistancesfromRefPoint(
 )
 
 private fun StationLocation.toStationDistance(geolocation: Geolocation): StationDistance {
-    val distance =
-        distanceInMiles(geolocation.latitude, geolocation.longitude, latitude, longitude)
-    return StationDistance(this, distance)
+    val distanceInMiles =
+        distanceInMetresHaversine(
+            geolocation.latitude,
+            geolocation.longitude,
+            latitude,
+            longitude
+        ) / 1609.344F
+    return StationDistance(this, distanceInMiles)
 }
 
-private fun distanceInMiles(
+private fun distanceInMetresHaversine(
     lat1: Double,
     lon1: Double,
     lat2: Double,
     lon2: Double
 ): Double {
-    val theta = lon1 - lon2
-    var dist =
-        sin(deg2rad(lat1)) * sin(deg2rad(lat2)) + cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta))
-    dist = acos(dist)
-    dist = rad2deg(dist)
-    dist *= 60 * 1.1515
-    return dist
-}
+    val earthRadius = 6371000.0 // in metres
 
-private fun distanceInMetres(
-    lat1: Double,
-    lon1: Double,
-    lat2: Double,
-    lon2: Double
-): Double {
-    return distanceInMiles(lat1, lon1, lat2, lon2) * 1609.344
+    val dLat = deg2rad(lat2 - lat1)
+    val dLon = deg2rad(lon2 - lon1)
+
+    val a = sin(dLat / 2).pow(2) +
+            (cos(deg2rad(lat1)) *
+                    cos(deg2rad(lat2)) *
+                    sin(dLon / 2).pow(2))
+
+    val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    return earthRadius * c
 }
 
 private fun deg2rad(deg: Double): Double {
@@ -75,13 +102,4 @@ private fun deg2rad(deg: Double): Double {
 
 private fun rad2deg(rad: Double): Double {
     return rad * 180.0 / PI
-}
-
-fun StationLocation.distanceInMetres(geolocation: Geolocation): Double {
-    return distanceInMetres(
-        geolocation.latitude,
-        geolocation.longitude,
-        this.latitude,
-        this.longitude
-    )
 }
