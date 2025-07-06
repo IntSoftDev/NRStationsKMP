@@ -6,7 +6,7 @@ import com.intsoftdev.nrstations.data.model.station.toDataVersion
 import com.intsoftdev.nrstations.data.model.station.toStationLocation
 import com.intsoftdev.nrstations.data.model.station.toVersion
 import com.russhwolf.settings.Settings
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 /**
  * Cache policy to be used when retrieving Stations
