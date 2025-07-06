@@ -23,8 +23,8 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
 import kotlin.test.assertEquals
+import kotlin.time.Clock
 import kotlinx.coroutines.Dispatchers
-import kotlinx.datetime.Clock
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

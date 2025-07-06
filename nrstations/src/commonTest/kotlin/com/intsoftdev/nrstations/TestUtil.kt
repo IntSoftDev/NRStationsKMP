@@ -4,7 +4,7 @@ import com.intsoftdev.nrstations.common.StationLocation
 import com.intsoftdev.nrstations.data.model.station.DataVersion
 import com.intsoftdev.nrstations.data.model.station.StationModel
 import app.cash.sqldelight.db.SqlDriver
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 internal expect fun testDbConnection(): SqlDriver
 
