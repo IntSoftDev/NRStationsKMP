@@ -1,7 +1,7 @@
 package com.intsoftdev.nrstations.cache
 
 import com.intsoftdev.nrstations.database.NRStationsDb
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
