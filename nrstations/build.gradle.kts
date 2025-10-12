@@ -75,7 +75,7 @@ kotlin {
         }
 
         // Tests are disabled by default with this plugin; enable if you need them:
-        withHostTestBuilder {}           // enables androidHostTest (Robolectric-style)
+        withHostTestBuilder {}
         withDeviceTestBuilder {
             // map to "test" tree
             sourceSetTreeName = "test"
