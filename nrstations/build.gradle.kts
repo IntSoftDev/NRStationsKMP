@@ -1,5 +1,5 @@
 import com.vanniktech.maven.publish.SonatypeHost
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
@@ -7,14 +7,14 @@ plugins {
     alias(isdlibs.plugins.kotlinMultiplatform)
     alias(isdlibs.plugins.cocoapods)
     alias(isdlibs.plugins.kotlin.serialization)
-    alias(isdlibs.plugins.androidLibrary)
+    alias(isdlibs.plugins.android.kotlin.multiplatform.library)
     alias(isdlibs.plugins.sqlDelight)
     alias(isdlibs.plugins.ksp)
     alias(isdlibs.plugins.kmpNativeCoroutines)
 }
 
 group = "com.intsoftdev"
-version = "1.0.0-ALPHA-15"
+version = "1.0.0-ALPHA-16"
 
 mavenPublishing {
     // Define coordinates for the published artifact
@@ -57,49 +57,29 @@ mavenPublishing {
 
 kotlin {
     jvmToolchain(17)
-}
 
-android {
-    namespace = "com.intsoftdev.nrstations"
-    compileSdk = isdlibs.versions.compileSdk.get().toInt()
-    defaultConfig {
+    androidLibrary {
+        namespace = "com.intsoftdev.nrstations"
+        compileSdk = isdlibs.versions.compileSdk.get().toInt()
         minSdk = isdlibs.versions.minSdk.get().toInt()
-    }
 
-    testOptions {
-        unitTests {
-            isIncludeAndroidResources = true
+        // Kotlin JVM target for Android compilations
+        compilations.configureEach {
+            compilerOptions.configure {
+                jvmTarget.set(
+                    JvmTarget.JVM_17
+                )
+                // Expect/actual classes warning suppression
+                freeCompilerArgs.add("-Xexpect-actual-classes")
+            }
         }
-    }
 
-    lint {
-        warningsAsErrors = true
-        abortOnError = true
-        /**
-         * Lint found an issue registry (androidx.lifecycle.lint.LiveDataCoreIssueRegistry)
-         * which contains some references to invalid API
-         */
-        disable.add("ObsoleteLintCustomCheck")
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-}
-
-kotlin {
-
-    androidTarget {
-        publishLibraryVariants("release", "debug")
-        @Suppress("OPT_IN_USAGE")
-        unitTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
-    }
-
-    // https://kotlinlang.org/docs/multiplatform-expect-actual.html#expected-and-actual-classes
-    // To suppress this warning about usage of expected and actual classes
-    compilerOptions {
-        freeCompilerArgs.add("-Xexpect-actual-classes")
+        // Tests are disabled by default with this plugin; enable if you need them:
+        withHostTestBuilder {}
+        withDeviceTestBuilder {
+            // map to "test" tree
+            sourceSetTreeName = "test"
+        }
     }
 
     listOf(
@@ -135,37 +115,56 @@ kotlin {
             }
         }
 
-        androidMain.dependencies {
-            api(isdlibs.koin.android)
-            implementation(isdlibs.androidx.lifecycle.viewmodel)
-            implementation(isdlibs.sqlDelight.android)
-            implementation(isdlibs.ktor.client.okHttp)
+        androidMain {
+            dependencies {
+                api(isdlibs.koin.android)
+                implementation(isdlibs.androidx.lifecycle.viewmodel)
+                implementation(isdlibs.sqlDelight.android)
+                implementation(isdlibs.ktor.client.okHttp)
+            }
         }
 
-        iosMain.dependencies {
-            implementation(isdlibs.sqlDelight.native)
-            implementation(isdlibs.ktor.client.ios)
+        iosMain {
+            dependencies {
+                implementation(isdlibs.sqlDelight.native)
+                implementation(isdlibs.ktor.client.ios)
+            }
         }
 
-        commonMain.dependencies {
-            implementation(isdlibs.koin.core)
-            implementation(isdlibs.coroutines.core)
-            implementation(isdlibs.sqlDelight.coroutinesExt)
-            implementation(isdlibs.bundles.ktor.common)
-            implementation(isdlibs.multiplatformSettings.common)
-            implementation(isdlibs.kotlinx.dateTime)
-            implementation(isdlibs.bundles.ktor.common)
-            implementation(isdlibs.napier.logger)
-            api(isdlibs.kmp.viewmodel)
+        commonMain {
+            dependencies {
+                implementation(isdlibs.koin.core)
+                implementation(isdlibs.coroutines.core)
+                implementation(isdlibs.sqlDelight.coroutinesExt)
+                implementation(isdlibs.bundles.ktor.common)
+                implementation(isdlibs.multiplatformSettings.common)
+                implementation(isdlibs.kotlinx.dateTime)
+                implementation(isdlibs.bundles.ktor.common)
+                implementation(isdlibs.napier.logger)
+                api(isdlibs.kmp.viewmodel)
+            }
         }
 
-        commonTest.dependencies {
-            implementation(isdlibs.bundles.commonTest)
-            implementation(isdlibs.turbine)
+        commonTest {
+            dependencies {
+                implementation(isdlibs.bundles.commonTest)
+                implementation(isdlibs.turbine)
+            }
         }
 
-        getByName("androidUnitTest").dependencies {
-            implementation(isdlibs.bundles.androidTest)
+        getByName("androidHostTest") {
+            dependencies {
+                implementation(isdlibs.bundles.androidTest)
+                implementation(isdlibs.sqlDelight.jvm)
+                implementation(isdlibs.sqlDelight.android)
+            }
+        }
+
+        getByName("androidDeviceTest") {
+            dependencies {
+                implementation(isdlibs.bundles.androidTest)
+                implementation(isdlibs.sqlDelight.android)
+            }
         }
     }
 
