@@ -155,6 +155,15 @@ kotlin {
         getByName("androidHostTest") {
             dependencies {
                 implementation(isdlibs.bundles.androidTest)
+                implementation(isdlibs.sqlDelight.jvm)
+                implementation(isdlibs.sqlDelight.android)
+            }
+        }
+
+        getByName("androidDeviceTest") {
+            dependencies {
+                implementation(isdlibs.bundles.androidTest)
+                implementation(isdlibs.sqlDelight.android)
             }
         }
     }
