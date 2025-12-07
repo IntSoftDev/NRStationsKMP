@@ -30,17 +30,13 @@ internal class StationsApiMock : StationsAPI {
         nextStationsResponse = { stations }
     }
 
-    fun stationsSuccessResponse(): List<StationModel> {
-        return TEST_STATIONS_API_RESPONSE
-    }
+    fun stationsSuccessResponse(): List<StationModel> = TEST_STATIONS_API_RESPONSE
 
     fun prepareDataVersionResponse(dataVersion: List<DataVersion>) {
         nextDataVersionResponse = { dataVersion }
     }
 
-    fun dataVersionSuccessResponse(): List<DataVersion> {
-        return listOf(DATA_VERSION_UPDATE)
-    }
+    fun dataVersionSuccessResponse(): List<DataVersion> = listOf(DATA_VERSION_UPDATE)
 
     fun throwOnCall(throwable: Throwable) {
         nextStationsResponse = { throw throwable }

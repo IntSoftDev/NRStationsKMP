@@ -16,7 +16,9 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class NearbyStationsViewModel : ViewModel(), StationsSdkDiComponent {
+class NearbyStationsViewModel :
+    ViewModel(),
+    StationsSdkDiComponent {
     private val stationsSDK = injectStations<NrStationsSDK>()
 
     private val _uiState = MutableStateFlow<NearbyStationsUiState>(NearbyStationsUiState.Loading)
@@ -33,36 +35,40 @@ class NearbyStationsViewModel : ViewModel(), StationsSdkDiComponent {
         longitude: Double
     ) {
         Napier.d("getNearbyStations $latitude $longitude enter")
-        viewModelScope.launch {
-            stationsSDK.getNearbyStations(latitude, longitude)
-                .onStart {
-                    Napier.d("onStart")
-                    _uiState.emit(NearbyStationsUiState.Loading)
-                }.catch { throwable ->
-                    _uiState.emit(NearbyStationsUiState.Error(error = throwable.message))
-                }.collect { result ->
-                    when (result) {
-                        is StationsResultState.Success -> {
-                            Napier.d("got stations count ${result.data.stationDistances.size}")
-                            _uiState.emit(
-                                NearbyStationsUiState.Loaded(stations = result.data)
-                            )
-                        }
+        viewModelScope
+            .launch {
+                stationsSDK
+                    .getNearbyStations(latitude, longitude)
+                    .onStart {
+                        Napier.d("onStart")
+                        _uiState.emit(NearbyStationsUiState.Loading)
+                    }.catch { throwable ->
+                        _uiState.emit(NearbyStationsUiState.Error(error = throwable.message))
+                    }.collect { result ->
+                        when (result) {
+                            is StationsResultState.Success -> {
+                                Napier.d("got stations count ${result.data.stationDistances.size}")
+                                _uiState.emit(
+                                    NearbyStationsUiState.Loaded(stations = result.data)
+                                )
+                            }
 
-                        is StationsResultState.Failure -> {
-                            _uiState.emit(NearbyStationsUiState.Error(error = result.error?.message))
-                            Napier.e("error")
+                            is StationsResultState.Failure -> {
+                                _uiState.emit(NearbyStationsUiState.Error(error = result.error?.message))
+                                Napier.e("error")
+                            }
                         }
                     }
-                }
-        }
+            }
     }
 }
 
 sealed interface NearbyStationsUiState {
     data object Loading : NearbyStationsUiState
 
-    data class Error(val error: String?) : NearbyStationsUiState
+    data class Error(
+        val error: String?
+    ) : NearbyStationsUiState
 
     data class Loaded(
         val stations: NearestStations

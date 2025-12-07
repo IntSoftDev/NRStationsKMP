@@ -33,7 +33,9 @@ import com.intsoftdev.nrstations.viewmodels.SearchableStationViewModel
 /**
  * enum values that represent the screens in the app
  */
-enum class StationsScreen(val title: String) {
+enum class StationsScreen(
+    val title: String
+) {
     Search("Search"),
     Nearby("Nearby")
 }

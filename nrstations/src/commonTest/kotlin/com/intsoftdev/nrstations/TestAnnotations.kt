@@ -4,7 +4,9 @@ import kotlin.reflect.KClass
 
 @OptIn(ExperimentalMultiplatform::class)
 @OptionalExpectation
-expect annotation class RunWith(val value: KClass<out Runner>)
+expect annotation class RunWith(
+    val value: KClass<out Runner>
+)
 
 expect abstract class Runner
 
