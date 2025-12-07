@@ -6,8 +6,14 @@
 //  Copyright © 2023 Intsoftdev. All rights reserved.
 //
 
-import KMPObservableViewModelCore
 import Foundation
 import nrstations
+import KMPObservableViewModelCore
+import KMPObservableViewModelSwiftUI
+import Observation
 
-extension Kmp_observableviewmodel_coreViewModel: ViewModel { }
+// Needed for @StateViewModel / @ObservedViewModel / @EnvironmentViewModel
+extension Kmp_observableviewmodel_coreViewModel: @retroactive ViewModel { }
+
+// Optional but nice: Observation framework support (iOS 17+ etc.)
+extension Kmp_observableviewmodel_coreViewModel: @retroactive Observable { }

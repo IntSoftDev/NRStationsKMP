@@ -62,6 +62,7 @@ dependencies {
 
     implementation(isdlibs.compose.material3)
     implementation(isdlibs.androidx.navigation.compose)
+    implementation(isdlibs.compose.material.icons.extended)
     implementation(isdlibs.compose.ui)
     implementation(isdlibs.compose.tooling)
     implementation(isdlibs.compose.maps)
