@@ -11,11 +11,26 @@ kotlin {
 
 android {
     namespace = "com.intsoftdev.nrstations.app"
-    compileSdk = isdlibs.versions.compileSdk.get().toInt()
+    compileSdk =
+        isdlibs
+            .versions
+            .compileSdk
+            .get()
+            .toInt()
     defaultConfig {
         applicationId = "com.intsoftdev.nrstations.app"
-        minSdk = isdlibs.versions.minSdk.get().toInt()
-        targetSdk = isdlibs.versions.targetSdk.get().toInt()
+        minSdk =
+            isdlibs
+                .versions
+                .minSdk
+                .get()
+                .toInt()
+        targetSdk =
+            isdlibs
+                .versions
+                .targetSdk
+                .get()
+                .toInt()
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -23,7 +38,10 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
