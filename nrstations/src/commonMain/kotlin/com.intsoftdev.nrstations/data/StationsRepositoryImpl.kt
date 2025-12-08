@@ -46,9 +46,10 @@ internal class StationsRepositoryImpl(
                     emit(StationsResultState.Success(result))
                 }
             }
-        }.retryWithPolicy(requestRetryPolicy).catch { throwable ->
-            emit(StationsResultState.Failure(throwable))
-        }.flowOn(requestDispatcher)
+        }.retryWithPolicy(requestRetryPolicy)
+            .catch { throwable ->
+                emit(StationsResultState.Failure(throwable))
+            }.flowOn(requestDispatcher)
 
     override suspend fun getStationLocation(vararg crsCodes: String): List<StationLocation> =
         when (stationsCache.getCacheState()) {
@@ -95,9 +96,10 @@ internal class StationsRepositoryImpl(
             }
         }.flowOn(requestDispatcher)
 
-    private suspend fun getServerDataVersion(): DataVersion {
-        return stationsProxyService.getDataVersion().first()
-    }
+    private suspend fun getServerDataVersion(): DataVersion =
+        stationsProxyService
+            .getDataVersion()
+            .first()
 
     private suspend fun refreshStations(): StationsResultState<StationsResult> {
         getServerDataVersion().also { serverDataVersion ->

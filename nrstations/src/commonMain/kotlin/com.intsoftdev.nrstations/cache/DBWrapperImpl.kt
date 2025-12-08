@@ -27,7 +27,11 @@ internal class DBWrapperImpl(
         }
     }
 
-    override fun getStations(): List<StationDb> = stationsDb.stationsTableQueries.selectAll().executeAsList()
+    override fun getStations(): List<StationDb> =
+        stationsDb
+            .stationsTableQueries
+            .selectAll()
+            .executeAsList()
 
     override fun getStationLocation(stationId: String): StationDb? {
         require(stationId.length == STATION_CODE_LEN) { "station Crs code $stationId invalid. It must have 3 letters" }
@@ -44,11 +48,19 @@ internal class DBWrapperImpl(
         stationsDb.versionTableQueries.insert(version.version, version.lastUpdate)
     }
 
-    override fun getVersion(): Version? = stationsDb.versionTableQueries.select().executeAsList().firstOrNull()
+    override fun getVersion(): Version? =
+        stationsDb
+            .versionTableQueries
+            .select()
+            .executeAsList()
+            .firstOrNull()
 
-    override fun isEmpty(): Boolean {
-        return stationsDb.stationsTableQueries.selectAll().executeAsList().isEmpty()
-    }
+    override fun isEmpty(): Boolean =
+        stationsDb
+            .stationsTableQueries
+            .selectAll()
+            .executeAsList()
+            .isEmpty()
 
     companion object {
         private const val STATION_CODE_LEN = 3

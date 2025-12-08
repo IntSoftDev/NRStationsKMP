@@ -16,14 +16,13 @@ import kotlin.math.sqrt
  * Utility method for calculating the distance between [StationLocation] and a triggering [Geolocation]
  */
 @Suppress("unused")
-fun StationLocation.distanceInMetres(geolocation: Geolocation): Double {
-    return distanceInMetresHaversine(
+fun StationLocation.distanceInMetres(geolocation: Geolocation): Double =
+    distanceInMetresHaversine(
         geolocation.latitude,
         geolocation.longitude,
         this.latitude,
         this.longitude
     )
-}
 
 internal fun getSortedStations(
     latitude: Double,
@@ -90,10 +89,6 @@ private fun distanceInMetresHaversine(
     return earthRadius * c
 }
 
-private fun deg2rad(deg: Double): Double {
-    return deg * PI / 180.0
-}
+private fun deg2rad(deg: Double): Double = deg * PI / 180.0
 
-private fun rad2deg(rad: Double): Double {
-    return rad * 180.0 / PI
-}
+private fun rad2deg(rad: Double): Double = rad * 180.0 / PI

@@ -14,12 +14,12 @@ internal class GetStationsUseCase(
     private val stationsRepository: StationsRepository,
     private val coroutineDispatcher: CoroutineDispatcher
 ) {
-    fun getAllStations(cachePolicy: CachePolicy): Flow<StationsResultState<StationsResult>> {
-        return stationsRepository.getAllStations(cachePolicy = cachePolicy)
-    }
+    fun getAllStations(cachePolicy: CachePolicy): Flow<StationsResultState<StationsResult>> =
+        stationsRepository
+            .getAllStations(cachePolicy = cachePolicy)
 
-    suspend fun getStationLocation(vararg crsCodes: String?): Flow<StationsResultState<List<StationLocation>>> {
-        return flow<StationsResultState<List<StationLocation>>> {
+    fun getStationLocation(vararg crsCodes: String?): Flow<StationsResultState<List<StationLocation>>> =
+        flow<StationsResultState<List<StationLocation>>> {
             val codes = crsCodes.mapNotNull { it }.toTypedArray()
             val stationLocations =
                 stationsRepository.getStationLocation(*codes)
@@ -27,7 +27,6 @@ internal class GetStationsUseCase(
         }.catch { throwable ->
             emit(StationsResultState.Failure(throwable))
         }.flowOn(coroutineDispatcher)
-    }
 
     fun getNearbyStations(
         latitude: Double,

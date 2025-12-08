@@ -44,7 +44,8 @@ class SearchableStationViewModel : NrStationsViewModel() {
 
     val stationsList =
         searchText
-            .combine(_stationsList) { text, stations -> // combine searchText with _stationsList
+            .combine(_stationsList) { text, stations ->
+                // combine searchText with _stationsList
                 if (text.isBlank()) {
                     stations
                 } else {

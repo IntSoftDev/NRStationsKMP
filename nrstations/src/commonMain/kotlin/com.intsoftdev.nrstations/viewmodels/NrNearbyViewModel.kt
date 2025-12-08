@@ -16,7 +16,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
+open class NrNearbyViewModel :
+    KMMBaseViewModel(),
+    StationsSdkDiComponent {
     private val stationsSDK = this.injectStations<NrStationsSDK>()
 
     // Backing property to avoid state updates from other classes
@@ -44,7 +46,8 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
     @Suppress("unused")
     fun getNearbyStations(crsCode: String) {
         viewModelScope.coroutineScope.launch {
-            stationsSDK.getStationLocation(crsCode)
+            stationsSDK
+                .getStationLocation(crsCode)
                 .onStart {
                     _uiState.emit(NearbyUiState.Loading)
                 }.catch { throwable ->
@@ -72,7 +75,8 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
         longitude: Double
     ) {
         viewModelScope.coroutineScope.launch {
-            stationsSDK.getNearbyStations(latitude, longitude)
+            stationsSDK
+                .getNearbyStations(latitude, longitude)
                 .onStart {
                     _uiState.emit(NearbyUiState.Loading)
                 }.catch { throwable ->
@@ -103,7 +107,9 @@ open class NrNearbyViewModel : KMMBaseViewModel(), StationsSdkDiComponent {
 sealed interface NearbyUiState {
     data object Loading : NearbyUiState
 
-    data class Error(val error: String?) : NearbyUiState
+    data class Error(
+        val error: String?
+    ) : NearbyUiState
 
     data class Loaded(
         val stations: NearestStations
