@@ -1,7 +1,7 @@
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinAndroidTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
     alias(isdlibs.plugins.maven.publish)
@@ -74,9 +74,18 @@ kotlin {
 
     androidLibrary {
         namespace = "com.intsoftdev.nrstations"
-        compileSdk = isdlibs.versions.compileSdk.get().toInt()
-        minSdk = isdlibs.versions.minSdk.get().toInt()
-
+        compileSdk =
+            isdlibs
+                .versions
+                .compileSdk
+                .get()
+                .toInt()
+        minSdk =
+            isdlibs
+                .versions
+                .minSdk
+                .get()
+                .toInt()
         // Tests are disabled by default with this plugin; enable if you need them:
         withHostTestBuilder {}
         withDeviceTestBuilder {
