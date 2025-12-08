@@ -15,4 +15,5 @@
 !/.idea/inspectionProfiles/*
 # Kotlin 2.0
 .kotlin/
+secrets.properties
 
