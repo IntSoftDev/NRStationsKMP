@@ -18,7 +18,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-open class NrStationsViewModel : ViewModel(), StationsSdkDiComponent {
+open class NrStationsViewModel :
+    ViewModel(),
+    StationsSdkDiComponent {
     private var stationsSDK = this.injectStations<NrStationsSDK>()
 
     // Backing property to avoid state updates from other classes
@@ -44,26 +46,30 @@ open class NrStationsViewModel : ViewModel(), StationsSdkDiComponent {
     }
 
     fun getAllStations(cachePolicy: CachePolicy = CachePolicy.USE_CACHE_WITH_EXPIRY) {
-        viewModelScope.coroutineScope.launch {
-            stationsSDK.getAllStations(cachePolicy = cachePolicy).onStart {
-                _uiState.emit(StationsUiState.Loading)
-            }.catch { throwable ->
-                _uiState.emit(StationsUiState.Error(error = throwable.message))
-            }.collect { stationsResult ->
-                when (stationsResult) {
-                    is StationsResultState.Success -> {
-                        _uiState.emit(
-                            StationsUiState.Loaded(stations = stationsResult.data.stations)
-                        )
-                    }
+        viewModelScope
+            .coroutineScope
+            .launch {
+                stationsSDK
+                    .getAllStations(cachePolicy = cachePolicy)
+                    .onStart {
+                        _uiState.emit(StationsUiState.Loading)
+                    }.catch { throwable ->
+                        _uiState.emit(StationsUiState.Error(error = throwable.message))
+                    }.collect { stationsResult ->
+                        when (stationsResult) {
+                            is StationsResultState.Success -> {
+                                _uiState.emit(
+                                    StationsUiState.Loaded(stations = stationsResult.data.stations)
+                                )
+                            }
 
-                    is StationsResultState.Failure -> {
-                        _uiState.emit(StationsUiState.Error(error = stationsResult.error?.message))
-                        Napier.e("${stationsResult.error}")
+                            is StationsResultState.Failure -> {
+                                _uiState.emit(StationsUiState.Error(error = stationsResult.error?.message))
+                                Napier.e("${stationsResult.error}")
+                            }
+                        }
                     }
-                }
             }
-        }
     }
 
     companion object {
@@ -74,7 +80,9 @@ open class NrStationsViewModel : ViewModel(), StationsSdkDiComponent {
 sealed interface StationsUiState {
     data object Loading : StationsUiState
 
-    data class Error(val error: String?) : StationsUiState
+    data class Error(
+        val error: String?
+    ) : StationsUiState
 
     data class Loaded(
         val stations: List<StationLocation>,

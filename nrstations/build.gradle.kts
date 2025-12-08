@@ -1,5 +1,6 @@
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinAndroidTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
@@ -14,7 +15,7 @@ plugins {
 }
 
 group = "com.intsoftdev"
-version = "1.0.0-ALPHA-16"
+version = "1.0.0-ALPHA-17"
 
 mavenPublishing {
     // Define coordinates for the published artifact
@@ -58,22 +59,33 @@ mavenPublishing {
 kotlin {
     jvmToolchain(17)
 
+    // Global KMP compiler options (applies to all targets)
+    compilerOptions {
+        // Expect/actual classes warning suppression
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
+    // Configure the existing Android target created by the Android KMP plugin
+    targets.withType<KotlinAndroidTarget>().configureEach {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+
     androidLibrary {
         namespace = "com.intsoftdev.nrstations"
-        compileSdk = isdlibs.versions.compileSdk.get().toInt()
-        minSdk = isdlibs.versions.minSdk.get().toInt()
-
-        // Kotlin JVM target for Android compilations
-        compilations.configureEach {
-            compilerOptions.configure {
-                jvmTarget.set(
-                    JvmTarget.JVM_17
-                )
-                // Expect/actual classes warning suppression
-                freeCompilerArgs.add("-Xexpect-actual-classes")
-            }
-        }
-
+        compileSdk =
+            isdlibs
+                .versions
+                .compileSdk
+                .get()
+                .toInt()
+        minSdk =
+            isdlibs
+                .versions
+                .minSdk
+                .get()
+                .toInt()
         // Tests are disabled by default with this plugin; enable if you need them:
         withHostTestBuilder {}
         withDeviceTestBuilder {

@@ -1,3 +1,16 @@
+import java.util.Properties
+
+// Load secrets.properties
+val secretsProperties = Properties()
+val secretsFile = rootProject.file("secrets.properties")
+if (secretsFile.exists()) {
+    secretsProperties.load(secretsFile.inputStream())
+    // Apply secrets as project properties
+    secretsProperties.forEach { key, value ->
+        project.ext.set(key.toString(), value)
+    }
+}
+
 plugins {
     alias(isdlibs.plugins.gradleVersions)
     alias(isdlibs.plugins.kotlin.android) apply false

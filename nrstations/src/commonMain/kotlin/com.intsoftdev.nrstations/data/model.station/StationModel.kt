@@ -36,9 +36,7 @@ internal fun StationLocation.toNRStation() =
 internal fun getHashFromStation(
     crs: String,
     name: String
-): Long {
-    return (crs + name).hashCode().toLong()
-}
+): Long = (crs + name).hashCode().toLong()
 
 internal fun StationDb.toStationLocation() =
     StationLocation(

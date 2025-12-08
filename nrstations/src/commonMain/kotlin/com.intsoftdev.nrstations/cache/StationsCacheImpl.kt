@@ -42,16 +42,14 @@ internal class StationsCacheImpl(
         dbWrapper.insertVersion(version.toVersion())
     }
 
-    override fun getAllStations(): List<StationLocation> {
-        return dbWrapper.getStations().map {
+    override fun getAllStations(): List<StationLocation> =
+        dbWrapper.getStations().map {
             it.toStationLocation()
         }
-    }
 
-    override fun getStationLocation(crsCode: String): StationLocation {
-        return dbWrapper.getStationLocation(crsCode)?.toStationLocation()
+    override fun getStationLocation(crsCode: String): StationLocation =
+        dbWrapper.getStationLocation(crsCode)?.toStationLocation()
             ?: throw IllegalStateException("station code $crsCode not found")
-    }
 
     override fun getCacheState(
         serverVersion: Double?,

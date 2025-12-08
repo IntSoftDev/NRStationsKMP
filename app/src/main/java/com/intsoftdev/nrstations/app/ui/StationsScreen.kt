@@ -233,8 +233,7 @@ fun StationRow(
             .clickable {
                 Napier.d("onClick ${station.stationName}")
                 onClick(station)
-            }
-            .padding(10.dp)
+            }.padding(10.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
