@@ -15,7 +15,7 @@ plugins {
 }
 
 group = "com.intsoftdev"
-version = "1.0.0-ALPHA-18"
+version = "1.0.0-ALPHA-19"
 
 mavenPublishing {
     // Define coordinates for the published artifact
