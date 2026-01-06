@@ -1,5 +1,5 @@
 PODS:
-  - nrstations (1.0.0-ALPHA-18)
+  - nrstations (1.0.0-ALPHA-19)
   - SwiftLint (0.55.1)
 
 DEPENDENCIES:
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../nrstations/"
 
 SPEC CHECKSUMS:
-  nrstations: 362fc17fae39702aa9038d66f35e8aad5f53b2b5
+  nrstations: eecb95a54e54b0568d4cf1a12aabada83fd3b103
   SwiftLint: 3fe909719babe5537c552ee8181c0031392be933
 
 PODFILE CHECKSUM: 9eb91268b578b1e783a34b17fbba4745fa06b292

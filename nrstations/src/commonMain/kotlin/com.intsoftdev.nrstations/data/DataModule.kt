@@ -1,4 +1,3 @@
-import com.intsoftdev.nrstations.common.APIConfig.Companion.LICENSE_PROP_KEY
 import com.intsoftdev.nrstations.common.APIConfig.Companion.SERVER_PROP_KEY
 import com.intsoftdev.nrstations.common.DefaultRetryPolicy
 import com.intsoftdev.nrstations.data.StationsAPI
@@ -16,8 +15,7 @@ internal val stationsDataModule =
         factory<StationsAPI> {
             StationsProxy(
                 httpClient = get(named(KOIN_HTTP_CLIENT)),
-                baseUrl = getProperty(SERVER_PROP_KEY),
-                azureSubscriptionKey = getPropertyOrNull(LICENSE_PROP_KEY)
+                baseUrl = getProperty(SERVER_PROP_KEY)
             )
         }
 
