@@ -10,6 +10,8 @@ interface ClientInfoProvider {
     fun get(): ClientInfo
 }
 
-class StaticClientInfoProvider(private val info: ClientInfo) : ClientInfoProvider {
+class StaticClientInfoProvider(
+    private val info: ClientInfo
+) : ClientInfoProvider {
     override fun get(): ClientInfo = info
 }

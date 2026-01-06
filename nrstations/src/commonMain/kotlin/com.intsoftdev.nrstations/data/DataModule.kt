@@ -15,7 +15,7 @@ internal val stationsDataModule =
         factory<StationsAPI> {
             StationsProxy(
                 httpClient = get(named(KOIN_HTTP_CLIENT)),
-                baseUrl = getProperty(SERVER_PROP_KEY),
+                baseUrl = getProperty(SERVER_PROP_KEY)
             )
         }
 

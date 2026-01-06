@@ -40,5 +40,5 @@ data class APIConfig(
 
 internal fun APIConfig.toKoinProperties(): Map<String, Any> =
     listOfNotNull(
-        SERVER_PROP_KEY to this.serverUrl,
+        SERVER_PROP_KEY to this.serverUrl
     ).toMap()
