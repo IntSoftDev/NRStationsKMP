@@ -54,7 +54,14 @@ internal class StationsRepositoryImpl(
     override suspend fun getStationLocation(vararg crsCodes: String): List<StationLocation> =
         when (stationsCache.getCacheState()) {
             is CacheState.Empty -> {
-                throw IllegalStateException("cache empty")
+                // Cache not yet populated — fetch stations first, then resolve
+                val result = refreshStations()
+                if (result is StationsResultState.Failure) {
+                    throw result.error ?: IllegalStateException("Failed to load stations")
+                }
+                crsCodes.map {
+                    stationsCache.getStationLocation(it)
+                }
             }
 
             else -> {
